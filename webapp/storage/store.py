@@ -20,7 +20,7 @@ class Store(db.Model, BaseModel):
 
     fields = [
         'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality', 'country', 'lat', 'lon', 'website',
-        'email', 'phone', 'mobile', 'fax', 'type', 'description', 'websiteCrowdfunding', 'websiteCoupon', 'wheelchair', 'licence'
+        'email', 'phone', 'mobile', 'fax', 'type', 'description', 'websiteCrowdfunding', 'websiteCoupon', 'wheelchair', 'licence',
         'type_slug', 'brand', 'osm_id'
     ]
 
