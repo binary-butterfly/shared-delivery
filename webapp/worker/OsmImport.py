@@ -13,7 +13,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import requests
 from time import sleep
 from urllib.parse import quote
-from ..extensions import logger
+from ..extensions import db, logger
 from ..models import Region, Store
 
 
@@ -28,7 +28,7 @@ def import_osm(region_id):
     base_url = 'https://overpass-api.de/api/interpreter?data='
 
     for slug, param in sources.items():
-        result = requests.get(base_url + quote(param))
+        result = requests.get(base_url + quote(param % region.name))
         if result.status_code != 200:
             logger.info('bad status code at %s' % slug)
             continue
@@ -39,6 +39,7 @@ def import_osm(region_id):
                 store = Store()
                 store.osm_id = store_raw.get('id')
                 store.region_id = region.id
+                store.type_slug = slug
             store.name = store_raw.get('tags', {}).get('name')
             if not store.name:
                 continue
@@ -59,7 +60,8 @@ def import_osm(region_id):
             store.website = store_raw.get('tags', {}).get('website')
             if not store.website:
                 store.website = store_raw.get('tags', {}).get('contact:website')
-
+            db.session.add(store)
+            db.session.commit()
 
 
 

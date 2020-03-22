@@ -19,6 +19,7 @@ from flask_migrate import Migrate, MigrateCommand
 
 from webapp.common.prepare_unittest import prepare_unittest as prepare_unittest_run
 from webapp.store_management.StoreElasticImport import es_create_index as es_create_index_run
+from webapp.worker.OsmImport import import_osm as import_osm_run
 
 
 app = launch()
@@ -42,6 +43,11 @@ def prepare_unittest():
 @manager.command
 def es_create_index():
     es_create_index_run()
+
+
+@manager.command
+def import_osm(region_id):
+    import_osm_run(region_id)
 
 
 if __name__ == "__main__":
