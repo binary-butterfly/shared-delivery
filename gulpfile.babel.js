@@ -70,7 +70,7 @@ gulp.task('styles', () => {
         .pipe(cache('styles'))
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(autoprefixer())
-        .pipe(gulpif(enabled.rev, cssnanoe()))
+        //.pipe(gulpif(enabled.rev, cssnanoe()))
         .pipe(remember('styles'))
         .pipe(concat('webapp' + ((enabled.rev) ? '.min' : '') + '.css'))
         .pipe(sourcemaps.write('.'))

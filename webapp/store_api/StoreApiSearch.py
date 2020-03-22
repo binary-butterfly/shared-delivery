@@ -34,7 +34,11 @@ def api_stores_search():
 @store_api.route('/api/store/<int:store_id>')
 @csrf.exempt
 def api_store(store_id):
-    store = Store.query.get_or_404(store_id)
+    store = Store.query.get(store_id)
+    if not store:
+        return json_response({
+            'status': 404
+        })
     return json_response({
         'status': 0,
         'data': store.to_dict()

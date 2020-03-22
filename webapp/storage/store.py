@@ -20,7 +20,8 @@ class Store(db.Model, BaseModel):
 
     fields = [
         'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality', 'country', 'lat', 'lon', 'website',
-        'email', 'phone', 'mobile', 'fax', 'type', 'description'
+        'email', 'phone', 'mobile', 'fax', 'type', 'description', 'websiteCrowdfunding', 'websiteCoupon', 'wheelchair', 'licence'
+        'type_slug', 'brand', 'osm_id'
     ]
 
     version = '0.9.0'
@@ -29,6 +30,8 @@ class Store(db.Model, BaseModel):
     opening_time = db.relationship('OpeningTime', backref='store', lazy='dynamic')
     #offer = db.relationship('Tag', backref='store', lazy='dynamic')
     #help = db.relationship('Tag', backref='store', lazy='dynamic')
+
+    osm_id = db.Column(db.Integer)
 
     name = db.Column(db.String(255))
     firstname = db.Column(db.String(255))
@@ -43,14 +46,21 @@ class Store(db.Model, BaseModel):
     lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
 
     website = db.Column(db.String(255))
+    websiteCrowdfunding = db.Column(db.String(255))
+    websiteCoupon = db.Column(db.String(255))
     email = db.Column(db.String(255))
     phone = db.Column(db.String(255))
     mobile = db.Column(db.String(255))
     fax = db.Column(db.String(255))
 
+    type_slug = db.Column(db.String(255))
     type = db.Column(db.String(255))
 
+    licence = db.Column(db.String(255))
     description = db.Column(db.Text)
+
+    brand = db.Column(db.String(255))
+    wheelchair = db.Column(db.String(255))
 
     def to_dict(self):
         result = super().to_dict()
