@@ -13,8 +13,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 from flask_wtf import FlaskForm
 from flask_babel import _
 from wtforms import validators
-from wtforms import StringField, TextAreaField, SelectField, SubmitField, BooleanField
+from wtforms import StringField, TextAreaField, SelectField, SubmitField, HiddenField
 from ..common.form import SearchBaseForm
+from ..common.countrycodes import country_codes
+from ..common.form_field import RegionField
+from ..common.form_filter import float_filter
 
 
 class StoreSearchForm(SearchBaseForm):
@@ -34,40 +37,120 @@ class StoreForm(FlaskForm):
     class Meta:
         locales = ('de_DE', 'de')
 
-    name_long = StringField(
-        label=_('Name (lang)'),
+    name = StringField(
+        label=_('Name'),
         validators=[
             validators.DataRequired(
-                message=_('Bitte geben Sie einen langen Namen an.')
+                message=_('Bitte geben Sie einen Namen an.')
             )
         ]
     )
     type = SelectField(
-        label='Typ',
+        label=_('Art des Geschäfts'),
+        choices=[
+            ('0', 'bitte wählen'),
+            ('Apotheke', 'Apotheke'),
+            ('Bäckerei', 'Bäckerei'),
+            ('Restaurant', 'Restaurant')
+        ],
         validators=[
             validators.DataRequired(
-                message='Typ benötigt.'
+                message='Bitte geben Sie einen Typen an.'
+            ),
+            validators.NoneOf(
+                ['0'],
+                message='Bitte geben Sie einen Typen an.'
             )
-        ],
-        choices=[
-            ('unit', 'Ladepunkt'),
-            ('cashpoint', 'Kasse')
         ]
     )
-    live_pki = BooleanField(
-        label='Live PKI'
+    region = RegionField(
+        label=_('Region'),
+
     )
-    public_key = TextAreaField(
-        label='Public Key Chain'
+    firstname = StringField(
+        label=_('Vorname')
     )
-    legal_note = TextAreaField(
-        label='Rechtliche Hinweise bei der Abrechnung'
+    lastname = StringField(
+        label=_('Nachname')
     )
-    comment = TextAreaField(
+    company = StringField(
+        label=_('Unternehmen')
+    )
+    address = StringField(
+        label=_('Straße und Hausnummer'),
+        validators=[
+            validators.DataRequired(
+                message=_('Bitte geben Sie eine Straße und Hausnummer an.')
+            )
+        ]
+    )
+    postalcode = StringField(
+        label=_('Postleitzahl'),
+        validators=[
+            validators.DataRequired(
+                message=_('Bitte geben Sie eine Postleitzahl an.')
+            )
+        ]
+    )
+    locality = StringField(
+        label=_('Ort'),
+        validators=[
+            validators.DataRequired(
+                message=_('Bitte geben Sie einen Ort an.')
+            )
+        ]
+    )
+    country = SelectField(
+        _('Staat'),
+        validators=[
+            validators.DataRequired(
+                message=_('Bitte geben Sie einen Staat an.')
+            )
+        ],
+        choices=country_codes,
+        default='DE'
+    )
+    lat = HiddenField(
+        label=_('Längengrad'),
+        filters=[
+            float_filter
+        ]
+    )
+    lon = HiddenField(
+        label=_('Breitengrad'),
+        filters=[
+            float_filter
+        ]
+    )
+    website = StringField(
+        label=_('Website'),
+        validators=[
+            validators.url(
+                message='Bitte geben Sie eine URL an'
+            ),
+            validators.Optional()
+        ],
+    )
+    email = StringField(
+        label=_('E-Mail'),
+        validators=[
+            validators.email(
+                message='Bitte geben Sie eine E-Mail an'
+            ),
+            validators.Optional()
+        ],
+    )
+    phone = StringField(
+        label=_('Telefon')
+    )
+    mobile = StringField(
+        label=_('Mobiltelefon')
+    )
+    fax = StringField(
+        label=_('Fax')
+    )
+    description = TextAreaField(
         label='Beschreibung'
-    )
-    offer_text = TextAreaField(
-        label='Angebot'
     )
     submit = SubmitField(_('speichern'))
 
@@ -75,3 +158,4 @@ class StoreForm(FlaskForm):
 class StoreDeleteForm(FlaskForm):
     submit = SubmitField(_('löschen'))
     abort = SubmitField(_('abbrechen'))
+

@@ -18,7 +18,7 @@ from .StoreElasticIndex import es_create_index
 from flask import current_app
 
 
-def es_index_orders(recreate=False):
+def es_index_stores(recreate=False):
     """
 
     """
@@ -39,8 +39,8 @@ def es_index_orders(recreate=False):
 
 
 @celery.task
-def es_index_order_delayed(order_id):
-    store = Store.query.get(order_id)
+def es_index_store_delay(store_id):
+    store = Store.query.get(store_id)
     if not store:
         return
     es_index_store(store)
@@ -49,7 +49,7 @@ def es_index_order_delayed(order_id):
 def es_index_store(store):
     index_name = current_app.config['ELASTICSEARCH_STORE_INDEX'] + '-latest'
 
-    store_dict = Store.to_dict()
+    store_dict = store.to_dict()
 
     es.index(
         index=index_name,

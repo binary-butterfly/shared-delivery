@@ -25,13 +25,15 @@ from .models import User
 from .frontend import frontend
 from .user import user
 from .store_management import store_management
+from .store_api import store_api
 
 __all__ = ['launch']
 
 DEFAULT_BLUEPRINTS = [
     frontend,
     user,
-    store_management
+    store_management,
+    store_api
 ]
 
 

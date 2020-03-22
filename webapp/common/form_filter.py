@@ -42,4 +42,6 @@ def float_filter(data):
         return
     if type(data) is float:
         return data
+    if type(data) is Decimal:
+        return float(data)
     return float(data.replace(',', '.'))

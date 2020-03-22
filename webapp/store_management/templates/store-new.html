@@ -1,0 +1,47 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field with context %}
+
+{% block content %}
+    <form method="POST" action="/admin/store/new" id="store-form">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ _('Geschäft hinzufügen') }}</h1>
+            </div>
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.name, 6) }}
+            {{ form_field(form.type, 6) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.address, 6) }}
+            {{ form_field(form.postalcode, 2) }}
+            {{ form_field(form.locality, 4) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.region, 6) }}
+            {{ form_field(form.country, 6) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.firstname, 6) }}
+            {{ form_field(form.lastname, 6) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.website, 6) }}
+            {{ form_field(form.email, 6) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.phone, 4) }}
+            {{ form_field(form.mobile, 4) }}
+            {{ form_field(form.fax, 4) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.description, 12) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.submit, 12, 'input-submit') }}
+        </div>
+        {{ form.lat }}
+        {{ form.lon }}
+        {{ form.csrf_token }}
+    </form>
+{% endblock %}

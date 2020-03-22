@@ -9,10 +9,14 @@ import Common from './Common';
 import SearchTableStore from "./SearchTable/SearchTableStore";
 
 import StoreMap from "./StoreMap";
+import StoreGeocode from "./Helper/StoreGeocode";
 
 
 $(document).ready(function () {
     window.common = new Common();
+    if (document.getElementById('store-form')) {
+        window.storeGeocode = new StoreGeocode();
+    }
 
     if (document.getElementById('store-map')) {
         ReactDOM.render(

@@ -13,6 +13,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import json
 from ..extensions import db
 from .base import BaseModel
+from ..common.helpers import DefaultJSONEncoder
 
 
 class ObjectHistory(db.Model, BaseModel):
@@ -26,10 +27,10 @@ class ObjectHistory(db.Model, BaseModel):
     _data = db.Column('data', db.Text)
 
     def _get_data(self):
-        return json.loads(self._data)
+        return json.loads(self._data, )
 
     def _set_data(self, data):
-        self._data = json.dumps(data)
+        self._data = json.dumps(data, sort_keys=True, cls=DefaultJSONEncoder)
 
-    email = db.synonym('_email', descriptor=property(_get_data, _set_data))
+    data = db.synonym('_data', descriptor=property(_get_data, _set_data))
 

@@ -16,7 +16,11 @@ from webapp import launch
 from webapp.extensions import db
 import webapp.models as Models
 from flask_migrate import Migrate, MigrateCommand
+
 from webapp.common.prepare_unittest import prepare_unittest as prepare_unittest_run
+from webapp.store_management.StoreElasticImport import es_create_index as es_create_index_run
+
+
 app = launch()
 
 manager = Manager(app)
@@ -33,6 +37,11 @@ def make_shell_context():
 @manager.command
 def prepare_unittest():
     prepare_unittest_run()
+
+
+@manager.command
+def es_create_index():
+    es_create_index_run()
 
 
 if __name__ == "__main__":

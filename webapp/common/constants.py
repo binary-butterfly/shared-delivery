@@ -32,6 +32,8 @@ class BaseConfig:
     CELERY_RESULT_BACKEND = 'amqp://localhost'
     CELERY_BROKER_URL = 'amqp://localhost'
 
+    ELASTICSEARCH_HOST = 'localhost'
+
     BABEL_DEFAULT_LOCALE = 'de'
     BABEL_DEFAULT_TIMEZONE = 'Europe/Berlin'
 

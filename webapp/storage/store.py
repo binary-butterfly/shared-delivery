@@ -19,7 +19,7 @@ class Store(db.Model, BaseModel):
     __tablename__ = 'store'
 
     fields = [
-        'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality', 'country', 'lat', 'lon', 'website',
+        'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality', 'country', 'lat', 'lon', 'website',
         'email', 'phone', 'mobile', 'fax', 'type', 'description'
     ]
 
@@ -57,4 +57,3 @@ class Store(db.Model, BaseModel):
         for field in self.fields:
             result[field] = getattr(self, field)
         return result
-

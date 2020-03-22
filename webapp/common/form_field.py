@@ -16,6 +16,7 @@ from flask_login import current_user
 from wtforms import DecimalField, StringField, SelectField
 from wtforms.utils import unset_value
 from decimal import Decimal
+from ..models import Region
 
 
 class FactorDecimalField(DecimalField):
@@ -56,3 +57,29 @@ class TimeStringField(StringField):
             setattr(obj, name, value)
         except ValueError:
             setattr(obj, name, 0)
+
+
+class RegionField(SelectField):
+    def __init__(self, all_option=False, **kwargs):
+        self.simple_validate = getattr(kwargs['_form'], 'simple_validate', False)
+        super(RegionField, self).__init__(**kwargs)
+        self.choices = [('_all', 'beliebig')] if all_option else [('0', 'bitte wählen')]
+        if self.simple_validate:
+            return
+        regions = Region.query
+        regions = regions.order_by(Region.name).all()
+        for region in regions:
+            self.choices.append((str(region.id), region.name))
+
+    def pre_validate(self, form):
+        if self.simple_validate:
+            return
+        super(RegionField, self).pre_validate(form)
+
+    def process(self, formdata, data=unset_value):
+        if data != unset_value and request.method == 'GET':
+            data = str(data.id)
+        super(RegionField, self).process(formdata, data)
+
+    def populate_obj(self, obj, name):
+        setattr(obj, '%s_id' % name, int(self.data))

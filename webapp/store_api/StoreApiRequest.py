@@ -10,43 +10,35 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-from flask import current_app
-from flask_login import login_required
-
-from ..common.response import json_response
-from ..models import Store
-
-from .StoreManagementForms import StoreSearchForm
-from .StoreManagementController import store_management
+from flask import current_app, request
+from ..common.elastic_request import ElasticRequest
 
 
-@store_management.route('/api/admin/stores', methods=['POST'])
-@login_required
-def api_stores():
-    data = []
+def get_data():
+    elastic_request = ElasticRequest(current_app.config['ELASTICSEARCH_STORE_INDEX'] + '-latest')
 
-    form = StoreSearchForm()
-    if not form.validate_on_submit():
-        return json_response({
-            'status': -1,
-            'errors': form.errors
+    if request.form.get('q'):
+        elastic_request.query_parts_must.append({
+            'bool': {
+                'should': [
+                    {
+                        'query_string': {
+                            'fields': ['name'],
+                            'query': request.form.get('query'),
+                            'default_operator': 'and',
+                            'boost': 50
+                        }
+                    },
+                    {
+                        'query_string': {
+                            'fields': ['description'],
+                            'query': request.form.get('query'),
+                            'default_operator': 'and',
+                            'boost': 20
+                        }
+                    }
+                ]
+            }
         })
-    stores = Store.query
-    if form.name.data:
-        stores = stores.filter(Store.name.like('%%%s%%' % form.name.data))
-
-    count = stores.count()
-    stores = stores.order_by(getattr(getattr(Store, form.sort_field.data), form.sort_order.data)())\
-        .limit(current_app.config['ITEMS_PER_PAGE'])\
-        .offset((form.page.data - 1) * current_app.config['ITEMS_PER_PAGE'])\
-        .all()
-    for store in stores:
-        item = store.to_dict()
-        data.append(item)
-    return json_response({
-        'data': data,
-        'status': 0,
-        'count': count
-    })
-
-
+    elastic_request.query()
+    return elastic_request.get_results(), elastic_request.get_result_count()

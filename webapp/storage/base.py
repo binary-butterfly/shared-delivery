@@ -12,9 +12,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import json
 from decimal import Decimal
+from datetime import datetime
 from dateutil.parser import parse as dateutil_parse
 from ..extensions import db
 from ..common.helpers import get_current_time, DefaultJSONEncoder
+
+
+def on_modified_update(context):
+    return datetime.utcnow()
 
 
 class BaseModel(object):
@@ -22,7 +27,6 @@ class BaseModel(object):
         'mysql_charset': 'utf8',
         'mysql_collate': 'utf8_unicode_ci'
     }
-
 
     version = '0.9.0'
 
@@ -34,7 +38,7 @@ class BaseModel(object):
 
     id = db.Column(db.Integer, primary_key=True)
     created = db.Column(db.DateTime, nullable=False, default=get_current_time)
-    modified = db.Column(db.DateTime, nullable=False, default=get_current_time)
+    modified = db.Column(db.DateTime, nullable=False, default=get_current_time, onupdate=on_modified_update)
 
     def to_dict(self):
         return {

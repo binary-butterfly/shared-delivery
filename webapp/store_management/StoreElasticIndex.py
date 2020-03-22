@@ -56,6 +56,9 @@ def es_mapping():
             'id': {
                 'type': 'integer'
             },
+            'name': {
+                'type': 'text'
+            },
             'firstname': {
                 'type': 'text'
             },
@@ -115,6 +118,12 @@ def es_mapping():
             },
             'region_website': {
                 'type': 'keyword'
+            },
+            'lat': {
+                'type': 'float'
+            },
+            'lat': {
+                'type': 'lon'
             },
             'region_location': {
                 'type': 'geo_point'
