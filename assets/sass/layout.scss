@@ -1,0 +1,137 @@
+
+body {
+  font-family: 'Open Sans', sans-serif;
+  padding-top: 50px;
+}
+
+h1 {
+  font-size: 2.2rem;
+}
+
+h2 {
+  font-size: 1.85rem;
+}
+
+#header-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 3000;
+  background-color: #FFFFFF;
+}
+
+#content-wrapper {
+  padding-top: 25px;
+  margin-bottom: 50px;
+}
+
+#content {
+  padding-top: 20px;
+  padding-bottom: 20px;
+  background-color: #FFFFFF;
+}
+
+#flash-messages {
+  list-style: none;
+  padding: 0;
+}
+
+#flash-messages li {
+  text-align: center;
+}
+
+#footer {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  text-align: center;
+}
+
+.row-form {
+  padding-bottom: 20px;
+}
+
+.error input {
+  border-color: #d9534f;
+}
+
+#sidebar {
+  list-style: none;
+  padding-left: 30px;
+}
+
+#sidebar > li {
+  border: 1px solid #eceeef;
+  background-color: #FFFFFF;
+  padding: 15px;
+  margin-bottom: 30px;
+}
+
+a.btn-default {
+  border-color: #ccc;
+  color: #333;
+}
+
+h2.nextarea {
+  margin-top: 1.5rem;
+}
+
+
+#content a:hover, #sidebar a:hover {
+  text-decoration: none;
+}
+
+#content a.btn-block {
+  margin-bottom: 1rem;
+}
+
+.navbar-brand img {
+  height: 30px;
+  width: auto;
+}
+
+.nolistitem {
+  font-style: italic;
+}
+
+.nofullwith {
+  width: auto;
+}
+
+.btn-space {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+}
+
+.mode-development #header-wrapper, .mode-staging #header-wrapper, .mode-sandbox #header-wrapper {
+  background-color: #871212;
+}
+
+.mode-development #header-wrapper a, .mode-staging #header-wrapper a, .mode-sandbox #header-wrapper a {
+  color: #FFF;
+}
+
+.mode-development #header-wrapper .dropdown-menu a, .mode-staging #header-wrapper .dropdown-menu a, .mode-sandbox #header-wrapper .dropdown-menu a {
+  color: #000;
+}
+
+#footer-status-line {
+  font-size: 0.8rem;
+  text-align: center;
+  margin-top: 70px;
+  filter: grayscale(100%);
+  -webkit-filter: grayscale(100%);
+}
+
+a.btn-default {
+  border-color: #ccc;
+  color: #333;
+}
+
+a.btn-icon, button.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 0 7px 7px 0;
+}

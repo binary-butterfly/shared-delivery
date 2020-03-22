@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field with context %}
+
+{% block content %}
+    <form method="POST" action="/user/settings">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ _('Nutzerdaten bearbeiten') }}</h1>
+            </div>
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.email_notification, 6) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.submit, 12, 'input-submit') }}
+        </div>
+        {{ form.csrf_token }}
+    </form>
+{% endblock %}

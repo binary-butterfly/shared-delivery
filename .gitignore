@@ -1,0 +1,10 @@
+config.py
+*.py[cod]
+.idea
+
+bin
+migrations
+venv
+tmp
+temp
+logs

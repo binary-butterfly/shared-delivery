@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field with context %}
+
+{% block content %}
+    <form method="POST" action="/login">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ _('Login') }}</h1>
+            </div>
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.email, 6) }}
+            {{ form_field(form.password, 6) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.remember_me, 12, 'input-checkbox') }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.submit, 12, 'input-submit') }}
+        </div>
+        {{ form.csrf_token }}
+    </form>
+    <p>Wenn Sie Ihr Passwort vergessen haben, so können Sie <a href="/recover">ein Neues setzen</a>.</p>
+{% endblock %}
+
+
+{% block sidebar %}
+    {{ super() }}
+    <li>
+        <h3><a href="/recover">Passwort vergessen</a></h3>
+        <p>Lassen Sie sich ein neues Passwort zuschicken!</p>
+    </li>
+{% endblock %}

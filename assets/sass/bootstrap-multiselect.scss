@@ -1,0 +1,17 @@
+.btn-group.bootstrap-multiselect {
+  width: 100%;
+}
+
+.multiselect-container {
+  right: 0;
+}
+
+.multiselect-container > li > a > label {
+  width: 100%;
+  padding-left: 10px;
+}
+
+.multiselect-container > li > a > label > input {
+  margin-right: 5px;
+}
+

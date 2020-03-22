@@ -1,0 +1,111 @@
+version: '3'
+services:
+  flask:
+    build:
+      context: .
+      dockerfile: Dockerfile.flask
+    ports:
+      - 5000:5000
+    container_name: shared-delivery-flask
+    volumes:
+      - .:/app
+    networks:
+      shared-delivery:
+        aliases:
+        - flask
+    entrypoint: ["python3", "runserver.py"]
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.flask
+    container_name: shared-delivery-worker
+    volumes:
+      - .:/app
+    networks:
+      shared-delivery:
+        aliases:
+        - worker
+    entrypoint: ["celery", "-A", "webapp.entry_point_celery", "worker"]
+
+  gulp:
+    build:
+      context: .
+      dockerfile: Dockerfile.gulp
+    container_name: shared-delivery-gulp
+    volumes:
+      - .:/app
+      - shared-delivery-node-modules:/app/node_modules
+    networks:
+      shared-delivery:
+        aliases:
+        - gulp
+    #entrypoint: ['sleep', '600000']
+    entrypoint: ["gulp", 'watch']
+
+  mysql:
+    image: mariadb
+    container_name: shared-delivery-mysql
+    volumes:
+      - .:/app
+      - shared-delivery-mysql:/var/lib/mysql
+    networks:
+      shared-delivery:
+        aliases:
+        - mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: shared-delivery
+
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin
+    container_name: shared-delivery-phpmyadmin
+    ports:
+      - 8081:80
+    networks:
+      shared-delivery:
+        aliases:
+        - phpmyadmin
+    environment:
+      PMA_USER: root
+      PMA_PASSWORD: root
+      PMA_HOST: mysql
+
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
+    container_name: shared-delivery-elasticsearch
+    volumes:
+      - shared-delivery-elastic:/usr/share/elasticsearch/data
+    environment:
+      - cluster.name=docker-cluster
+      - bootstrap.memory_lock=true
+      - discovery.type=single-node
+      - "ES_JAVA_OPTS=-Xms1024m -Xmx1024m"
+      - xpack.security.enabled=false
+      - xpack.monitoring.enabled=false
+      - xpack.ml.enabled=false
+      - xpack.graph.enabled=false
+      - xpack.watcher.enabled=false
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    networks:
+      shared-delivery:
+        aliases:
+        - elasticsearch
+
+  rabbitmq:
+    image: rabbitmq:latest
+    container_name: shared-delivery-rabbitmq
+    networks:
+      shared-delivery:
+        aliases:
+        - rabbitmq
+volumes:
+  shared-delivery-node-modules:
+  shared-delivery-mysql:
+  shared-delivery-elastic:
+
+networks:
+  shared-delivery:

@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ _('Fehlerhafter Link') }}</h1>
+            <p>Der Link ist fehlerhaft oder unvollständig, so dass das Passwort leider nicht yurückgesetzt werden kann.</p>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block sidebar %}
+    {{ super() }}
+    <li>
+        <h3><a href="/recover">Passwort vergessen</a></h3>
+        <p>Lassen Sie sich ein neues Passwort zuschicken!</p>
+    </li>
+{% endblock %}

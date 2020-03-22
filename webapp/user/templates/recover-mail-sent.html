@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ _('Recover-Mail gesendet!') }}</h1>
+            <p>{{ _('Bitte schauen Sie in Ihr Postfach.') }}</p>
+        </div>
+    </div>
+{% endblock %}
+
+
+{% block sidebar %}
+    {{ super() }}
+    <li>
+        <h3><a href="/recover">Passwort vergessen</a></h3>
+        <p>Lassen Sie sich ein neues Passwort zuschicken!</p>
+    </li>
+{% endblock %}

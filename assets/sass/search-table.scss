@@ -1,0 +1,68 @@
+#content .bootstrap-select {
+  margin: 0 4px;
+}
+
+#content .bootstrap-select .btn {
+  background-color: #FFF;
+  border-width: 0;
+  padding: 0;
+  vertical-align: baseline;
+  border-bottom: 1px dotted #999;
+}
+
+/*#content .bootstrap-select .btn:after {
+  content: none;
+}*/
+
+#content .bootstrap-select a, #content .bootstrap-select a:hover, #content .bootstrap-select a:visited, #content .bootstrap-select a:active {
+  color: #000;
+}
+
+#content .pagination .page-item.disabled a.page-link {
+  color: #dee2e6;
+}
+
+.search-table-result-header-text {
+  padding-top: 0.5rem;
+}
+
+.sortable {
+  cursor: pointer;
+}
+
+.sortable.active:after {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  margin-left: 0.255em;
+  vertical-align: 0.255em;
+  content: "";
+  border-right: 0.3em solid transparent;
+  border-left: 0.3em solid transparent;
+}
+
+.sortable.active.asc:after {
+  border-top: 0.3em solid;
+  border-bottom: 0;
+}
+
+.sortable.active.desc:after {
+  border-top: 0;
+  border-bottom: 0.3em solid;
+}
+
+#content a.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  text-align: center;
+  margin: 0 7px 7px 0;
+}
+
+#content a.btn-icon:hover {
+  border-radius: 10px;
+}
+
+#content .nobreak {
+  white-space: nowrap;
+}

@@ -1,0 +1,7 @@
+Herzlich Willkommen bei Shared Delivery, {{ user.firstname}} {{ user.lastname }},
+
+Um Ihren Account zu aktivieren, klicken Sie bitte auf die folgende URL: {{ validation_url }}
+
+Beste Grüße,
+Ihr Shared Delivery Team
+
