@@ -122,8 +122,8 @@ def es_mapping():
             'lat': {
                 'type': 'float'
             },
-            'lat': {
-                'type': 'lon'
+            'lon': {
+                'type': 'float'
             },
             'region_location': {
                 'type': 'geo_point'

@@ -50,7 +50,8 @@ def es_index_store(store):
     index_name = current_app.config['ELASTICSEARCH_STORE_INDEX'] + '-latest'
 
     store_dict = store.to_dict()
-
+    if store.lat and store.lon:
+        store_dict['location'] = '%s,%s' % (store.lat, store.lon)
     es.index(
         index=index_name,
         id='store-%s' % store.id,
