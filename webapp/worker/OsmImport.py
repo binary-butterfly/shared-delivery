@@ -73,7 +73,7 @@ def import_single_osm(region, base_key, category):
             store = Store()
             store.osm_id = store_raw.get('id')
             store.region_id = region.id
-            store.licence = ''
+            store.licence = 'ODbL'
         elif category not in store.category:
             store.category.append(category)
         store.name = store_raw.get('tags', {}).get('name')
@@ -87,9 +87,11 @@ def import_single_osm(region, base_key, category):
             store.address += ' '
         store.address = store_details.get('addr:housenumber', '')
         store.postalcode = store_details.get('addr:postcode', '')
-        store.locality = store_details.get('addr:city', '')
+        if not store.address:
+            store.address = None
+        store.locality = store_details.get('addr:city')
         store.country = 'DE'
-        store.brand = store_details.get('brand', '')
+        store.brand = store_details.get('brand')
         store.wheelchair = store_details.get('wheelchair')
         store.phone = store_details.get('phone')
         if not store.website:
@@ -99,7 +101,7 @@ def import_single_osm(region, base_key, category):
             store.website = store_details.get('contact:website')
         db.session.add(store)
         db.session.commit()
-        save_opening_hours(store.id, store_details.get('opening_hours', ''))
+        save_opening_hours(store.id, store_details.get('opening_hours'))
     sleep(2)
 
 

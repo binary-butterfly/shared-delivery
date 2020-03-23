@@ -49,9 +49,13 @@ def es_index_store_delay(store_id):
 def es_index_store(store):
     index_name = current_app.config['ELASTICSEARCH_STORE_INDEX'] + '-latest'
 
-    store_dict = store.to_dict()
+    store_dict = store.to_dict(children=True)
     if store.lat and store.lon:
         store_dict['location'] = '%s,%s' % (store.lat, store.lon)
+    categories = []
+    for category in store_dict['category']:
+        categories.append(category['name'])
+    store_dict['category'] = categories
     es.index(
         index=index_name,
         id='store-%s' % store.id,

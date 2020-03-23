@@ -95,9 +95,6 @@ def es_mapping():
             'fax': {
                 'type': 'keyword'
             },
-            'type': {
-                'type': 'keyword'
-            },
             'description': {
                 'type': 'text'
             },
@@ -127,6 +124,9 @@ def es_mapping():
             },
             'region_location': {
                 'type': 'geo_point'
+            },
+            'category': {
+                'type': 'keyword'
             },
             'opening_time': {
                 'type': 'nested',

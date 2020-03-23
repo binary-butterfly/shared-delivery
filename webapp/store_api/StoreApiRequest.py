@@ -15,16 +15,20 @@ from ..common.elastic_request import ElasticRequest
 
 
 def get_data():
+    if request.method == 'GET':
+        data = request.args
+    else:
+        data = request.form
     elastic_request = ElasticRequest(current_app.config['ELASTICSEARCH_STORE_INDEX'] + '-latest')
 
-    if request.form.get('q'):
+    if data.get('q'):
         elastic_request.query_parts_must.append({
             'bool': {
                 'should': [
                     {
                         'query_string': {
                             'fields': ['name'],
-                            'query': request.form.get('query'),
+                            'query': data.get('q'),
                             'default_operator': 'and',
                             'boost': 50
                         }
@@ -32,7 +36,7 @@ def get_data():
                     {
                         'query_string': {
                             'fields': ['description'],
-                            'query': request.form.get('query'),
+                            'query': data.get('q'),
                             'default_operator': 'and',
                             'boost': 20
                         }
@@ -40,5 +44,18 @@ def get_data():
                 ]
             }
         })
+    if data.get('lat') and data.get('lon') and data.get('radius'):
+        elastic_request.query_parts_must.append({
+            "geo_distance": {
+                "distance": "%sm" % int(data.get('radius')),
+                "location": {
+                    "lat": float(data.get('lat')),
+                    "lon": float(data.get('lon'))
+                }
+            }
+        })
+    elastic_request.set_limit(current_app.config['ITEMS_PER_API'])
+    elastic_request.set_skip(current_app.config['ITEMS_PER_API'] * (data.get('page', 1) - 1))
+
     elastic_request.query()
     return elastic_request.get_results(), elastic_request.get_result_count()

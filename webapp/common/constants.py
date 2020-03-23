@@ -42,6 +42,7 @@ class BaseConfig:
     MAPBOX_ZOOM = 13
 
     ITEMS_PER_PAGE = 25
+    ITEMS_PER_API = 25
 
     ELASTICSEARCH_STORE_INDEX = 'shared-delivery-store'
 

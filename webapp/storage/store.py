@@ -21,7 +21,8 @@ class Store(db.Model, BaseModel):
     fields = [
         'id', 'created', 'modified', 'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality',
         'country', 'lat', 'lon', 'website', 'email', 'phone', 'mobile', 'fax', 'description', 'websiteCrowdfunding',
-        'websiteCoupon', 'wheelchair', 'licence', 'brand', 'osm_id', 'revisited_government', 'revisited_store'
+        'websiteCoupon', 'wheelchair', 'licence', 'brand', 'osm_id', 'revisited_government', 'revisited_store',
+        'delivery', 'pickup'
     ]
 
     version = '0.9.0'
@@ -55,6 +56,9 @@ class Store(db.Model, BaseModel):
 
     revisited_government = db.Column(db.Boolean)
     revisited_store = db.Column(db.Boolean)
+
+    delivery = db.Column(db.Boolean)
+    pickup = db.Column(db.Boolean)
 
     #type_slug = db.Column(db.String(255))
     #type = db.Column(db.String(255))
