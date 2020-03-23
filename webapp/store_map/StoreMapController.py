@@ -19,6 +19,5 @@ store_map = Blueprint('store_map', __name__, template_folder='templates')
 
 @store_map.route('/store-map')
 @store_map.route('/')
-@login_required
 def regions_main():
     return render_template('map.html')
