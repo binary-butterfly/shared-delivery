@@ -23,7 +23,7 @@ from .StoreApiController import store_api
 @store_api.route('/api/stores/geo')
 @csrf.exempt
 def api_stores_geo():
-    items, count = get_data()
+    items, count = get_data(10000)
     features = []
     for item in items:
         properties = {

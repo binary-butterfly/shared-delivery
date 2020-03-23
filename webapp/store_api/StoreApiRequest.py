@@ -14,7 +14,7 @@ from flask import current_app, request
 from ..common.elastic_request import ElasticRequest
 
 
-def get_data():
+def get_data(limit=None):
     if request.method == 'GET':
         data = request.args
     else:
@@ -61,8 +61,11 @@ def get_data():
     if data.get('region-id'):
         elastic_request.set_fq('region_id', data.get('region-id'))
 
-    elastic_request.set_limit(current_app.config['ITEMS_PER_API'])
-    elastic_request.set_skip(current_app.config['ITEMS_PER_API'] * (data.get('page', 1, type=int) - 1))
+    if limit:
+        elastic_request.set_limit(limit)
+    else:
+        elastic_request.set_limit(current_app.config['ITEMS_PER_API'])
+        elastic_request.set_skip(current_app.config['ITEMS_PER_API'] * (data.get('page', 1, type=int) - 1))
 
     elastic_request.query()
     return elastic_request.get_results(), elastic_request.get_result_count()
