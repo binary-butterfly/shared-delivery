@@ -10,28 +10,4 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-
-from ..extensions import db
-from .base import BaseModel
-
-
-class Region(db.Model, BaseModel):
-    __tablename__ = 'region'
-
-    version = '0.9.1'
-
-    fields = [
-        'name', 'description', 'website', 'lat', 'lon'
-    ]
-
-    store = db.relationship('Store', backref='region', lazy='dynamic')
-
-    name = db.Column(db.String(255))
-    description = db.Column(db.Text)
-
-    website = db.Column(db.String(255))
-
-    area = db.Column(db.Text)
-    lat = db.Column(db.Numeric(precision=8, scale=6), default=0)
-    lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
-
+from .RegionManagementController import region_management

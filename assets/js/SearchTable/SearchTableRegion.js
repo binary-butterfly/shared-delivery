@@ -7,12 +7,12 @@ export default class SearchTableStore extends SearchTable {
         sort_order: 'asc',
         page: 1
     };
-    apiUrl = '/api/admin/stores';
-    formId = 'store-search-form';
-    varPrefix = 'searchTableStore';
+    apiUrl = '/api/admin/regions';
+    formId = 'region-search-form';
+    varPrefix = 'searchTableRegion';
     loadParamsRegExp = [
         /store\/(.*)/g,
-        /\/admin\/store\/(.*)/g
+        /\/admin\/region\/(.*)/g
     ];
 
     sortDef = [
@@ -22,7 +22,6 @@ export default class SearchTableStore extends SearchTable {
 
     colDef = [
         { sortField: 'name', text: 'Name' },
-        { text: 'Adresse' },
         { text: 'Aktionen' }
     ];
 
@@ -30,7 +29,6 @@ export default class SearchTableStore extends SearchTable {
         return (
             <tr key={`store-${row.id}`}>
                 {this.renderTableCellName(row)}
-                {this.renderTableCellAddress(row)}
                 {this.renderTableCellActions(row)}
             </tr>
         )
@@ -44,20 +42,11 @@ export default class SearchTableStore extends SearchTable {
         )
     }
 
-    renderTableCellAddress(row) {
-        return(
-            <td>
-                {row.address}<br/>
-                {row.postalcode} {row.locality}
-            </td>
-        )
-    }
-
     renderTableCellActions(row) {
         return(
             <td>
-                {this.renderActionLink(`/admin/store/${row.id}/show`, 'info', true)}
-                {this.renderActionLink(`/admin/store/${row.id}/edit`, 'edit', true)}
+                {this.renderActionLink(`/admin/region/${row.id}/show`, 'info', true)}
+                {this.renderActionLink(`/admin/region/${row.id}/edit`, 'edit', true)}
             </td>
         )
     }

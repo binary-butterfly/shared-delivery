@@ -11,27 +11,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 """
 
 
-from ..extensions import db
-from .base import BaseModel
+from flask import Blueprint, render_template, flash, redirect
+from flask_login import login_required
+
+store_map = Blueprint('store_map', __name__, template_folder='templates')
 
 
-class Region(db.Model, BaseModel):
-    __tablename__ = 'region'
-
-    version = '0.9.1'
-
-    fields = [
-        'name', 'description', 'website', 'lat', 'lon'
-    ]
-
-    store = db.relationship('Store', backref='region', lazy='dynamic')
-
-    name = db.Column(db.String(255))
-    description = db.Column(db.Text)
-
-    website = db.Column(db.String(255))
-
-    area = db.Column(db.Text)
-    lat = db.Column(db.Numeric(precision=8, scale=6), default=0)
-    lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
-
+@store_map.route('/store-map')
+@store_map.route('/')
+@login_required
+def regions_main():
+    return render_template('map.html')

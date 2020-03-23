@@ -26,6 +26,8 @@ from .frontend import frontend
 from .user import user
 from .store_management import store_management
 from .store_api import store_api
+from .region_management import region_management
+from .store_map import store_map
 
 __all__ = ['launch']
 
@@ -33,7 +35,9 @@ DEFAULT_BLUEPRINTS = [
     frontend,
     user,
     store_management,
-    store_api
+    store_api,
+    region_management,
+    store_map
 ]
 
 

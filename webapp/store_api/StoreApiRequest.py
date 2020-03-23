@@ -56,6 +56,11 @@ def get_data():
         })
     if data.get('category'):
         elastic_request.set_fq('category', data.get('category'))
+    if data.get('region'):
+        elastic_request.set_fq('region_name', data.get('region'))
+    if data.get('region-id'):
+        elastic_request.set_fq('region_id', data.get('region-id'))
+
     elastic_request.set_limit(current_app.config['ITEMS_PER_API'])
     elastic_request.set_skip(current_app.config['ITEMS_PER_API'] * (data.get('page', 1, type=int) - 1))
 

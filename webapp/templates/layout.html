@@ -58,13 +58,18 @@
 
                 <div class="collapse navbar-collapse justify-content-end" id="navbar-header">
                     <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/stores">Geschäfte</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/store-map">Karte</a>
+                        </li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" href="#" id="account-dropdown"
-                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ _('Geschäfte') }}</a>
-                            <div class="dropdown-menu" aria-labelledby="account-dropdown">
-                                    <a class="dropdown-item" href="/stores">{{ _('Suchen') }}</a>
-                                    <a class="dropdown-item" href="/store-map">{{ _('Karte') }}</a>
-                                    <a class="dropdown-item" href="/admin/stores">{{ _('Verwalten') }}</a>
+                            <a class="nav-link dropdown-toggle" href="#" id="region-dropdown"
+                               data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ _('Verwalten') }}</a>
+                            <div class="dropdown-menu" aria-labelledby="region-dropdown">
+                                <a class="dropdown-item" href="/admin/regions">{{ _('Regionen') }}</a>
+                                <a class="dropdown-item" href="/admin/stores">{{ _('Geschäfte') }}</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">

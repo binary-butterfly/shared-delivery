@@ -83,9 +83,9 @@ def import_single_osm(region, base_key, category):
         store.lon = store_raw.get('lon')
         store_details = store_raw.get('tags', {})
         store.address = store_details.get('addr:street', '')
-        if store.address and store_details.get('addr:street', ''):
+        if store.address and store_details.get('addr:housenumber', ''):
             store.address += ' '
-        store.address = store_details.get('addr:housenumber', '')
+        store.address += store_details.get('addr:housenumber', '')
         store.postalcode = store_details.get('addr:postcode', '')
         if not store.address:
             store.address = None
@@ -121,7 +121,7 @@ def save_opening_hours(store_id, osm_opening_time):
             for period in oh.get_day(datetime(2020, 3, 16 + i, 12, 0, 0)).periods:
                 begin = period.beginning.time()
                 begin_int = begin.hour * 3600 + begin.minute * 60 + begin.second
-                end = period.beginning.time()
+                end = period.end.time()
                 end_int = end.hour * 3600 + end.minute * 60 + end.second
                 ot = OpeningTime.query\
                     .filter_by(store_id=store_id)\

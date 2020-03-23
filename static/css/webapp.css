@@ -8957,4 +8957,29 @@ a.btn-icon, button.btn-icon {
 #content .nobreak {
   white-space: nowrap; }
 
+#store-map-box {
+  height: 600px;
+  position: relative; }
+
+#store-map-overlay {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0px;
+  bottom: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.5);
+  background: #F3F3F3;
+  color: #333;
+  padding: 10px;
+  overflow-y: scroll;
+  overflow-x: hidden; }
+
+.overlay-close {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  z-index: 2000; }
+
 /*# sourceMappingURL=webapp.css.map */

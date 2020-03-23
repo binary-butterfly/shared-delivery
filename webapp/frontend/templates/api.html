@@ -1,0 +1,39 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field, action_button with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ _('API') }}</h1>
+            <p>
+                Sämtliche Daten afu dieser Seite stehen unter einer freien Lizenz und können so optimal weiterverwendet
+                werden.
+            </p>
+            <h2>Endpunkte</h2>
+            <p>
+                Aktuell gibt es drei Endpunkte:
+            </p>
+            <h3><code>/api/stores/search</code></h3>
+            <p>
+                Die Suche kann via GET und via POST bedient werden. Die Ausgabe erfolgt in Form einer Liste von
+                Objekten.
+            </p>
+            <h3><code>/api/stores/geo</code></h3>
+            <p>Die Geo-Suche kann ebenfalls via GET und via POST bedient werden. Die Ausgabe erfolgt als GeoJSON</p>
+            <h3>Suchparameter</h3>
+            <p>Folgende Suchparameter sind möglich</p>
+            <ul>
+                <li><strong>page:</strong> Die Seite bei einer paginierten Ausgabe</li>
+                <li><strong>q:</strong> Text für eine gewichtete Volltextsuche</li>
+                <li><strong>lat:</strong> Ein Längengrad für eine Umkreissuche</li>
+                <li><strong>lon:</strong> Ein Breitengrad für eine Umkreissuche</li>
+                <li><strong>radius:</strong> Ein Radius in Metern für eine Umkreissuche</li>
+            </ul>
+            <h3><code>/api/store/STOREID</code></h3>
+            <p>
+                Unter der Einzelabfrage kann ein einzelnes Store-Objekt abgerufen werden. Dies ist besonders nützlich
+                in Verbindung mit der Geo-Suche.
+            </p>
+        </div>
+    </div>
+{% endblock %}

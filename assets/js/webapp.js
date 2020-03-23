@@ -7,6 +7,7 @@ import ReactDOM from "react-dom";
 
 import Common from './Common';
 import SearchTableStore from "./SearchTable/SearchTableStore";
+import SearchTableRegion from "./SearchTable/SearchTableRegion";
 
 import StoreMap from "./StoreMap";
 import StoreGeocode from "./Helper/StoreGeocode";
@@ -25,10 +26,23 @@ $(document).ready(function () {
         );
     }
 
+    if (document.getElementById('store-map')) {
+        ReactDOM.render(
+            <StoreMap ref={(storeMap) => {window.storeMap = storeMap}} />,
+            document.getElementById("store-map")
+        );
+    }
+
     if (document.getElementById('store-search-results')) {
         ReactDOM.render(
             <SearchTableStore ref={(searchTableStore) => {window.searchTableStore = searchTableStore}} />,
             document.getElementById("store-search-results")
+        );
+    }
+    if (document.getElementById('region-search-results')) {
+        ReactDOM.render(
+            <SearchTableRegion ref={(searchTableRegion) => {window.searchTableRegion = searchTableRegion}} />,
+            document.getElementById("region-search-results")
         );
     }
 });

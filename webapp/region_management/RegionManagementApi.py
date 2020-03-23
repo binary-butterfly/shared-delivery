@@ -10,28 +10,43 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
+from flask import current_app
+from flask_login import login_required
 
-from ..extensions import db
-from .base import BaseModel
+from ..common.response import json_response
+from ..models import Region
+
+from .RegionManagementForms import RegionSearchForm
+from .RegionManagementController import region_management
 
 
-class Region(db.Model, BaseModel):
-    __tablename__ = 'region'
+@region_management.route('/api/admin/regions', methods=['POST'])
+@login_required
+def api_regions():
+    data = []
 
-    version = '0.9.1'
+    form = RegionSearchForm()
+    if not form.validate_on_submit():
+        return json_response({
+            'status': -1,
+            'errors': form.errors
+        })
+    regions = Region.query
+    if form.name.data:
+        regions = regions.filter(Region.name.like('%%%s%%' % form.name.data))
 
-    fields = [
-        'name', 'description', 'website', 'lat', 'lon'
-    ]
+    count = regions.count()
+    regions = regions.order_by(getattr(getattr(Region, form.sort_field.data), form.sort_order.data)())\
+        .limit(current_app.config['ITEMS_PER_PAGE'])\
+        .offset((form.page.data - 1) * current_app.config['ITEMS_PER_PAGE'])\
+        .all()
+    for region in regions:
+        item = region.to_dict()
+        data.append(item)
+    return json_response({
+        'data': data,
+        'status': 0,
+        'count': count
+    })
 
-    store = db.relationship('Store', backref='region', lazy='dynamic')
-
-    name = db.Column(db.String(255))
-    description = db.Column(db.Text)
-
-    website = db.Column(db.String(255))
-
-    area = db.Column(db.Text)
-    lat = db.Column(db.Numeric(precision=8, scale=6), default=0)
-    lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
 

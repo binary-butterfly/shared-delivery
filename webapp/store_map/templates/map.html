@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field, action_button with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ _('Karte') }}</h1>
+            <div id="store-map"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var map_config = {
+            lat: {{ config.MAPBOX_CENTER_LAT }},
+            lon: {{ config.MAPBOX_CENTER_LON }},
+            zoom: 8,
+            token: '{{ config.MAPBOX_TOKEN }}'
+        }
+    </script>
+    {{ super() }}
+{% endblock %}

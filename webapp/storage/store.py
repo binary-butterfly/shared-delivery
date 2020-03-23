@@ -20,8 +20,8 @@ class Store(db.Model, BaseModel):
 
     fields = [
         'id', 'created', 'modified', 'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality',
-        'country', 'lat', 'lon', 'website', 'email', 'phone', 'mobile', 'fax', 'description', 'websiteCrowdfunding',
-        'websiteCoupon', 'wheelchair', 'licence', 'brand', 'osm_id', 'revisited_government', 'revisited_store',
+        'country', 'lat', 'lon', 'website', 'email', 'phone', 'mobile', 'fax', 'description', 'website_crowdfunding',
+        'website_coupon', 'wheelchair', 'licence', 'brand', 'osm_id', 'revisited_government', 'revisited_store',
         'delivery', 'pickup'
     ]
 
@@ -47,8 +47,8 @@ class Store(db.Model, BaseModel):
     lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
 
     website = db.Column(db.String(255))
-    websiteCrowdfunding = db.Column(db.String(255))
-    websiteCoupon = db.Column(db.String(255))
+    website_crowdfunding = db.Column(db.String(255))
+    website_coupon = db.Column(db.String(255))
     email = db.Column(db.String(255))
     phone = db.Column(db.String(255))
     mobile = db.Column(db.String(255))
@@ -78,4 +78,9 @@ class Store(db.Model, BaseModel):
             result['category'] = []
             for category in self.category:
                 result['category'].append(category.to_dict())
+            if self.region_id:
+                result['region'] = self.region.to_dict()
+            else:
+                result['region'] = {}
+
         return result

@@ -10,28 +10,57 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
+from flask_wtf import FlaskForm
+from flask_babel import _
+from wtforms import validators
+from wtforms import StringField, TextAreaField, SelectField, SubmitField, HiddenField
+from ..common.form import SearchBaseForm
+from ..common.countrycodes import country_codes
+from ..common.form_field import RegionField
+from ..common.form_filter import float_filter
 
-from ..extensions import db
-from .base import BaseModel
+
+class RegionSearchForm(SearchBaseForm):
+    name = StringField(
+        label='Name'
+    )
+    sort_field = SelectField(
+        label='Sortier-Feld',
+        choices=[
+            ('name', 'Name'),
+            ('created', 'Erstellt')
+        ]
+    )
 
 
-class Region(db.Model, BaseModel):
-    __tablename__ = 'region'
+class RegionForm(FlaskForm):
+    class Meta:
+        locales = ('de_DE', 'de')
 
-    version = '0.9.1'
+    name = StringField(
+        label=_('Name'),
+        validators=[
+            validators.DataRequired(
+                message=_('Bitte geben Sie einen Namen an.')
+            )
+        ]
+    )
+    website = StringField(
+        label=_('Website'),
+        validators=[
+            validators.url(
+                message='Bitte geben Sie eine URL an'
+            ),
+            validators.Optional()
+        ],
+    )
+    description = TextAreaField(
+        label='Beschreibung'
+    )
+    submit = SubmitField(_('speichern'))
 
-    fields = [
-        'name', 'description', 'website', 'lat', 'lon'
-    ]
 
-    store = db.relationship('Store', backref='region', lazy='dynamic')
-
-    name = db.Column(db.String(255))
-    description = db.Column(db.Text)
-
-    website = db.Column(db.String(255))
-
-    area = db.Column(db.Text)
-    lat = db.Column(db.Numeric(precision=8, scale=6), default=0)
-    lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
+class RegionDeleteForm(FlaskForm):
+    submit = SubmitField(_('löschen'))
+    abort = SubmitField(_('abbrechen'))
 
