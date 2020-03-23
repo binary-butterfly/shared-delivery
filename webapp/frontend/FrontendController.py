@@ -40,3 +40,8 @@ def status():
 @frontend.route('/browserconfig.xml')
 def browserconfig_xml():
     return render_template('browserconfig.xml')
+
+
+@frontend.route('/api')
+def api():
+    return render_template('api.html')

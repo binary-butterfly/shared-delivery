@@ -1,4 +1,4 @@
-{% macro form_field(field, box_width=12, form_type='input-text', unit=None, extra_classes=None, box_classes=None) -%}
+w{% macro form_field(field, box_width=12, form_type='input-text', unit=None, extra_classes=None, box_classes=None) -%}
     {% set field_kwargs = {} %}
     {% if form_type == 'hidden' %}
         {{ field(class='hidden ' + (' '.join(extra_classes) if extra_classes else '')) }}
