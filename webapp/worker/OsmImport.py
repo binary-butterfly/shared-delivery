@@ -65,7 +65,7 @@ def import_single_osm(region, base_key, category):
     )
     result = requests.get(current_app.config['OVERPASS_BASE_URL'], {'data': url_param})
     if result.status_code != 200:
-        logger.info('bad status code at %s' % category.slug)
+        logger.info('osm', 'bad status code at %s' % category.slug)
         return
     for store_raw in result.json().get('elements', []):
         store = Store.query.filter_by(osm_id=store_raw.get('id')).first()
