@@ -19,10 +19,14 @@ class Tag(db.Model, BaseModel):
 
     version = '0.9.0'
 
+    fields = [
+        'type', 'slug', 'name', 'description'
+    ]
+
     store_id = db.Column(db.Integer, db.ForeignKey('store.id'))
 
     type = db.Column(db.Enum('offer', 'help'))
     slug = db.Column(db.String(255))
-    title = db.Column(db.String(255))
+    name = db.Column(db.String(255))
     description = db.Column(db.Text)
 

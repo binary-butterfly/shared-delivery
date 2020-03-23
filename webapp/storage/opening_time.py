@@ -19,6 +19,10 @@ class OpeningTime(db.Model, BaseModel):
 
     version = '0.9.0'
 
+    fields = [
+        'id', 'created', 'modified', 'store_id', 'type', 'weekday', 'open', 'close'
+    ]
+
     store_id = db.Column(db.Integer, db.ForeignKey('store.id'))
 
     type = db.Column(db.Enum('all', 'delivery', 'counter', 'pickup'))

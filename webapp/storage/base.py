@@ -41,12 +41,10 @@ class BaseModel(object):
     modified = db.Column(db.DateTime, nullable=False, default=get_current_time, onupdate=on_modified_update)
 
     def to_dict(self):
-        return {
-            'id': self.id,
-            'modified': self.created.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'created': self.created.strftime('%Y-%m-%dT%H:%M:%SZ'),
-            'version': self.version
-        }
+        result = {}
+        for field in self.fields:
+            result[field] = getattr(self, field)
+        return result
 
     def to_json(self):
         return json.dumps(self.to_dict(), cls=DefaultJSONEncoder)

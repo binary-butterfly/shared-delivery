@@ -11,11 +11,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 """
 
 from flask import current_app
-from ..common.elastic_request import ElasticRequest
 from ..common.response import json_response
 from ..extensions import csrf
-from .StoreApiRequest import get_data
 from ..models import Store
+from .StoreApiRequest import get_data
 
 from .StoreApiController import store_api
 
@@ -28,7 +27,7 @@ def api_stores_search():
         'status': 0,
         'data': data,
         'count:': count
-    })
+    }, cors=True)
 
 
 @store_api.route('/api/store/<int:store_id>')
@@ -41,6 +40,6 @@ def api_store(store_id):
         })
     return json_response({
         'status': 0,
-        'data': store.to_dict()
-    })
+        'data': store.to_dict(children=True)
+    }, cors=True)
 

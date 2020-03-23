@@ -10,40 +10,29 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-import os
+from ..extensions import db
+from .base import BaseModel
 
 
-class BaseConfig:
-    INSTANCE_FOLDER_PATH = os.path.join('/tmp', 'instance')
+store_category = db.Table(
+    'store_category',
+    db.Column('store_id', db.Integer, db.ForeignKey('store.id')),
+    db.Column('category_id', db.Integer, db.ForeignKey('category.id'))
+)
 
-    PROJECT_NAME = "shared-delivery"
-    PROJECT_VERSION = '1.0.0'
 
-    PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-    LOG_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'logs'))
-    TEMP_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'temp'))
+class Category(db.Model, BaseModel):
+    __tablename__ = 'category'
 
-    DEBUG = False
-    TESTING = False
+    fields = [
+        'slug', 'name', 'description'
+    ]
 
-    SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SQLALCHEMY_ECHO = False
+    version = '0.9.0'
 
-    CELERY_RESULT_BACKEND = 'amqp://localhost'
-    CELERY_BROKER_URL = 'amqp://localhost'
+    store = db.relationship("Store", secondary=store_category, backref=db.backref('category', lazy='dynamic'))
 
-    ELASTICSEARCH_HOST = 'localhost'
-
-    BABEL_DEFAULT_LOCALE = 'de'
-    BABEL_DEFAULT_TIMEZONE = 'Europe/Berlin'
-
-    MAPBOX_CENTER_LAT = 51.470915
-    MAPBOX_CENTER_LON = 7.219874
-    MAPBOX_ZOOM = 13
-
-    ITEMS_PER_PAGE = 25
-
-    ELASTICSEARCH_STORE_INDEX = 'shared-delivery-store'
-
-    OVERPASS_BASE_URL = 'https://overpass-api.de/api/interpreter'
+    slug = db.Column(db.String(255))
+    name = db.Column(db.String(255))
+    description = db.Column(db.Text)
 

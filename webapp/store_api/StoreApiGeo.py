@@ -41,4 +41,4 @@ def api_stores_geo():
     return json_response({
         'type': 'FeatureCollection',
         'features': features
-    })
+    }, cors=True)

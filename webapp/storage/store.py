@@ -19,9 +19,9 @@ class Store(db.Model, BaseModel):
     __tablename__ = 'store'
 
     fields = [
-        'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality', 'country', 'lat', 'lon', 'website',
-        'email', 'phone', 'mobile', 'fax', 'type', 'description', 'websiteCrowdfunding', 'websiteCoupon', 'wheelchair', 'licence',
-        'type_slug', 'brand', 'osm_id'
+        'id', 'created', 'modified', 'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality',
+        'country', 'lat', 'lon', 'website', 'email', 'phone', 'mobile', 'fax', 'description', 'websiteCrowdfunding',
+        'websiteCoupon', 'wheelchair', 'licence', 'brand', 'osm_id', 'revisited_government', 'revisited_store'
     ]
 
     version = '0.9.0'
@@ -31,7 +31,7 @@ class Store(db.Model, BaseModel):
     #offer = db.relationship('Tag', backref='store', lazy='dynamic')
     #help = db.relationship('Tag', backref='store', lazy='dynamic')
 
-    osm_id = db.Column(db.Integer)
+    osm_id = db.Column(db.BigInteger)
 
     name = db.Column(db.String(255))
     firstname = db.Column(db.String(255))
@@ -53,8 +53,11 @@ class Store(db.Model, BaseModel):
     mobile = db.Column(db.String(255))
     fax = db.Column(db.String(255))
 
-    type_slug = db.Column(db.String(255))
-    type = db.Column(db.String(255))
+    revisited_government = db.Column(db.Boolean)
+    revisited_store = db.Column(db.Boolean)
+
+    #type_slug = db.Column(db.String(255))
+    #type = db.Column(db.String(255))
 
     licence = db.Column(db.String(255))
     description = db.Column(db.Text)
@@ -62,8 +65,13 @@ class Store(db.Model, BaseModel):
     brand = db.Column(db.String(255))
     wheelchair = db.Column(db.String(255))
 
-    def to_dict(self):
+    def to_dict(self, children=False):
         result = super().to_dict()
-        for field in self.fields:
-            result[field] = getattr(self, field)
+        if children:
+            result['opening-time'] = []
+            for opening_time in self.opening_time:
+                result['opening-time'].append(opening_time.to_dict())
+            result['category'] = []
+            for category in self.category:
+                result['category'].append(category.to_dict())
         return result
