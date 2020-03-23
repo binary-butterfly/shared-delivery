@@ -119,10 +119,13 @@ def save_opening_hours(store_id, osm_opening_time):
             return
         for i in range(0, 7):
             for period in oh.get_day(datetime(2020, 3, 16 + i, 12, 0, 0)).periods:
-                begin = period.beginning.time()
-                begin_int = begin.hour * 3600 + begin.minute * 60 + begin.second
-                end = period.end.time()
-                end_int = end.hour * 3600 + end.minute * 60 + end.second
+                try:
+                    begin = period.beginning.time()
+                    begin_int = begin.hour * 3600 + begin.minute * 60 + begin.second
+                    end = period.end.time()
+                    end_int = end.hour * 3600 + end.minute * 60 + end.second
+                except:
+                    continue
                 ot = OpeningTime.query\
                     .filter_by(store_id=store_id)\
                     .filter_by(weekday=i+1)\
