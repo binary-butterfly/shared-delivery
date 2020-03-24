@@ -1,4 +1,4 @@
-# encoding: utf-8
+    # encoding: utf-8
 
 """
 Copyright (c) 2017, Ernesto Ruge
@@ -28,6 +28,7 @@ from .store_management import store_management
 from .store_api import store_api
 from .region_management import region_management
 from .store_map import store_map
+from .region_select import region_select
 
 __all__ = ['launch']
 
@@ -37,7 +38,8 @@ DEFAULT_BLUEPRINTS = [
     store_management,
     store_api,
     region_management,
-    store_map
+    store_map,
+    region_select
 ]
 
 

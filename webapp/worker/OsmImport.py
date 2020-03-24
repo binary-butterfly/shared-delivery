@@ -74,6 +74,7 @@ def import_single_osm(region, base_key, category):
             store.osm_id = store_raw.get('id')
             store.region_id = region.id
             store.licence = 'ODbL'
+            store.category = [category]
         elif category not in store.category:
             store.category.append(category)
         store.name = store_raw.get('tags', {}).get('name')

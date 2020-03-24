@@ -11,30 +11,36 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 """
 
 
-from ..extensions import db
-from .base import BaseModel
+from flask import Blueprint, render_template, abort
+
+from ..models import Region, Category, Store
+
+region_select = Blueprint('region_select', __name__, template_folder='templates')
 
 
-class Region(db.Model, BaseModel):
-    __tablename__ = 'region'
+@region_select.route('/')
+def regions_main():
+    regions = Region.query.order_by(Region.name).all()
+    return render_template('frontpage.html', regions=regions)
 
-    version = '0.9.1'
 
-    fields = [
-        'name', 'description', 'website', 'lat', 'lon'
-    ]
+@region_select.route('/region/<string:region_slug>')
+def regions_categories(region_slug):
+    region = Region.query.filter_by(slug=region_slug).first()
+    if not region:
+        abort(404)
+    categories = Category.query.order_by(Category.priority.asc(), Category.name.asc()).all()
+    return render_template('region.html', region=region, categories=categories)
 
-    store = db.relationship('Store', backref='region', lazy='dynamic')
 
-    name = db.Column(db.String(255))
-    slug = db.Column(db.String(255), index=True, unique=True)
-    description = db.Column(db.Text)
-
-    website = db.Column(db.String(255))
-
-    area = db.Column(db.Text)
-    lat = db.Column(db.Numeric(precision=8, scale=6), default=0)
-    lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
-
-    logo = db.Column(db.Enum('jpg', 'png'))
-    picture = db.Column(db.Enum('jpg', 'png'))
+@region_select.route('/region/<string:region_slug>/<string:category_slug>')
+def regions_stores(region_slug, category_slug):
+    region = Region.query.filter_by(slug=region_slug).first()
+    category = Category.query.filter_by(slug=category_slug).first()
+    if not region or not category:
+        abort(404)
+    stores = Store.query\
+        .filter_by(region_id=region.id) \
+        .filter(Store.category.contains(category)) \
+        .order_by(Store.name.asc()).all()
+    return render_template('store-list.html', region=region, category=category, stores=stores)

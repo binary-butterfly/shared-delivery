@@ -32,7 +32,12 @@ class Category(db.Model, BaseModel):
 
     store = db.relationship("Store", secondary=store_category, backref=db.backref('category', lazy='dynamic'))
 
-    slug = db.Column(db.String(255))
+    slug = db.Column(db.String(255), index=True, unique=True)
     name = db.Column(db.String(255))
     description = db.Column(db.Text)
+
+    priority = db.Column(db.Integer)
+
+    logo = db.Column(db.Enum('jpg', 'png'))
+    picture = db.Column(db.Enum('jpg', 'png'))
 

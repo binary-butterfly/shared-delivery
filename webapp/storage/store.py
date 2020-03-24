@@ -13,7 +13,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 from ..extensions import db
 from .base import BaseModel
-
+from .category import store_category
 
 class Store(db.Model, BaseModel):
     __tablename__ = 'store'
@@ -54,20 +54,21 @@ class Store(db.Model, BaseModel):
     mobile = db.Column(db.String(255))
     fax = db.Column(db.String(255))
 
-    revisited_government = db.Column(db.Boolean)
-    revisited_store = db.Column(db.Boolean)
+    revisited_government = db.Column(db.DateTime)
+    revisited_store = db.Column(db.DateTime)
+    revisited_user = db.Column(db.DateTime)
 
     delivery = db.Column(db.Boolean)
     pickup = db.Column(db.Boolean)
-
-    #type_slug = db.Column(db.String(255))
-    #type = db.Column(db.String(255))
 
     licence = db.Column(db.String(255))
     description = db.Column(db.Text)
 
     brand = db.Column(db.String(255))
     wheelchair = db.Column(db.String(255))
+
+    logo = db.Column(db.Enum('jpg', 'png'))
+    picture = db.Column(db.Enum('jpg', 'png'))
 
     def to_dict(self, children=False):
         result = super().to_dict()

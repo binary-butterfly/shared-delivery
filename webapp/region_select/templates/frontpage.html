@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ _('Lokale Geschäfte') }}</h1>
+            <p>
+                Welches Geschäft hat wann offen? Welches Geschäft liefert? Dies wollen wir hier beantworten.
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        {% for region in regions %}
+            <div class="col-md-4 image-select-box">
+                <h2><a href="/region/{{ region.slug }}">{{ region.name }}</a></h2>
+                <a href="/region/{{ region.slug }}">
+                    <img
+                            src="/static/img/region/{% if region.picture %}{{ region.id }}.350.{{ region.picture }}{% else %}default.350.png{% endif %}"
+                            alt="{{ region.name }}"
+                    >
+                </a>
+            </div>
+        {% endfor %}
+    </div>
+{% endblock %}
