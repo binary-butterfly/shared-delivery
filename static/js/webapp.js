@@ -17808,7 +17808,7 @@ var StoreMap = /*#__PURE__*/function (_Component) {
         container: 'store-map-box',
         style: 'mapbox://styles/mapbox/light-v9',
         center: [map_config.lon, map_config.lat],
-        zoom: 6
+        zoom: map_config.zoom
       });
       this.map.addControl(new mapbox_gl__WEBPACK_IMPORTED_MODULE_9___default.a.NavigationControl(), 'top-left');
       var deref_map = new jquery__WEBPACK_IMPORTED_MODULE_10___default.a.Deferred();
@@ -17819,7 +17819,17 @@ var StoreMap = /*#__PURE__*/function (_Component) {
       this.map.on('load', function (data) {
         deref_map.resolve(data);
       });
-      jquery__WEBPACK_IMPORTED_MODULE_10___default.a.get(this.geoApiUrl, function (data) {
+      var data = {};
+
+      if (map_config['region-slug']) {
+        data['region-slug'] = map_config['region-slug'];
+      }
+
+      if (map_config['category-slug']) {
+        data['category-slug'] = map_config['category-slug'];
+      }
+
+      jquery__WEBPACK_IMPORTED_MODULE_10___default.a.get(this.geoApiUrl, data, function (data) {
         deref_data.resolve(data);
       });
     }

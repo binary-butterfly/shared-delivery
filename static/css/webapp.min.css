@@ -8901,6 +8901,9 @@ a.btn-icon, button.btn-icon {
   text-align: center;
   margin: 0 7px 7px 0; }
 
+.image-select-box {
+  text-align: center; }
+
 #content .bootstrap-select {
   margin: 0 4px; }
 

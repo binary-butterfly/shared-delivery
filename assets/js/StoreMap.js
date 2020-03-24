@@ -18,7 +18,7 @@ export default class StoreMap extends Component {
             container: 'store-map-box',
             style: 'mapbox://styles/mapbox/light-v9',
             center: [map_config.lon, map_config.lat],
-            zoom: 6
+            zoom: map_config.zoom
         });
         this.map.addControl(new mapboxgl.NavigationControl(), 'top-left');
 
@@ -29,7 +29,14 @@ export default class StoreMap extends Component {
         this.map.on('load', function (data) {
             deref_map.resolve(data);
         });
-        $.get(this.geoApiUrl, function (data) {
+        let data = {};
+        if (map_config['region-slug']) {
+            data['region-slug'] = map_config['region-slug'];
+        }
+        if (map_config['category-slug']) {
+            data['category-slug'] = map_config['category-slug'];
+        }
+        $.get(this.geoApiUrl, data, function (data) {
             deref_data.resolve(data);
         });
     };

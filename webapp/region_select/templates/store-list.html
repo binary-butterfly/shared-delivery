@@ -22,4 +22,24 @@
             </div>
         {% endfor %}
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ _('Karte') }}</h1>
+            <div id="store-map"></div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var map_config = {
+            lat: {{ region.lat }},
+            lon: {{ region.lon }},
+            zoom: 11,
+            token: '{{ config.MAPBOX_TOKEN }}',
+            'category-slug': '{{ category.slug }}',
+            'region-slug': '{{ region.slug }}'
+        }
+    </script>
+    {{ super() }}
 {% endblock %}
