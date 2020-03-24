@@ -42,8 +42,3 @@ class Category(db.Model, BaseModel):
 
     logo = db.Column(db.Enum('jpg', 'png'))
     picture = db.Column(db.Enum('jpg', 'png'))
-
-
-@event.listens_for(Category, 'before_insert')
-def update_slug(mapper, connection, category):
-    category.slug = slugify(category.name)
