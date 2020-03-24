@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+{% block title %}Impressum | {{ super() }}{% endblock %}
+{% block og_title %}Impressum | {{ super() }}{% endblock %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>Impressum</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <h4>Angaben gemäß § 5 TMG</h4>
+            <p>
+                binary butterfly GmbH<br>
+                Am Hertinger Tor 1<br>
+                59423 Unna
+            </p>
+            <h4>Kontakt:</h4>
+            <p>
+                Telefon: <a href="tel:+4923036766916">+49 2303 6766916</a><br>
+                E-Mail: <a href="mailto:ernesto.ruge@binary0butterfly.de">ernesto.ruge@binary0butterfly.de</a><br>
+                Anfragen bitte via Mail senden.
+            </p>
+            <h4>Registereintrag:</h4>
+            <p>
+                Eintragung im Handelsregister.<br>
+                Registergericht: Amtsgericht Hamm<br>
+                Registernummer: HRB 9654
+            </p>
+        </div>
+    </div>
+{% endblock %}

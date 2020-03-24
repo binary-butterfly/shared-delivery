@@ -1,0 +1,31 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field, action_button with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ _('Mitmachen') }}</h1>
+            <p>
+                Wir sind ein offenes Projekt, jeder kann bei uns mitmachen.
+            </p>
+            <h2>Wirtschaftsförderungen / Verwaltungen</h2>
+            <p>
+                Für uns macht es am meisten Sinn, wenn Städte eine koordinierende Rolle einnehmen und die Daten
+                sammeln, damit nicht hunderte gut gemeiner Projekte auf die Läden einströmen. Ein spezieller Behörden-
+                Zugang ist daher in Entwicklung
+            </p>
+            <h2>NutzerInnen</h2>
+            <p>Auch NutzerInnen sind herzlich dazu aufgefordert, Daten zu aktualisieren</p>
+            <h2>Lizenz</h2>
+            <p>
+                Alle Einreichungen müssen der Open Data Commons Open Database Lizenz unterliegen, damit die Daten
+                auch wieder OpenStreetMap zur Verfügung gestellt werden können.
+            </p>
+            <h2>Software</h2>
+            <p>
+                Die hier eingesetzt Software ist selbstverständlich Freie Software und freut sich über Ergänzungen
+                und Fehlerbehebungen: <a href="https://github.com/binary-butterfly/shared-delivery">github.com</a>.
+            </p>
+        </div>
+    </div>
+{% endblock %}

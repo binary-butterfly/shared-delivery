@@ -110,6 +110,9 @@ def es_mapping():
             'region_name': {
                 'type': 'text'
             },
+            'region_slug': {
+                'type': 'text'
+            },
             'region_description': {
                 'type': 'text'
             },
@@ -126,6 +129,9 @@ def es_mapping():
                 'type': 'geo_point'
             },
             'category': {
+                'type': 'keyword'
+            },
+            'category_slug': {
                 'type': 'keyword'
             },
             'opening_time': {

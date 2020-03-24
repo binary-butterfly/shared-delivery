@@ -45,3 +45,18 @@ def browserconfig_xml():
 @frontend.route('/api')
 def api():
     return render_template('api.html')
+
+
+@frontend.route('/datenschutz')
+def datenschutz():
+    return render_template('datenschutz.html')
+
+
+@frontend.route('/impressum')
+def impressum():
+    return render_template('impressum.html')
+
+
+@frontend.route('/mitmachen')
+def mitmachen():
+    return render_template('mitmachen.html')

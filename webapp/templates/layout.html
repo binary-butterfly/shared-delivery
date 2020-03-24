@@ -76,7 +76,10 @@
                             <a class="nav-link dropdown-toggle" href="#" id="region-dropdown"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ _('Infos') }}</a>
                             <div class="dropdown-menu" aria-labelledby="region-dropdown">
+                                <a class="dropdown-item" href="/mitmachen">{{ _('Mitmachen') }}</a>
                                 <a class="dropdown-item" href="/api">{{ _('API') }}</a>
+                                <a class="dropdown-item" href="/datenschutz">{{ _('Datenschutz') }}</a>
+                                <a class="dropdown-item" href="/impressum">{{ _('Impressum') }}</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -90,7 +93,7 @@
                                     <a class="dropdown-item" href="/admin/options">{{ _('Globale Optionen') }}</a>
                                 {% endif %}
                                 {% if current_user.is_authenticated %}
-                                    <a class="dropdown-item" href="/account/password">{{ _('Passwort ändern') }}</a>
+                                    <a class="dropdown-item" href="/user/password">{{ _('Passwort ändern') }}</a>
                                     <a class="dropdown-item" href="/logout">{{ _('Logout') }}</a>
                                     {% if session.get('emulate-user-id') %}
                                         <a class="dropdown-item" href="/user/switch-back">{{ _('Nutzeransicht beenden') }}</a>
@@ -116,10 +119,20 @@
     {% block footer %}
         <div class="container">
             <div class="row">
+                <div class="col-md-12">
+
+                </div>
             </div>
             <div class="row">
                 <div class="col-md-12" id="footer-status-line">
-                    Shared Delivery v{{ config['PROJECT_VERSION'] }} was made with 💚 in the ruhr area and has 🦋-wings to fly.
+                    <p>
+                        Sämtliche Geodaten unterliegen Geodaten der Open Data Commons Open Database Lizenz,
+                        <a href="https://www.openstreetmap.org/copyright">© OpenStreetMap-Mitwirkende</a>.
+                    </p>
+                    <p>
+                        Shared Delivery v{{ config['PROJECT_VERSION'] }} was made with 💚 in the ruhr area and
+                        has 🦋-wings to fly.
+                    </p>
                 </div>
             </div>
         </div>

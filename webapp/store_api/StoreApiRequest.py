@@ -35,6 +35,14 @@ def get_data(limit=None):
                     },
                     {
                         'query_string': {
+                            'fields': ['category'],
+                            'query': data.get('q'),
+                            'default_operator': 'and',
+                            'boost': 35
+                        }
+                    },
+                    {
+                        'query_string': {
                             'fields': ['description'],
                             'query': data.get('q'),
                             'default_operator': 'and',
@@ -54,10 +62,15 @@ def get_data(limit=None):
                 }
             }
         })
+
     if data.get('category'):
         elastic_request.set_fq('category', data.get('category'))
+    if data.get('category-slug'):
+        elastic_request.set_fq('category_slug', data.get('category-slug'))
     if data.get('region'):
         elastic_request.set_fq('region_name', data.get('region'))
+    if data.get('region-slug'):
+        elastic_request.set_fq('region_name', data.get('region-slug'))
     if data.get('region-id'):
         elastic_request.set_fq('region_id', data.get('region-id'))
 
