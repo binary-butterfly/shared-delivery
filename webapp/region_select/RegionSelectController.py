@@ -44,3 +44,9 @@ def regions_stores(region_slug, category_slug):
         .filter(Store.category.contains(category)) \
         .order_by(Store.name.asc()).all()
     return render_template('store-list.html', region=region, category=category, stores=stores)
+
+
+@region_select.route('/store/<int:store_id>')
+def store(store_id):
+    store = Store.query.get_or_404(store_id)
+    return render_template('store-single.html', store=store)

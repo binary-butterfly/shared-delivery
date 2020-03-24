@@ -85,3 +85,11 @@ class Store(db.Model, BaseModel):
                 result['region'] = {}
 
         return result
+
+    @property
+    def wheelchair_out(self):
+        if self.wheelchair == 'yes':
+            return 'ja'
+        if self.wheelchair == 'no':
+            return 'nein'
+        return self.wheelchair

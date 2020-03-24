@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ store.name }} in {{ store.region.name }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            {% if store.address %}
+                <p>
+                    {{ store.address }}<br>
+                    {{ store.postalcode }} {% if store.locality %}{{ store.locality }}{% else %}{{ store.region.name }}{% endif %}
+                </p>
+                <p>
+                    {% if store.phone %}
+                        Telefon: <a href="tel:{{ store.phone }}">{{ store.phone }}</a><br>
+                    {% endif %}
+                    {% if store.mobile %}
+                        Mobil: <a href="tel:{{ store.mobile }}">{{ store.mobile }}</a><br>
+                    {% endif %}
+                    {% if store.fax %}
+                        Fax: <a href="tel:{{ store.fax }}">{{ store.fax }}</a><br>
+                    {% endif %}
+                    {% if store.email %}
+                        E-Mail: <a href="mailto:{{ store.email }}">{{ store.email }}</a><br>
+                    {% endif %}
+                    {% if store.website %}
+                        Website: <a href="{{ store.website }}">{{ store.website }}</a><br>
+                    {% endif %}
+                </p>
+                <p>
+                    {% if store.brand %}
+                        Kette: {{ store.brand }}
+                    {% endif %}
+                    {% if store.wheelchair %}
+                        Rollstuhlgeeignet: {{ store.wheelchair_out }}
+                    {% endif %}
+                </p>
+            {% endif %}
+        </div>
+        <div class="col-md-6">
+            <h2>Öffnungszeiten</h2>
+            <p>
+                {% for opening_time in store.opening_time %}
+                    {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
+                {% else %}
+                    Keine Öffnungszseiten hinterlegt.
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+{% endblock %}

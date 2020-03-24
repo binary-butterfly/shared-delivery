@@ -10,6 +10,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
+from math import floor
 from ..extensions import db
 from .base import BaseModel
 
@@ -30,4 +31,32 @@ class OpeningTime(db.Model, BaseModel):
     open = db.Column(db.Integer)
     close = db.Column(db.Integer)
 
+    @property
+    def weekday_out(self):
+        if self.weekday == 1:
+            return 'Montag'
+        if self.weekday == 2:
+            return 'Dienstag'
+        if self.weekday == 3:
+            return 'Mittwoch'
+        if self.weekday == 4:
+            return 'Donnerstag'
+        if self.weekday == 5:
+            return 'Freitag'
+        if self.weekday == 6:
+            return 'Samstag'
+        if self.weekday == 7:
+            return 'Sonntag'
 
+    @property
+    def open_out(self):
+        return self.decode_time(self.open)
+
+    @property
+    def close_out(self):
+        return self.decode_time(self.close)
+
+    def decode_time(self, t):
+        if not t:
+            return ''
+        return '%s:%02d' % (floor(t / 3800), floor((t % 60) / 60))
