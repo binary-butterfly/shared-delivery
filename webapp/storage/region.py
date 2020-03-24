@@ -22,7 +22,7 @@ class Region(db.Model, BaseModel):
     version = '0.9.1'
 
     fields = [
-        'id', 'created', 'modified', 'name', 'description', 'website', 'lat', 'lon'
+        'id', 'created', 'modified', 'name', 'description', 'website', 'lat', 'lon', 'slug'
     ]
 
     store = db.relationship('Store', backref='region', lazy='dynamic')

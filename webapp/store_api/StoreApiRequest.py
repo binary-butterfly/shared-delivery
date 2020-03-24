@@ -70,7 +70,7 @@ def get_data(limit=None):
     if data.get('region'):
         elastic_request.set_fq('region_name', data.get('region'))
     if data.get('region-slug'):
-        elastic_request.set_fq('region_name', data.get('region-slug'))
+        elastic_request.set_fq('region_slug', data.get('region-slug'))
     if data.get('region-id'):
         elastic_request.set_fq('region_id', data.get('region-id'))
 

@@ -53,9 +53,14 @@ def es_index_store(store):
     if store.lat and store.lon:
         store_dict['location'] = '%s,%s' % (store.lat, store.lon)
     categories = []
+    category_slugs = []
     for category in store_dict['category']:
         categories.append(category['name'])
+        category_slugs.append(category['slug'])
     store_dict['category'] = categories
+    store_dict['category_slug'] = category_slugs
+    for key in store_dict['region'].keys():
+        store_dict['region_%s' % key] = store_dict['region'][key]
     es.index(
         index=index_name,
         id='store-%s' % store.id,
