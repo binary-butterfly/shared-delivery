@@ -45,6 +45,5 @@ class Category(db.Model, BaseModel):
 
 
 @event.listens_for(Category, 'before_insert')
-@event.listens_for(Category, 'before_update')
 def update_slug(mapper, connection, category):
     category.slug = slugify(category.name)
