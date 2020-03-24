@@ -7,3 +7,6 @@ venv
 tmp
 temp
 logs
+static/img/category
+static/img/region
+static/img/store
