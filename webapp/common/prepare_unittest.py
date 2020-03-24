@@ -40,14 +40,14 @@ def prepare_unittest():
     connection.commit()
 
     user = User()
-    user.email = 'mail@ernestoruge.de'
+    user.email = 'test@unittest.de'
     user.password = 'unittest'
-    user.first_name = 'Ernesto'
-    user.last_name = 'Ruge'
-    user.company = 'binary butterfly GmbH'
-    user.address = 'Am Hertinger Tor'
-    user.postalcode = '59423'
-    user.locality = 'Unna'
+    user.first_name = 'Test'
+    user.last_name = 'User'
+    user.company = ''
+    user.address = ''
+    user.postalcode = ''
+    user.locality = ''
     user.country = 'DE'
     user.status = 'active'
     user.capabilities = ['admin']

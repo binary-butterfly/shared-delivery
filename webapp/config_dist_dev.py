@@ -37,9 +37,10 @@ class DefaultConfig(BaseConfig):
 
     CELERY_RESULT_BACKEND = 'amqp://rabbitmq'
     CELERY_BROKER_URL = 'amqp://rabbitmq'
-    REDIS_URL = 'redis://redis:6379/3'
 
-    SOCKETIO_QUEUE = 'amqp://rabbitmq'
+    ELASTICSEARCH_HOST = 'elasticsearch'
+
+    MAPBOX_TOKEN = ''
 
 
 class DevelopmentConfig(DefaultConfig):
