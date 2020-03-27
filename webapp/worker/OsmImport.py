@@ -70,8 +70,8 @@ def upsert_category(category_slug, category_name):
 
 
 def import_single_osm(region, base_key, category):
-    url_param = '[out:json];area[name="%s"];nwr[%s=%s](area);out body;' % (
-        region.name,
+    url_param = '[out:json];area["de:regionalschluessel"=%s];nwr[%s=%s](area);out body;' % (
+        region.regionalschluessel,
         base_key,
         category.slug
     )
