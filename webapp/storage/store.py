@@ -87,6 +87,10 @@ class Store(db.Model, BaseModel):
         return result
 
     @property
+    def revisit_required(self):
+        return not (self.revisited_government or self.revisited_store or self.revisited_user)
+
+    @property
     def wheelchair_out(self):
         if self.wheelchair == 'yes':
             return 'ja'

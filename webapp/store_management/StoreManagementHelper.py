@@ -11,19 +11,23 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 """
 
 from ..extensions import celery
-from ..models import Store, ObjectHistory
+from ..models import Store, ObjectDump
 from ..extensions import db
 
 
 @celery.task
-def create_store_revision(store_id):
+def create_store_revision_delay(store_id):
     store = Store.query.get(store_id)
     if not store:
         return
-    object_history = ObjectHistory()
-    object_history.object_id = store_id
-    object_history.type = 'store'
-    data = store.to_dict(children=True)
-    object_history.data = data
-    db.session.add(object_history)
+    create_store_revision(store)
+
+
+def create_store_revision(store):
+    object_dump = ObjectDump()
+    object_dump.object_id = store.id
+    object_dump.object = 'store'
+    object_dump.type = 'revision'
+    object_dump.data = store.to_dict(children=True)
+    db.session.add(object_dump)
     db.session.commit()

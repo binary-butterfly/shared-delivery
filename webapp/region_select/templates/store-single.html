@@ -6,6 +6,15 @@
             <h1>{{ store.name }} in {{ store.region.name }}</h1>
         </div>
     </div>
+    {% if store.revisit_required %}
+        <div class="row row-form">
+            <div class="col-md-12 store-revisit-box bd-callout bd-callout-warning">
+                <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
+                <p>Die angezeigten Daten wurden noch für Coronoa aktualisiert. Kannst Du uns dabei helfen?</p>
+                <a href="/store/{{ store.id }}/suggest" class="btn btn-primary">Ich kenne die aktuellen Öffnungszeiten</a>
+            </div>
+        </div>
+    {% endif %}
     <div class="row">
         <div class="col-md-6">
             {% if store.address %}
@@ -32,11 +41,14 @@
                 </p>
                 <p>
                     {% if store.brand %}
-                        Kette: {{ store.brand }}
+                        Marke: {{ store.brand }}
                     {% endif %}
                     {% if store.wheelchair %}
                         Rollstuhlgeeignet: {{ store.wheelchair_out }}
                     {% endif %}
+                </p>
+                <p>
+                    Letzte Aktualisierung: {{ store.modified|datetime }}
                 </p>
             {% endif %}
         </div>

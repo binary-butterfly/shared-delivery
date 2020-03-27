@@ -9056,4 +9056,16 @@ a.btn-icon, button.btn-icon {
 .image-select-box {
   margin-bottom: 30px; }
 
+.store-revisit-box {
+  border: 1px solid #999;
+  border-left-width: 0.25rem;
+  border-radius: 0.25rem;
+  border-left-color: #f0ad4e;
+  padding: 20px; }
+
+.store-revisit-box .fa {
+  float: right;
+  font-size: 3rem;
+  color: #f0ad4e; }
+
 /*# sourceMappingURL=webapp.min.css.map */

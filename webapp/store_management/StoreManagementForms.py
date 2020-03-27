@@ -129,18 +129,6 @@ class StoreForm(FlaskForm):
         choices=country_codes,
         default='DE'
     )
-    lat = HiddenField(
-        label=_('Längengrad'),
-        filters=[
-            float_filter
-        ]
-    )
-    lon = HiddenField(
-        label=_('Breitengrad'),
-        filters=[
-            float_filter
-        ]
-    )
     website = StringField(
         label=_('Website'),
         validators=[
@@ -196,6 +184,21 @@ class StoreForm(FlaskForm):
         min_entries=0
     )
     submit = SubmitField(_('speichern'))
+
+
+class StoreNewForm(StoreForm):
+    lat = HiddenField(
+        label=_('Längengrad'),
+        filters=[
+            float_filter
+        ]
+    )
+    lon = HiddenField(
+        label=_('Breitengrad'),
+        filters=[
+            float_filter
+        ]
+    )
 
 
 class StoreDeleteForm(FlaskForm):

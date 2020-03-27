@@ -51,3 +51,5 @@ def store(store_id):
     store = Store.query.get_or_404(store_id)
     opening_times = OpeningTime.query.filter_by(store_id=store.id).order_by(OpeningTime.weekday, OpeningTime.open).all()
     return render_template('store-single.html', store=store, opening_times=opening_times)
+
+

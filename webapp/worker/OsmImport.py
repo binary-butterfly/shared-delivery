@@ -12,12 +12,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 import requests
 from time import sleep
-#from urllib.parse import quote
 from datetime import datetime
+from humanized_opening_hours import OHParser
 from flask import current_app
 from ..extensions import db, logger
 from ..models import Region, Store, Category, OpeningTime
-from humanized_opening_hours import OHParser
+from ..store_management.StoreManagementHelper import create_store_revision
 
 
 def import_osm(region_id):
@@ -103,6 +103,7 @@ def import_single_osm(region, base_key, category):
         db.session.add(store)
         db.session.commit()
         save_opening_hours(store.id, store_details.get('opening_hours'))
+        create_store_revision(store)
     sleep(2)
 
 

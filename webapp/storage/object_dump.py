@@ -16,13 +16,14 @@ from .base import BaseModel
 from ..common.helpers import DefaultJSONEncoder
 
 
-class ObjectHistory(db.Model, BaseModel):
-    __tablename__ = 'object_history'
+class ObjectDump(db.Model, BaseModel):
+    __tablename__ = 'object_dump'
 
     version = '0.9.0'
 
     object_id = db.Column(db.Integer)
-    type = db.Column(db.String(255), index=True)
+    type = db.Column(db.Enum('suggestion', 'revision'), index=True)
+    object = db.Column(db.String(255), index=True)
 
     _data = db.Column('data', db.Text)
 

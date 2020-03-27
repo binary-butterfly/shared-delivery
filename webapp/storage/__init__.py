@@ -19,4 +19,4 @@ from .region import Region
 from .tag import Tag
 from .category import Category
 from .opening_time import OpeningTime
-from .object_history import ObjectHistory
+from .object_dump import ObjectDump

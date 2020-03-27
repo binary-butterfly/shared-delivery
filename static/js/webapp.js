@@ -38636,7 +38636,7 @@ __webpack_require__.r(__webpack_exports__);
 $(document).ready(function () {
   window.common = new _Common__WEBPACK_IMPORTED_MODULE_5__[/* default */ "a"]();
 
-  if (document.getElementById('store-form')) {
+  if (document.getElementById('store-new-form')) {
     window.storeGeocode = new _Helper_StoreGeocode__WEBPACK_IMPORTED_MODULE_9__[/* default */ "a"]();
   }
 

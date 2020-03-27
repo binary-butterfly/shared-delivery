@@ -17,7 +17,7 @@ import SearchTableUser from "./SearchTable/SearchTableUser";
 
 $(document).ready(function () {
     window.common = new Common();
-    if (document.getElementById('store-form')) {
+    if (document.getElementById('store-new-form')) {
         window.storeGeocode = new StoreGeocode();
     }
 

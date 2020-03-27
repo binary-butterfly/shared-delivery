@@ -16,9 +16,9 @@ from flask_login import login_required, current_user
 
 from ..extensions import db
 from ..models import Store, OpeningTime
-from .StoreManagementForms import StoreSearchForm, StoreForm, StoreDeleteForm
+from .StoreManagementForms import StoreSearchForm, StoreForm, StoreNewForm, StoreDeleteForm
 from webapp.store_management.StoreElasticImport import es_index_store_delay
-from webapp.store_management.StoreManagementHelper import create_store_revision
+from webapp.store_management.StoreManagementHelper import create_store_revision_delay
 
 store_management = Blueprint('store_management', __name__, template_folder='templates')
 
@@ -60,7 +60,7 @@ def store_new():
         db.session.commit()
         save_opening_times(form, opening_times_data, store)
         es_index_store_delay.delay(store.id)
-        create_store_revision.delay(store.id)
+        create_store_revision_delay.delay(store.id)
         flash('Geschäft erfolgreich gespeichert', 'success')
         return redirect('/admin/stores')
     return render_template('store-new.html', form=form)
@@ -89,7 +89,7 @@ def store_edit(store_id):
         db.session.commit()
         save_opening_times(form, opening_times_data, store)
         es_index_store_delay.delay(store.id)
-        create_store_revision.delay(store.id)
+        create_store_revision_delay.delay(store.id)
         flash('Geschäft erfolgreich gespeichert', 'success')
         return redirect('/admin/stores')
     return render_template('store-edit.html', form=form, store=store, opening_times=opening_times)

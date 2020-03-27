@@ -2,10 +2,14 @@
 {% from "macros.html" import form_field with context %}
 
 {% block content %}
-    <form method="POST" action="/admin/store/new" id="store-new-form">
+    <form method="POST" action="/admin/store/{{ store.id }}/edit" id="store-form">
         <div class="row">
             <div class="col-md-12">
-                <h1>{{ _('Geschäft hinzufügen') }}</h1>
+                <h1>{{ _('Änderungen vorschlagen') }}</h1>
+                <p>
+                    Du kennst die Öffnungszeiten von {{ store.name }}? Perfekt! Hier kannst Du die Öffnungszeiten und
+                    weitere Daten eingeben, so dass später alle auf die Daten zugreifen können.
+                </p>
             </div>
         </div>
         <div class="row row-form">
@@ -22,12 +26,10 @@
             {{ form_field(form.country, 6) }}
         </div>
         <div class="row row-form">
-            {{ form_field(form.firstname, 6) }}
-            {{ form_field(form.lastname, 6) }}
-        </div>
-        <div class="row row-form">
-            {{ form_field(form.website, 6) }}
-            {{ form_field(form.email, 6) }}
+            {{ form_field(form.firstname, 3) }}
+            {{ form_field(form.lastname, 3) }}
+            {{ form_field(form.website, 3) }}
+            {{ form_field(form.email, 3) }}
         </div>
         <div class="row row-form">
             {{ form_field(form.phone, 4) }}
@@ -43,15 +45,13 @@
             </div>
             <div class="col-md-6" id="opening-times-form"></div>
         </div>
-        {{ form.lat }}
-        {{ form.lon }}
         {{ form.csrf_token }}
     </form>
 {% endblock %}
 
 {% block scripts %}
     <script>
-        var opening_times = [];
+        var opening_times = {{ opening_times|tojson|safe }};
     </script>
     {{ super() }}
 {% endblock %}
