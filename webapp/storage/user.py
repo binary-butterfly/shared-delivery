@@ -130,12 +130,9 @@ class User(db.Model, BaseModel, UserMixin):
                 salt=current_app.config['SECURITY_PASSWORD_SALT']
             )
         )
-        if self.status == 'pre-registered-start':
-            template = 'emails/validate-email-pre-register.txt'
-        else:
-            template = 'emails/validate-email.txt'
+        template = 'emails/validate-email.txt'
         msg = Message(
-            "Bitte bestätigen Sie kurz Ihre Anmeldung",
+            "Willkommen bei Shared Delivery",
             sender=current_app.config['MAILS_FROM'],
             recipients=[self.email],
             body=render_template(template, user=self, validation_url=validation_url)

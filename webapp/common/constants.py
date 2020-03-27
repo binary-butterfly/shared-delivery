@@ -25,6 +25,7 @@ class BaseConfig:
 
     DEBUG = False
     TESTING = False
+    MAINTENANCE_MODE = False
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False

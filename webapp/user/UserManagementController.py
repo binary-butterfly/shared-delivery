@@ -39,7 +39,7 @@ def user_show(store_id):
     return render_template('user-show.html', user=user)
 
 
-@user.route('/admin/store/new', methods=['GET', 'POST'])
+@user.route('/admin/user/new', methods=['GET', 'POST'])
 def user_new():
     if not current_user.has_capability('admin'):
         abort(403)
