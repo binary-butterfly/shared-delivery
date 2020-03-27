@@ -13,6 +13,7 @@ import StoreMap from "./StoreMap";
 import StoreGeocode from "./Helper/StoreGeocode";
 import OpeningTimesForm from "./OpeningTimesForm";
 import SearchTableUser from "./SearchTable/SearchTableUser";
+import SearchTableStoreSuggestion from "./SearchTable/SearchTableStoreSuggestion";
 
 
 $(document).ready(function () {
@@ -48,16 +49,22 @@ $(document).ready(function () {
             document.getElementById("user-search-results")
         );
     }
+    if (document.getElementById('region-search-results')) {
+        ReactDOM.render(
+            <SearchTableRegion ref={(searchTableRegion) => {window.searchTableRegion = searchTableRegion}} />,
+            document.getElementById("region-search-results")
+        );
+    }
     if (document.getElementById('store-search-results')) {
         ReactDOM.render(
             <SearchTableStore ref={(searchTableStore) => {window.searchTableStore = searchTableStore}} />,
             document.getElementById("store-search-results")
         );
     }
-    if (document.getElementById('region-search-results')) {
+    if (document.getElementById('store-suggestion-search-results')) {
         ReactDOM.render(
-            <SearchTableRegion ref={(searchTableRegion) => {window.searchTableRegion = searchTableRegion}} />,
-            document.getElementById("region-search-results")
+            <SearchTableStoreSuggestion ref={(searchTableStoreSuggestion) => {window.searchTableStoreSuggestion = searchTableStoreSuggestion}} />,
+            document.getElementById("store-suggestion-search-results")
         );
     }
 });

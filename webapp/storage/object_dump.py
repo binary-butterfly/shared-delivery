@@ -22,8 +22,11 @@ class ObjectDump(db.Model, BaseModel):
     version = '0.9.0'
 
     object_id = db.Column(db.Integer)
+    region_id = db.Column(db.Integer)
     type = db.Column(db.Enum('suggestion', 'revision'), index=True)
     object = db.Column(db.String(255), index=True)
+    settled = db.Column(db.Boolean, default=False)
+    deleted = db.Column(db.Boolean, default=False)
 
     _data = db.Column('data', db.Text)
 

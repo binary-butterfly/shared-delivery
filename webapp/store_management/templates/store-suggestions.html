@@ -5,20 +5,18 @@
     <div class="row">
         <div class="col-md-12">
             <h1>
-                {{ _('Geschäfte') }}
+                {{ _('Geschäfte: Verbesserungsvorschläge') }}
                 {{ action_button('new', url_for('store_management.store_new')) }}
-                {{ action_button('custom', url_for('store_management.store_suggestions'), 'Verbesserungsvorschläge', 'exclamation') }}
             </h1>
         </div>
     </div>
-    <form method="post" action="#" id="store-search-form">
+    <form method="post" action="#" id="store-suggestion-search-form">
         <div class="row row-form">
-            {{ form_field(form.name, 3) }}
             {{ form_field(form.region, 3) }}
+            {{ form_field(form.settled, 3) }}
             {{ form_field(form.submit, 3, 'input-submit-emptylabel' ) }}
         </div>
         {{ form.csrf_token }}
-        <div id="store-search-results"></div>
+        <div id="store-suggestion-search-results"></div>
     </form>
 {% endblock %}
-

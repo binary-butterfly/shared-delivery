@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field with context %}
+
+{% block content %}
+    <form method="POST" action="/admin/region/{{ region.id }}/sync" id="region-form">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ _('Region synchronisieren') }}</h1>
+                <p>Mit dieser Funktion können Sie neue Daten von OpenStreetMap abrufen.</p>
+                {% if region.sync_status == 'syncing' %}
+                    <p>Aktuell läuft bereits ein Abruf, so dass Sie keinen weiteren starten können.</p>
+                {% endif %}
+            </div>
+        </div>
+        {% if region.sync_status != 'syncing' %}
+            <div class="row row-form">
+                {{ form_field(form.abort, 6, 'input-submit') }}
+                {{ form_field(form.submit, 6, 'input-submit') }}
+            </div>
+        {% endif %}
+        {{ form.csrf_token }}
+    </form>
+{% endblock %}

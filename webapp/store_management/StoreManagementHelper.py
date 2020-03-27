@@ -26,6 +26,7 @@ def create_store_revision_delay(store_id):
 def create_store_revision(store):
     object_dump = ObjectDump()
     object_dump.object_id = store.id
+    object_dump.region_id = store.region_id
     object_dump.object = 'store'
     object_dump.type = 'revision'
     object_dump.data = store.to_dict(children=True)
@@ -45,3 +46,54 @@ def get_opening_times_for_form(store_id):
         ot['close'] = opening_time_db.close_out
         opening_times.append(ot)
     return opening_times
+
+
+def save_opening_times_form(form, opening_times_data, store):
+    status = {}
+    opening_times = {}
+    for field in ['all', 'delivery', 'pickup']:
+        status[field] = getattr(form, '%s_switch' % field)
+        opening_times[field] = []
+        for opening_time in opening_times_data[field]:
+            opening_times[field].append({
+                'weekday': int(opening_time.weekday.data),
+                'open': opening_time.open.data_out,
+                'close': opening_time.close.data_out
+            })
+    save_opening_times(status, opening_times, store)
+
+
+def save_opening_times(status, opening_times,  store):
+    old_ids = []
+    for opening_time in store.opening_time:
+        old_ids.append(opening_time.id)
+    for field in ['all', 'delivery', 'pickup']:
+        if status.get(field):
+            for opening_time in opening_times[field]:
+                opening_time_id = upsert_opening_time(store, opening_time, field)
+                if opening_time_id in old_ids:
+                    old_ids.remove(opening_time_id)
+    if len(old_ids) == 0:
+        return
+    OpeningTime.query.filter(OpeningTime.id.in_(old_ids)).delete(synchronize_session=False)
+    db.session.commit()
+
+
+def upsert_opening_time(store, opening_time_raw, type):
+    for opening_time in store.opening_time:
+        if opening_time.weekday != opening_time_raw['weekday']:
+            continue
+        if opening_time.open != opening_time_raw['open']:
+            continue
+        if opening_time.close != opening_time_raw['close']:
+            continue
+        return opening_time.id
+    opening_time = OpeningTime()
+    opening_time.type = type
+    opening_time.weekday = opening_time_raw['weekday']
+    opening_time.open = opening_time_raw['open']
+    opening_time.close = opening_time_raw['close']
+    opening_time.store_id = store.id
+    db.session.add(opening_time)
+    db.session.commit()
+    return opening_time.id

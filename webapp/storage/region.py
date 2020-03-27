@@ -32,6 +32,8 @@ class Region(db.Model, BaseModel):
     description = db.Column(db.Text)
 
     website = db.Column(db.String(255))
+    regionalschluessel = db.Column(db.String(16))
+    sync_status = db.Column(db.String(32), default='idle')
 
     area = db.Column(db.Text)
     lat = db.Column(db.Numeric(precision=8, scale=6), default=0)

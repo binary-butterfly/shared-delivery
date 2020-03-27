@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field, action_button with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                {{ store.name }} in {{ store.region.name }}: Änderungsvorschlag
+                {{ action_button('edit', url_for('store_management.store_edit', store_id=store.id)) }}
+                {{ action_button('delete', url_for('store_management.store_delete', store_id=store.id)) }}
+            </h1>
+            <p>Es werden nur die sich unterscheidenden Felder angezeigt. Vorlage: OpenStreetMap ID
+                <a href="https://www.openstreetmap.org/node/{{ store.osm_id }}">{{ store.osm_id }}</a>
+            </p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <table class="table">
+                <tr>
+                    <th>Wert</th>
+                    <th>alt</th>
+                    <th>neu</th>
+                </tr>
+                {% if store.address != suggestion.address or store.postalcode != suggestion.postalcode %}
+                    <tr>
+                        <td>Adresse</td>
+                        <td>
+                            {{ store.address }}<br>
+                            {{ store.postalcode }} {% if store.locality %}{{ store.locality }}{% else %}{{ store.region.name }}{% endif %}
+                        </td>
+                        <td>
+                            {{ suggestion.address }}<br>
+                            {{ suggestion.postalcode }} {% if suggestion.locality %}{{ suggestion.locality }}{% else %}{{ store.region.name }}{% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if store.phone != suggestion.phone %}
+                    <tr>
+                        <td>Telefon</td>
+                        <td><a href="tel:{{ store.phone }}">{{ store.phone }}</a></td>
+                        <td><a href="tel:{{ suggestion.phone }}">{{ suggestion.phone }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.mobile != suggestion.mobile %}
+                    <tr>
+                        <td>Mobil</td>
+                        <td><a href="tel:{{ store.mobile }}">{{ store.mobile }}</a></td>
+                        <td><a href="tel:{{ suggestion.mobile }}">{{ suggestion.mobile }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.fax != suggestion.fax %}
+                    <tr>
+                        <td>Fax</td>
+                        <td><a href="tel:{{ store.fax }}">{{ store.fax }}</a></td>
+                        <td><a href="tel:{{ suggestion.fax }}">{{ suggestion.fax }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.email != suggestion.email %}
+                    <tr>
+                        <td>E-Mail</td>
+                        <td><a href="mailto:{{ store.email }}">{{ store.email }}</a></td>
+                        <td><a href="mailto:{{ suggestion.email }}">{{ suggestion.email }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.website != suggestion.website %}
+                    <tr>
+                        <td>Website</td>
+                        <td><a href="{{ store.website }}">{{ store.website }}</a></td>
+                        <td><a href="{{ suggestion.website }}">{{ suggestion.website }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.brand != suggestion.brand %}
+                    <tr>
+                        <td>Kette</td>
+                        <td>{{ store.brand }}</td>
+                        <td>{{ suggestion.brand }}</td>
+                    </tr>
+                {% endif %}
+                {% if store.wheelchair != suggestion.wheelchair %}
+                    <tr>
+                        <td>Rollstuhlgeeignet</td>
+                        <td>{{ store.wheelchair_out }}</td>
+                        <td>{{ suggestion.wheelchair_out }}</td>
+                    </tr>
+                {% endif %}
+                {% if opening_times_data['new']|length or opening_times_data['old']|length %}
+                    <tr>
+                        <td>Geänderte Öffnungszeiten</td>
+                        <td>
+                            {% for opening_time in opening_times_data['old'] %}
+                                {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for opening_time in opening_times_data['new'] %}
+                                {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Gleichbleibende Öffnungszeiten</td>
+                        <td colspan="2">
+                            {% for opening_time in opening_times_data['both'] %}
+                                {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
+                            {% endfor %}
+                        </td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+    <form method="POST" action="/admin/store/suggestion/{{ object_dump.id }}/show" id="store-form">
+        <div class="row row-form">
+            {{ form_field(form.abort, 3, 'input-submit') }}
+            {{ form_field(form.delete, 3, 'input-submit') }}
+            {{ form_field(form.edit, 3, 'input-submit') }}
+            {{ form_field(form.merge, 3, 'input-submit') }}
+            {{ form.csrf_token }}
+        </div>
+    </form>
+{% endblock %}

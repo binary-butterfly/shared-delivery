@@ -27,7 +27,6 @@ export default class SearchTable extends Component {
 
 
     componentDidMount() {
-        console.log('weee');
         this.init();
         this.updateData();
     }

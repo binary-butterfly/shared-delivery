@@ -41,6 +41,34 @@ class StoreSearchForm(SearchBaseForm):
     )
 
 
+class StoreSuggestionSearchForm(SearchBaseForm):
+    region = RegionField(
+        label='Region',
+        all_option=True,
+        validators=[
+            validators.Optional()
+        ]
+    )
+    settled = SelectField(
+        label='erledigt',
+        choices=[
+            ('_all', 'beliebig'),
+            ('yes', 'ja'),
+            ('no', 'nein')
+        ],
+        validators=[
+            validators.Optional()
+        ],
+        default='no'
+    )
+    sort_field = SelectField(
+        label='Sortier-Feld',
+        choices=[
+            ('created', 'Erstellt')
+        ]
+    )
+
+
 class OpeningTimeForm(FlaskForm):
     weekday = SelectField(
         label='Wochentag',
@@ -184,6 +212,7 @@ class StoreForm(StoreBaseForm):
         ]
     )
 
+
 class StoreNewForm(StoreForm):
     lat = HiddenField(
         label=_('Längengrad'),
@@ -201,5 +230,12 @@ class StoreNewForm(StoreForm):
 
 class StoreDeleteForm(FlaskForm):
     submit = SubmitField(_('löschen'))
+    abort = SubmitField(_('abbrechen'))
+
+
+class StoreSuggestionMergeForm(FlaskForm):
+    merge = SubmitField(_('übernehmen'))
+    delete = SubmitField(_('löschen'))
+    edit = SubmitField(_('einzeln bearbeiten'))
     abort = SubmitField(_('abbrechen'))
 

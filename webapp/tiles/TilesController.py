@@ -40,6 +40,7 @@ def regions_stores(region_slug, category_slug):
     if not region or not category:
         abort(404)
     stores = Store.query\
+        .filter_by(deleted=False)\
         .filter_by(region_id=region.id) \
         .filter(Store.category.contains(category)) \
         .order_by(Store.name.asc()).all()

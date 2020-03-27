@@ -15,14 +15,22 @@ from time import sleep
 from datetime import datetime
 from humanized_opening_hours import OHParser
 from flask import current_app
-from ..extensions import db, logger
+from ..extensions import db, logger, celery
 from ..models import Region, Store, Category, OpeningTime
 from ..store_management.StoreManagementHelper import create_store_revision
+from ..store_management.StoreElasticImport import es_index_stores
+
+
+@celery.task
+def import_osm_delay(region_id):
+    import_osm(region_id)
 
 
 def import_osm(region_id):
     region = Region.query.get(region_id)
     if not region:
+        return
+    if region.sync_status == 'syncing':
         return
 
     sources = {
@@ -44,6 +52,10 @@ def import_osm(region_id):
     for base_key, sub_source in sources.items():
         for category_slug, category_name in sub_source.items():
             import_single_osm(region, base_key, upsert_category(category_slug, category_name))
+    es_index_stores()
+    region.sync_status = 'idle'
+    db.session.add(region)
+    db.session.commit()
 
 
 def upsert_category(category_slug, category_name):

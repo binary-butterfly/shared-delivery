@@ -16,7 +16,8 @@ from flask_login import login_required
 
 from ..extensions import db
 from ..models import Region
-from .RegionManagementForms import RegionSearchForm, RegionForm, RegionDeleteForm
+from .RegionManagementForms import RegionSearchForm, RegionForm, RegionDeleteForm, RegionSyncForm
+from ..worker.OsmImport import import_osm_delay
 
 region_management = Blueprint('region_management', __name__, template_folder='templates')
 
@@ -37,8 +38,10 @@ def region_new():
     if form.validate_on_submit():
         region = Region()
         form.populate_obj(region)
+        region.sync_status = 'syncing'
         db.session.add(region)
         db.session.commit()
+        import_osm_delay.delay(region.id)
         flash('Region erfolgreich gespeichert', 'success')
         return redirect('/admin/regions')
     return render_template('region-new.html', form=form)
@@ -56,3 +59,20 @@ def region_edit(region_id):
         flash('Region erfolgreich gespeichert', 'success')
         return redirect('/admin/regions')
     return render_template('region-edit.html', form=form, region=region)
+
+
+@region_management.route('/admin/region/<int:region_id>/sync', methods=['GET', 'POST'])
+@login_required
+def region_sync(region_id):
+    region = Region.query.get_or_404(region_id)
+    form = RegionSyncForm(obj=region)
+    if form.validate_on_submit():
+        if form.abort.data:
+            return redirect('/admin/regions')
+        region.sync_status = 'syncing'
+        db.session.add(region)
+        db.session.commit()
+        import_osm_delay.delay(region.id)
+        flash('Synchronisation erfolgreich gestartet', 'success')
+        return redirect('/admin/regions')
+    return render_template('region-sync.html', form=form, region=region)

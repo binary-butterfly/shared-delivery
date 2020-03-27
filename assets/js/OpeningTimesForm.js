@@ -130,6 +130,10 @@ export default class StoreForm extends Component {
             </div>
         )
     }
+    setWeekday(area, position, evt) {
+        let openingTimes = this.state.openingTimes;
+        openingTimes[area][position].weekday = evt.target.value;
+    }
 
     renderOpeningTime(opening_time, position) {
         return (
@@ -137,8 +141,9 @@ export default class StoreForm extends Component {
                 <div className="col-4">
                     <select
                         className="form-control"
-                        defaultValue={opening_time.weekday}
+                        value={opening_time.weekday}
                         name={`opening_times_${opening_time.type}-${position}-weekday`}
+                        onChange={this.setWeekday.bind(this, opening_time.type, position)}
                     >
                         <option value="1">Montag</option>
                         <option value="2">Dienstag</option>

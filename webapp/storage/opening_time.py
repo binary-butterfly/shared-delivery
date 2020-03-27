@@ -33,6 +33,7 @@ class OpeningTime(db.Model, BaseModel):
 
     @property
     def weekday_out(self):
+        self.weekday = int(self.weekday)
         if self.weekday == 1:
             return 'Montag'
         if self.weekday == 2:

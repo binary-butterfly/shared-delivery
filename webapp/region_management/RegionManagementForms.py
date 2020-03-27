@@ -54,6 +54,18 @@ class RegionForm(FlaskForm):
     description = TextAreaField(
         label='Beschreibung'
     )
+    regionalschluessel = StringField(
+        label='Regionalschlüssel',
+        validators=[
+            validators.DataRequired(
+                message='Bitte geben Sie einen Regionalschlüssel an'
+            ),
+            validators.Length(
+                min=12,
+                max=12
+            )
+        ]
+    )
     submit = SubmitField(_('speichern'))
 
 
@@ -61,3 +73,7 @@ class RegionDeleteForm(FlaskForm):
     submit = SubmitField(_('löschen'))
     abort = SubmitField(_('abbrechen'))
 
+
+class RegionSyncForm(FlaskForm):
+    submit = SubmitField(_('synchronisieren'))
+    abort = SubmitField(_('abbrechen'))

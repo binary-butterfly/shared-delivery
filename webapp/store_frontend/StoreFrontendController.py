@@ -53,6 +53,7 @@ def store_frontend_suggest(store_id):
         object_dump.data = store_suggestion
         object_dump.type = 'suggestion'
         object_dump.object = 'store'
+        object_dump.region_id = store.region_id
         object_dump.object_id = store.id
         db.session.add(object_dump)
         db.session.commit()
