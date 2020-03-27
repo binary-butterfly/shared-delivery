@@ -15,9 +15,6 @@ from flask_babel import _
 from wtforms import validators
 from wtforms import StringField, TextAreaField, SelectField, SubmitField, HiddenField
 from ..common.form import SearchBaseForm
-from ..common.countrycodes import country_codes
-from ..common.form_field import RegionField
-from ..common.form_filter import float_filter
 
 
 class RegionSearchForm(SearchBaseForm):

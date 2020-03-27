@@ -31,11 +31,11 @@ def user_index():
     return render_template('users.html', form=form)
 
 
-@user.route('/admin/store/<int:store_id>/show', methods=['GET', 'POST'])
-def user_show(store_id):
+@user.route('/admin/user/<int:user_id>/show', methods=['GET', 'POST'])
+def user_show(user_id):
     if not current_user.has_capability('admin'):
         abort(403)
-    user = User.query.get_or_404(store_id)
+    user = User.query.get_or_404(user_id)
     return render_template('user-show.html', user=user)
 
 

@@ -13,6 +13,7 @@
     <form method="post" action="#" id="store-search-form">
         <div class="row row-form">
             {{ form_field(form.name, 3) }}
+            {{ form_field(form.region, 3) }}
             {{ form_field(form.submit, 3, 'input-submit-emptylabel' ) }}
         </div>
         {{ form.csrf_token }}

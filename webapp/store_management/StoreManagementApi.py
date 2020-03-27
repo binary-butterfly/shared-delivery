@@ -35,6 +35,9 @@ def api_stores():
     if form.name.data:
         stores = stores.filter(Store.name.like('%%%s%%' % form.name.data))
 
+    if form.region.data and form.region.data not in ['None', '_all']:
+        stores = stores.filter_by(region_id=form.region.data)
+
     count = stores.count()
     stores = stores.order_by(getattr(getattr(Store, form.sort_field.data), form.sort_order.data)())\
         .limit(current_app.config['ITEMS_PER_PAGE'])\

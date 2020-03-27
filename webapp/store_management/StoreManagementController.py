@@ -51,9 +51,14 @@ def store_new():
     form = StoreForm()
     if form.validate_on_submit():
         store = Store()
+        opening_times_data = {}
+        for field in ['all', 'delivery', 'pickup']:
+            opening_times_data[field] = getattr(form, 'opening_times_%s' % field)
+            delattr(form, 'opening_times_%s' % field)
         form.populate_obj(store)
         db.session.add(store)
         db.session.commit()
+        save_opening_times(form, opening_times_data, store)
         es_index_store_delay.delay(store.id)
         create_store_revision.delay(store.id)
         flash('Geschäft erfolgreich gespeichert', 'success')

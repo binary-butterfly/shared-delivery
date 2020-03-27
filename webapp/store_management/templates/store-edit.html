@@ -6,6 +6,16 @@
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ _('Geschäft bearbeiten') }}</h1>
+                <p>
+                    Quelle:
+                    {% if store.osm_id %}
+                        <a href="https://www.openstreetmap.org/node/{{ store.osm_id }}" target="_blank">
+                            OpenStreetMap ID {{ store.osm_id }}
+                        </a>
+                    {% else %}
+                        Shared Delivery
+                    {% endif %}
+                </p>
             </div>
         </div>
         <div class="row row-form">

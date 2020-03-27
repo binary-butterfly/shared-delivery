@@ -25,6 +25,13 @@ class StoreSearchForm(SearchBaseForm):
     name = StringField(
         label='Name'
     )
+    region = RegionField(
+        label='Region',
+        all_option=True,
+        validators=[
+            validators.Optional()
+        ]
+    )
     sort_field = SelectField(
         label='Sortier-Feld',
         choices=[
@@ -72,7 +79,12 @@ class StoreForm(FlaskForm):
     )
     region = RegionField(
         label=_('Region'),
-
+        validators = [
+            validators.NoneOf(
+                ['0'],
+                message='Bitte geben Sie eine Region an'
+            )
+        ]
     )
     firstname = StringField(
         label=_('Vorname')
