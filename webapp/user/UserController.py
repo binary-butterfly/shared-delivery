@@ -15,13 +15,15 @@ from hashlib import sha256
 from itsdangerous import URLSafeTimedSerializer
 from flask import Blueprint, render_template, current_app, request, flash, redirect, session, abort
 from flask_login import login_required, login_user, current_user, logout_user
-from .UserForms import LoginForm, UserProfileForm, PasswordForm, RecoverForm, RecoverSetForm, UserSettingsForm
+from .UserForms import LoginForm, PasswordForm, RecoverForm, RecoverSetForm, UserSettingsForm
 from ..models import User
 from ..extensions import db, logger
 from flask_babel import _
 
 
 user = Blueprint('user', __name__, template_folder='templates')
+
+from . import UserManagementController
 
 
 @user.route('/login', methods=['GET', 'POST'])
@@ -69,21 +71,6 @@ def account_password():
         else:
             flash(_('Altes Passwort nicht korrekt'), 'danger')
     return render_template('password.html', form=form)
-
-
-@user.route('/user/nutzerdaten', methods=['GET', 'POST'])
-@login_required
-def account_nutzerdaten():
-    form = UserProfileForm(obj=current_user)
-
-    if form.validate_on_submit():
-        form.populate_obj(current_user)
-        db.session.add(current_user)
-        db.session.commit()
-
-        flash(_('Nutzerdaten gespeichert.'), 'success')
-        return redirect('/')
-    return render_template('userdata.html', form=form)
 
 
 @user.route('/logout')

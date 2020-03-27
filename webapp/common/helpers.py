@@ -14,6 +14,8 @@ import re
 import pytz
 import json
 import codecs
+import random
+import string
 import requests
 from dateutil.parser import parse as dateutil_parse
 import translitcodec
@@ -25,6 +27,10 @@ from ..extensions import logger
 from requests.exceptions import ConnectionError
 from urllib3.exceptions import NewConnectionError
 from json.decoder import JSONDecodeError
+
+
+def get_random_password(length=16):
+    return ''.join(random.SystemRandom().choice(string.ascii_uppercase + string.ascii_lowercase + string.digits) for _ in range(length))
 
 
 def localtime(value):

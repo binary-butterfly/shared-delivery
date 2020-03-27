@@ -10,7 +10,7 @@
         </div>
         <div class="row row-form">
             {{ form_field(form.name, 6) }}
-            {{ form_field(form.type, 6) }}
+            {{ form_field(form.category, 6) }}
         </div>
         <div class="row row-form">
             {{ form_field(form.address, 6) }}
@@ -22,12 +22,10 @@
             {{ form_field(form.country, 6) }}
         </div>
         <div class="row row-form">
-            {{ form_field(form.firstname, 6) }}
-            {{ form_field(form.lastname, 6) }}
-        </div>
-        <div class="row row-form">
-            {{ form_field(form.website, 6) }}
-            {{ form_field(form.email, 6) }}
+            {{ form_field(form.firstname, 3) }}
+            {{ form_field(form.lastname, 3) }}
+            {{ form_field(form.website, 3) }}
+            {{ form_field(form.email, 3) }}
         </div>
         <div class="row row-form">
             {{ form_field(form.phone, 4) }}
@@ -35,13 +33,23 @@
             {{ form_field(form.fax, 4) }}
         </div>
         <div class="row row-form">
-            {{ form_field(form.description, 12) }}
-        </div>
-        <div class="row row-form">
-            {{ form_field(form.submit, 12, 'input-submit') }}
+            <div class="col-md-6">
+                <label for="description">Beschreibung</label>
+                {{ form.description(class="form-control") }}
+                <label for="submit">&nbsp;</label>
+                {{ form.submit(class="form-control") }}
+            </div>
+            <div class="col-md-6" id="opening-times-form"></div>
         </div>
         {{ form.lat }}
         {{ form.lon }}
         {{ form.csrf_token }}
     </form>
+{% endblock %}
+
+{% block scripts %}
+    <script>
+        var opening_times = {{ opening_times|tojson|safe }};
+    </script>
+    {{ super() }}
 {% endblock %}

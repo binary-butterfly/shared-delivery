@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field with context %}
+
+{% block content %}
+    <form method="POST" action="/admin/user/{{ user.id }}/edit" id="user-form">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ _('Nutzer bearbeiten') }}</h1>
+            </div>
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.firstname, 4) }}
+            {{ form_field(form.lastname, 4) }}
+            {{ form_field(form.email, 4) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.address, 6) }}
+            {{ form_field(form.postalcode, 2) }}
+            {{ form_field(form.locality, 4) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.submit, 12) }}
+        </div>
+        {{ form.csrf_token }}
+    </form>
+{% endblock %}

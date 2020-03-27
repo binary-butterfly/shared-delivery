@@ -1,0 +1,82 @@
+{% extends "layout.html" %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ store.name }} in {{ store.region.name }}</h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                {% if store.address %}
+                    <tr>
+                        <td>Adresse</td>
+                        <td>
+                            {{ store.address }}<br>
+                            {{ store.postalcode }} {% if store.locality %}{{ store.locality }}{% else %}{{ store.region.name }}{% endif %}
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if store.phone %}
+                    <tr>
+                        <td>Telefon</td>
+                        <td><a href="tel:{{ store.phone }}">{{ store.phone }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.mobile %}
+                    <tr>
+                        <td>Mobil</td>
+                        <td><a href="tel:{{ store.mobile }}">{{ store.mobile }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.fax %}
+                    <tr>
+                        <td>Fax</td>
+                        <td><a href="tel:{{ store.fax }}">{{ store.fax }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.email %}
+                    <tr>
+                        <td>E-Mail</td>
+                        <td><a href="mailto:{{ store.email }}">{{ store.email }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.website %}
+                    <tr>
+                        <td>Website</td>
+                        <td><a href="{{ store.website }}">{{ store.website }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.brand %}
+                    <tr>
+                        <td>Kette</td>
+                        <td>{{ store.brand }}</td>
+                    </tr>
+                {% endif %}
+                {% if store.wheelchair %}
+                    <tr>
+                        <td>Rollstuhlgeeignet</td>
+                        <td>{{ store.wheelchair_out }}</td>
+                    </tr>
+
+                {% endif %}
+                <tr>
+                    <td>OpenStreetMap ID</td>
+                    <td><a href="https://www.openstreetmap.org/node/{{ store.osm_id }}">{{ store.osm_id }}</a></td>
+                </tr>
+            </table>
+
+        </div>
+        <div class="col-md-6">
+            <h2>Öffnungszeiten</h2>
+            <p>
+                {% for opening_time in store.opening_time %}
+                    {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
+                {% else %}
+                    Keine Öffnungszseiten hinterlegt.
+                {% endfor %}
+            </p>
+        </div>
+    </div>
+{% endblock %}

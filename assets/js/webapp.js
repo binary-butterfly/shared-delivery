@@ -11,6 +11,8 @@ import SearchTableRegion from "./SearchTable/SearchTableRegion";
 
 import StoreMap from "./StoreMap";
 import StoreGeocode from "./Helper/StoreGeocode";
+import OpeningTimesForm from "./OpeningTimesForm";
+import SearchTableUser from "./SearchTable/SearchTableUser";
 
 
 $(document).ready(function () {
@@ -26,6 +28,13 @@ $(document).ready(function () {
         );
     }
 
+    if (document.getElementById('opening-times-form')) {
+        ReactDOM.render(
+            <OpeningTimesForm ref={(openingTimesForm) => {window.openingTimesForm = openingTimesForm}} />,
+            document.getElementById("opening-times-form")
+        );
+    }
+
     if (document.getElementById('store-map')) {
         ReactDOM.render(
             <StoreMap ref={(storeMap) => {window.storeMap = storeMap}} />,
@@ -33,6 +42,12 @@ $(document).ready(function () {
         );
     }
 
+    if (document.getElementById('user-search-results')) {
+        ReactDOM.render(
+            <SearchTableUser ref={(searchTableUser) => {window.searchTableUser = searchTableUser}} />,
+            document.getElementById("user-search-results")
+        );
+    }
     if (document.getElementById('store-search-results')) {
         ReactDOM.render(
             <SearchTableStore ref={(searchTableStore) => {window.searchTableStore = searchTableStore}} />,

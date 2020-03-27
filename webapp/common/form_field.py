@@ -13,10 +13,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import math
 from flask import request
 from flask_login import current_user
-from wtforms import DecimalField, StringField, SelectField
+from wtforms import DecimalField, StringField, SelectMultipleField, SelectField
 from wtforms.utils import unset_value
 from decimal import Decimal
-from ..models import Region
+from ..models import Region, Category
 
 
 class FactorDecimalField(DecimalField):
@@ -42,18 +42,21 @@ class TimeStringField(StringField):
     def process(self, formdata, data=unset_value):
         if data != unset_value and request.method == 'GET':
             if data is None:
-                data = '0:00:00'
+                data = '0:00'
             data = int(data)
-            data = "%d:%02d:%02d" % (
+            data = "%d:%02d" % (
                 math.floor(data / 60 / 60),
-                math.floor((data / 60) % 60),
-                math.floor(data % 60)
+                math.floor((data / 60) % 60)
             )
         super(TimeStringField, self).process(formdata, data)
 
+    @property
+    def data_out(self):
+        return int(self.data[:-3]) * 3600 + int(self.data[-2:]) * 60
+
     def populate_obj(self, obj, name):
         try:
-            value = int(self.data[-8:-6]) * 3600 + int(self.data[-5:-3]) * 60 + int(self.data[-2:])
+            value = int(self.data[-5:-3]) * 3600 + int(self.data[-2:]) * 60
             setattr(obj, name, value)
         except ValueError:
             setattr(obj, name, 0)
@@ -83,3 +86,37 @@ class RegionField(SelectField):
 
     def populate_obj(self, obj, name):
         setattr(obj, '%s_id' % name, int(self.data))
+
+
+class CategoryField(SelectMultipleField):
+    def __init__(self, all_option=False, **kwargs):
+        self.simple_validate = getattr(kwargs['_form'], 'simple_validate', False)
+        super(CategoryField, self).__init__(**kwargs)
+        self.choices = [('_all', 'beliebig')] if all_option else [('0', 'bitte wählen')]
+        if self.simple_validate:
+            return
+        self.categories = Category.query
+        self.categories = self.categories.order_by(Category.name).all()
+        for category in self.categories:
+            self.choices.append((str(category.id), category.name))
+
+    def pre_validate(self, form):
+        if self.simple_validate:
+            return
+        super(CategoryField, self).pre_validate(form)
+
+    def process(self, formdata, data=unset_value):
+        if data != unset_value and request.method == 'GET':
+            result = []
+            for item in data:
+                result.append(str(item.id))
+            data = result
+        super(CategoryField, self).process(formdata, data)
+
+    def populate_obj(self, obj, name):
+        result = []
+        for item in self.data:
+            for category in self.categories:
+                if category.id == int(item):
+                    result.append(category)
+        setattr(obj, '%s' % name, result)

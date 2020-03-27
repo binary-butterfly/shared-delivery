@@ -19,6 +19,7 @@ import datetime
 from dateutil.parser import parse as dateutil_parse
 from urllib.parse import quote_plus
 from flask_babel import _
+from .helpers import DefaultJSONEncoder
 
 
 def register_global_filters(app):
@@ -51,6 +52,11 @@ def register_global_filters(app):
             return json.loads(value)
         except (ValueError, TypeError):
             return []
+
+    @app.template_filter('tojson')
+    def data_to_json(value):
+        return json.dumps(value, cls=DefaultJSONEncoder)
+
 
     @app.template_filter('ceil')
     def template_price(value):

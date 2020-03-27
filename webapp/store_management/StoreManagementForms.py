@@ -13,10 +13,11 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 from flask_wtf import FlaskForm
 from flask_babel import _
 from wtforms import validators
-from wtforms import StringField, TextAreaField, SelectField, SubmitField, HiddenField
+from wtforms import StringField, TextAreaField, SelectField, SubmitField, HiddenField, FormField, FieldList, \
+    BooleanField
 from ..common.form import SearchBaseForm
 from ..common.countrycodes import country_codes
-from ..common.form_field import RegionField
+from ..common.form_field import RegionField, CategoryField, TimeStringField
 from ..common.form_filter import float_filter
 
 
@@ -33,6 +34,27 @@ class StoreSearchForm(SearchBaseForm):
     )
 
 
+class OpeningTimeForm(FlaskForm):
+    weekday = SelectField(
+        label='Wochentag',
+        choices=[
+            ('1', 'Montags'),
+            ('2', 'Dienstags'),
+            ('3', 'Mittwoch'),
+            ('4', 'Donnerstag'),
+            ('5', 'Freitag'),
+            ('6', 'Samstag'),
+            ('7', 'Sonntag')
+        ]
+    )
+    open = TimeStringField(
+        label='Öffnungszeit'
+    )
+    close = TimeStringField(
+        label='Sließzeit'
+    )
+
+
 class StoreForm(FlaskForm):
     class Meta:
         locales = ('de_DE', 'de')
@@ -45,23 +67,8 @@ class StoreForm(FlaskForm):
             )
         ]
     )
-    type = SelectField(
-        label=_('Art des Geschäfts'),
-        choices=[
-            ('0', 'bitte wählen'),
-            ('Apotheke', 'Apotheke'),
-            ('Bäckerei', 'Bäckerei'),
-            ('Restaurant', 'Restaurant')
-        ],
-        validators=[
-            validators.DataRequired(
-                message='Bitte geben Sie einen Typen an.'
-            ),
-            validators.NoneOf(
-                ['0'],
-                message='Bitte geben Sie einen Typen an.'
-            )
-        ]
+    category = CategoryField(
+        label=_('Art des Geschäfts')
     )
     region = RegionField(
         label=_('Region'),
@@ -151,6 +158,30 @@ class StoreForm(FlaskForm):
     )
     description = TextAreaField(
         label='Beschreibung'
+    )
+    all_switch = BooleanField(
+        label='Geschäft hat geöffnet'
+    )
+    opening_times_all = FieldList(
+        FormField(OpeningTimeForm),
+        label='Öffnungszeiten',
+        min_entries=0
+    )
+    delivery_switch = BooleanField(
+        label='Abweichende Lieferzeiten'
+    )
+    opening_times_delivery = FieldList(
+        FormField(OpeningTimeForm),
+        label='Öffnungszeiten',
+        min_entries=0
+    )
+    pickup_switch = BooleanField(
+        label='Abweichende Abholzeiten'
+    )
+    opening_times_pickup = FieldList(
+        FormField(OpeningTimeForm),
+        label='Öffnungszeiten',
+        min_entries=0
     )
     submit = SubmitField(_('speichern'))
 

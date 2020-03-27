@@ -2,15 +2,15 @@
 {% from "macros.html" import form_field with context %}
 
 {% block content %}
-    <form method="POST" action="/user/nutzerdaten">
+    <form method="POST" action="/user/data">
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ _('Nutzerdaten bearbeiten') }}</h1>
             </div>
         </div>
         <div class="row row-form">
-            {{ form_field(form.first_name, 6) }}
-            {{ form_field(form.last_name, 6) }}
+            {{ form_field(form.firstname, 6) }}
+            {{ form_field(form.lastname, 6) }}
         </div>
         <div class="row row-form">
             {{ form_field(form.company, 12) }}
@@ -24,7 +24,6 @@
         </div>
         <div class="row row-form">
             {{ form_field(form.phone, 6) }}
-            {{ form_field(form.language, 6) }}
         </div>
         <div class="row row-form">
             {{ form_field(form.submit, 12, 'input-submit') }}

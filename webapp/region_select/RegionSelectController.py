@@ -13,7 +13,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 from flask import Blueprint, render_template, abort
 
-from ..models import Region, Category, Store
+from ..models import Region, Category, Store, OpeningTime
 
 region_select = Blueprint('region_select', __name__, template_folder='templates')
 
@@ -49,4 +49,5 @@ def regions_stores(region_slug, category_slug):
 @region_select.route('/store/<int:store_id>')
 def store(store_id):
     store = Store.query.get_or_404(store_id)
-    return render_template('store-single.html', store=store)
+    opening_times = OpeningTime.query.filter_by(store_id=store.id).order_by(OpeningTime.weekday, OpeningTime.open).all()
+    return render_template('store-single.html', store=store, opening_times=opening_times)

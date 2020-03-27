@@ -4,9 +4,11 @@
     <div class="row">
         <div class="col-md-12">
             <h1>{{ _('Lokale Geschäfte in ') }}{{ region.name }}</h1>
-            <p>
-                <img src="/static/img/region/{% if region.picture %}{{ region.id }}.1110.{{ region.picture }}{% else %}default.1110.png{% endif %}" alt="{{ region.name }}">
-            </p>
+            {% if region.picture %}
+                <p>
+                    <img src="/static/img/region/{{ region.id }}.1110.{{ region.picture }}" alt="{{ region.name }}">
+                </p>
+            {% endif %}
             <p>
                 Welches Geschäft hat in {{ region.name }} wann offen? Welches Geschäft liefert? Dies wollen wir hier beantworten.
             </p>

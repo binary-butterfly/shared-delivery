@@ -10,12 +10,12 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-
-from flask import Blueprint, render_template, flash, redirect
-from flask_login import login_required
+from math import floor
+from flask import Blueprint, render_template, flash, redirect, abort
+from flask_login import login_required, current_user
 
 from ..extensions import db
-from ..models import Store
+from ..models import Store, OpeningTime
 from .StoreManagementForms import StoreSearchForm, StoreForm, StoreDeleteForm
 from webapp.store_management.StoreElasticImport import es_index_store_delay
 from webapp.store_management.StoreManagementHelper import create_store_revision
@@ -28,13 +28,26 @@ from . import StoreManagementApi
 @store_management.route('/admin/stores')
 @login_required
 def stores_main():
+    if not current_user.has_capability('admin'):
+        abort(403)
     form = StoreSearchForm()
     return render_template('stores.html', form=form)
+
+
+@store_management.route('/admin/store/<int:store_id>/show', methods=['GET', 'POST'])
+@login_required
+def store_show(store_id):
+    if not current_user.has_capability('admin'):
+        abort(403)
+    store = Store.query.get_or_404(store_id)
+    return render_template('store-show.html', store=store)
 
 
 @store_management.route('/admin/store/new', methods=['GET', 'POST'])
 @login_required
 def store_new():
+    if not current_user.has_capability('admin'):
+        abort(403)
     form = StoreForm()
     if form.validate_on_submit():
         store = Store()
@@ -51,14 +64,65 @@ def store_new():
 @store_management.route('/admin/store/<int:store_id>/edit', methods=['GET', 'POST'])
 @login_required
 def store_edit(store_id):
+    if not current_user.has_capability('admin'):
+        abort(403)
     store = Store.query.get_or_404(store_id)
+    opening_times = []
+    for opening_time in OpeningTime.query.filter_by(store_id=store.id).order_by(OpeningTime.weekday, OpeningTime.open).all():
+        ot = opening_time.to_dict()
+        ot['open'] = opening_time.open_out
+        ot['close'] = opening_time.close_out
+        opening_times.append(ot)
     form = StoreForm(obj=store)
     if form.validate_on_submit():
+        opening_times_data = {}
+        for field in ['all', 'delivery', 'pickup']:
+            opening_times_data[field] = getattr(form, 'opening_times_%s' % field)
+            delattr(form, 'opening_times_%s' % field)
         form.populate_obj(store)
         db.session.add(store)
         db.session.commit()
+        save_opening_times(form, opening_times_data, store)
         es_index_store_delay.delay(store.id)
         create_store_revision.delay(store.id)
         flash('Geschäft erfolgreich gespeichert', 'success')
         return redirect('/admin/stores')
-    return render_template('store-edit.html', form=form, store=store)
+    return render_template('store-edit.html', form=form, store=store, opening_times=opening_times)
+
+
+def save_opening_times(form, opening_times_data,  store):
+    old_ids = []
+    for opening_time in store.opening_time:
+        old_ids.append(opening_time.id)
+    for field in ['all', 'delivery', 'pickup']:
+        if getattr(form, '%s_switch' % field):
+            for opening_time in opening_times_data[field]:
+                opening_time_id = upsert_opening_time(store, opening_time, field)
+                if opening_time_id in old_ids:
+                    old_ids.remove(opening_time_id)
+
+    if len(old_ids) == 0:
+        return
+    OpeningTime.query.filter(OpeningTime.id.in_(old_ids)).delete(synchronize_session=False)
+    db.session.commit()
+
+
+def upsert_opening_time(store, form_opening_time, type):
+    for opening_time in store.opening_time:
+        if opening_time.weekday != int(form_opening_time.weekday.data):
+            continue
+        if opening_time.open != form_opening_time.open.data_out:
+            continue
+        if opening_time.close != form_opening_time.close.data_out:
+            continue
+        return opening_time.id
+    opening_time = OpeningTime()
+    opening_time.type = type
+    opening_time.weekday = int(form_opening_time.weekday.data)
+    opening_time.open = form_opening_time.open.data_out
+    opening_time.close = form_opening_time.close.data_out
+    opening_time.store_id = store.id
+    db.session.add(opening_time)
+    db.session.commit()
+    print('create %s' % opening_time.id)
+    return opening_time.id

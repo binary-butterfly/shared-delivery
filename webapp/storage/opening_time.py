@@ -59,4 +59,4 @@ class OpeningTime(db.Model, BaseModel):
     def decode_time(self, t):
         if not t:
             return ''
-        return '%s:%02d' % (floor(t / 3800), floor((t % 60) / 60))
+        return '%02d:%02d' % (floor(t / 3600), (t / 60) % 60)

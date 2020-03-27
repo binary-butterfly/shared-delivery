@@ -39,6 +39,11 @@ login_manager.anonymous_user = AnonymousUser
 class User(db.Model, BaseModel, UserMixin):
     __tablename__ = 'user'
 
+    fields = [
+        'id', 'created', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality', 'phone', 'mobile',
+        'email'
+    ]
+
     version = '0.9.1'
 
     region_id = db.Column(db.Integer, db.ForeignKey('region.id'))

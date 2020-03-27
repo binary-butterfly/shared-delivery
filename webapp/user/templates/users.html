@@ -5,17 +5,18 @@
     <div class="row">
         <div class="col-md-12">
             <h1>
-                {{ _('Regionen') }}
-                {{ action_button('new', url_for('region_management.region_new')) }}
+                {{ _('Nutzer') }}
+                {{ action_button('new', url_for('user.user_new')) }}
             </h1>
         </div>
     </div>
-    <form method="post" action="#" id="region-search-form">
+    <form method="post" action="#" id="user-search-form">
         <div class="row row-form">
             {{ form_field(form.name, 3) }}
             {{ form_field(form.submit, 3, 'input-submit-emptylabel' ) }}
         </div>
         {{ form.csrf_token }}
-        <div id="region-search-results"></div>
+        <div id="user-search-results"></div>
     </form>
 {% endblock %}
+

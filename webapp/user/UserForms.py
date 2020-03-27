@@ -68,61 +68,6 @@ class PasswordForm(FlaskForm):
     submit = SubmitField(_('Passwort speichern'))
 
 
-class UserProfileForm(FlaskForm):
-    first_name = StringField(
-        label=_('Vorname'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie einen Vorname an.')
-            )
-        ]
-    )
-    last_name = StringField(
-        label=_('Nachname'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie einen Nachnamen an.')
-            )
-        ]
-    )
-    company = StringField(
-        label=_('Unternehmen')
-    )
-    address = StringField(
-        label=_('Strasse und Hausnummer'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie Strasse und Hausnummer an.')
-            )
-        ]
-    )
-    postalcode = StringField(
-        label=_('Postleitzahl'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie eine Postleitzahl an.')
-            )
-        ]
-    )
-    locality = StringField(
-        label=_('Ort'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie einen Ort an.')
-            )
-        ]
-    )
-    language = SelectField(
-        label=_('Sprache'),
-        choices=[('de', _('deutsch')), ('en', _('englisch'))],
-        default='de'
-    )
-    phone = StringField(
-        label=_('Telefonnummer'),
-        validators=[]
-    )
-    submit = SubmitField(_('speichern'))
-
 
 class RecoverForm(FlaskForm):
     email = StringField(

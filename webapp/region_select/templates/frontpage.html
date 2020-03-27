@@ -1,4 +1,5 @@
 {% extends "layout.html" %}
+{% from "svgs.html" import locality_svg with context %}
 
 {% block content %}
     <div class="row">
@@ -11,13 +12,16 @@
     </div>
     <div class="row">
         {% for region in regions %}
-            <div class="col-md-4 image-select-box">
-                <h2><a href="/region/{{ region.slug }}">{{ region.name }}</a></h2>
+            <div class="col-md-4 col-6 image-select-box">
                 <a href="/region/{{ region.slug }}">
-                    <img
-                            src="/static/img/region/{% if region.picture %}{{ region.id }}.350.{{ region.picture }}{% else %}default.350.png{% endif %}"
-                            alt="{{ region.name }}"
-                    >
+                    {% if region.picture %}
+                        <img
+                                src="/static/img/region/{% if region.picture %}{{ region.id }}.350.{{ region.picture }}{% else %}default.350.png{% endif %}"
+                                alt="{{ region.name }}"
+                        >
+                    {% else %}
+                        {{ locality_svg(region.name) }}
+                    {% endif %}
                 </a>
             </div>
         {% endfor %}
