@@ -18,7 +18,7 @@ from ..extensions import db
 from ..models import Store, OpeningTime
 from .StoreManagementForms import StoreSearchForm, StoreForm, StoreNewForm, StoreDeleteForm
 from webapp.store_management.StoreElasticImport import es_index_store_delay
-from webapp.store_management.StoreManagementHelper import create_store_revision_delay
+from webapp.store_management.StoreManagementHelper import create_store_revision_delay, get_opening_times_for_form
 
 store_management = Blueprint('store_management', __name__, template_folder='templates')
 
@@ -72,12 +72,7 @@ def store_edit(store_id):
     if not current_user.has_capability('admin'):
         abort(403)
     store = Store.query.get_or_404(store_id)
-    opening_times = []
-    for opening_time in OpeningTime.query.filter_by(store_id=store.id).order_by(OpeningTime.weekday, OpeningTime.open).all():
-        ot = opening_time.to_dict()
-        ot['open'] = opening_time.open_out
-        ot['close'] = opening_time.close_out
-        opening_times.append(ot)
+
     form = StoreForm(obj=store)
     if form.validate_on_submit():
         opening_times_data = {}
@@ -92,7 +87,7 @@ def store_edit(store_id):
         create_store_revision_delay.delay(store.id)
         flash('Geschäft erfolgreich gespeichert', 'success')
         return redirect('/admin/stores')
-    return render_template('store-edit.html', form=form, store=store, opening_times=opening_times)
+    return render_template('store-edit.html', form=form, store=store, opening_times=get_opening_times_for_form(store.id))
 
 
 def save_opening_times(form, opening_times_data,  store):
@@ -129,5 +124,22 @@ def upsert_opening_time(store, form_opening_time, type):
     opening_time.store_id = store.id
     db.session.add(opening_time)
     db.session.commit()
-    print('create %s' % opening_time.id)
     return opening_time.id
+
+
+@store_management.route('/admin/store/<int:store_id>/delete', methods=['GET', 'POST'])
+@login_required
+def store_delete(store_id):
+    if not current_user.has_capability('admin'):
+        abort(403)
+    store = Store.query.get_or_404(store_id)
+    form = StoreDeleteForm()
+    if form.validate_on_submit():
+        if form.abort.data:
+            return redirect('/admin/stores')
+        store.deleted = True
+        db.session.add(store)
+        db.session.commit()
+        flash('Geschäft erfolgreich gelöscht', 'success')
+        return redirect('/admin/stores')
+    return render_template('store-delete.html', store=store, form=form)

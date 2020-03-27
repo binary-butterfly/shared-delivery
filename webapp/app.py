@@ -28,7 +28,8 @@ from .store_management import store_management
 from .store_api import store_api
 from .region_management import region_management
 from .store_map import store_map
-from .region_select import region_select
+from .tiles import tiles
+from .store_frontend import store_frontend
 
 __all__ = ['launch']
 
@@ -39,7 +40,8 @@ DEFAULT_BLUEPRINTS = [
     store_api,
     region_management,
     store_map,
-    region_select
+    tiles,
+    store_frontend
 ]
 
 

@@ -46,6 +46,10 @@ class Store(db.Model, BaseModel):
     lat = db.Column(db.Numeric(precision=8, scale=6), default=0)
     lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
 
+    source_text = db.Column(db.String(255))
+    source_url = db.Column(db.String(255))
+    deleted = db.Column(db.Boolean, default=False)
+
     website = db.Column(db.String(255))
     website_crowdfunding = db.Column(db.String(255))
     website_coupon = db.Column(db.String(255))

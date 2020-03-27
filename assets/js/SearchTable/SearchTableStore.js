@@ -58,6 +58,7 @@ export default class SearchTableStore extends SearchTable {
             <td>
                 {this.renderActionLink(`/admin/store/${row.id}/show`, 'info', true)}
                 {this.renderActionLink(`/admin/store/${row.id}/edit`, 'edit', true)}
+                {this.renderActionLink(`/admin/store/${row.id}/delete`, 'delete', true)}
             </td>
         )
     }

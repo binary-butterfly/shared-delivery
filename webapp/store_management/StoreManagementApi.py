@@ -31,7 +31,7 @@ def api_stores():
             'status': -1,
             'errors': form.errors
         })
-    stores = Store.query
+    stores = Store.query.filter(Store.deleted == False)
     if form.name.data:
         stores = stores.filter(Store.name.like('%%%s%%' % form.name.data))
 

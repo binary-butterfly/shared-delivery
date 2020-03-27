@@ -62,7 +62,7 @@ class OpeningTimeForm(FlaskForm):
     )
 
 
-class StoreForm(FlaskForm):
+class StoreBaseForm(FlaskForm):
     class Meta:
         locales = ('de_DE', 'de')
 
@@ -77,20 +77,17 @@ class StoreForm(FlaskForm):
     category = CategoryField(
         label=_('Art des Geschäfts')
     )
-    region = RegionField(
-        label=_('Region'),
-        validators = [
-            validators.NoneOf(
-                ['0'],
-                message='Bitte geben Sie eine Region an'
-            )
+    source_text = StringField(
+        label=_('Woher kommt die Information?')
+    )
+    source_url = StringField(
+        label=_('Woher kommt die Information (Ergänzender Link)?'),
+        validators=[
+            validators.URL(
+                message='Bitte geben Sie eine valide URL ein (oder gar nichts)'
+            ),
+            validators.Optional()
         ]
-    )
-    firstname = StringField(
-        label=_('Vorname')
-    )
-    lastname = StringField(
-        label=_('Nachname')
     )
     company = StringField(
         label=_('Unternehmen')
@@ -118,16 +115,6 @@ class StoreForm(FlaskForm):
                 message=_('Bitte geben Sie einen Ort an.')
             )
         ]
-    )
-    country = SelectField(
-        _('Staat'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie einen Staat an.')
-            )
-        ],
-        choices=country_codes,
-        default='DE'
     )
     website = StringField(
         label=_('Website'),
@@ -185,6 +172,17 @@ class StoreForm(FlaskForm):
     )
     submit = SubmitField(_('speichern'))
 
+
+class StoreForm(StoreBaseForm):
+    region = RegionField(
+        label=_('Region'),
+        validators = [
+            validators.NoneOf(
+                ['0'],
+                message='Bitte geben Sie eine Region an'
+            )
+        ]
+    )
 
 class StoreNewForm(StoreForm):
     lat = HiddenField(

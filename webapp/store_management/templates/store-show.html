@@ -1,9 +1,14 @@
 {% extends "layout.html" %}
+{% from "macros.html" import action_button with context %}
 
 {% block content %}
     <div class="row">
         <div class="col-md-12">
-            <h1>{{ store.name }} in {{ store.region.name }}</h1>
+            <h1>
+                {{ store.name }} in {{ store.region.name }}
+                {{ action_button('edit', url_for('store_management.store_edit', store_id=store.id)) }}
+                {{ action_button('delete', url_for('store_management.store_delete', store_id=store.id)) }}
+            </h1>
         </div>
     </div>
     <div class="row">

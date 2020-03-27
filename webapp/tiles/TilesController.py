@@ -15,16 +15,16 @@ from flask import Blueprint, render_template, abort
 
 from ..models import Region, Category, Store, OpeningTime
 
-region_select = Blueprint('region_select', __name__, template_folder='templates')
+tiles = Blueprint('tiles', __name__, template_folder='templates')
 
 
-@region_select.route('/')
+@tiles.route('/')
 def regions_main():
     regions = Region.query.order_by(Region.name).all()
     return render_template('frontpage.html', regions=regions)
 
 
-@region_select.route('/region/<string:region_slug>')
+@tiles.route('/region/<string:region_slug>')
 def regions_categories(region_slug):
     region = Region.query.filter_by(slug=region_slug).first()
     if not region:
@@ -33,7 +33,7 @@ def regions_categories(region_slug):
     return render_template('region.html', region=region, categories=categories)
 
 
-@region_select.route('/region/<string:region_slug>/<string:category_slug>')
+@tiles.route('/region/<string:region_slug>/<string:category_slug>')
 def regions_stores(region_slug, category_slug):
     region = Region.query.filter_by(slug=region_slug).first()
     category = Category.query.filter_by(slug=category_slug).first()
@@ -44,12 +44,4 @@ def regions_stores(region_slug, category_slug):
         .filter(Store.category.contains(category)) \
         .order_by(Store.name.asc()).all()
     return render_template('store-list.html', region=region, category=category, stores=stores)
-
-
-@region_select.route('/store/<int:store_id>')
-def store(store_id):
-    store = Store.query.get_or_404(store_id)
-    opening_times = OpeningTime.query.filter_by(store_id=store.id).order_by(OpeningTime.weekday, OpeningTime.open).all()
-    return render_template('store-single.html', store=store, opening_times=opening_times)
-
 
