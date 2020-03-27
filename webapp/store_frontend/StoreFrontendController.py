@@ -44,6 +44,7 @@ def store_frontend_suggest(store_id):
             if getattr(form, '%s_switch' % field):
                 for opening_time in opening_times_data[field]:
                     store_suggestion['opening_time'].append({
+                        'type': field,
                         'weekday': opening_time.weekday.data,
                         'open': opening_time.open.data_out,
                         'close': opening_time.close.data_out
