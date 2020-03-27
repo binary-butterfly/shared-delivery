@@ -49,10 +49,10 @@
                 </button>
 
                 <a class="navbar-brand" href="/">
-                    {% if config['MODE'] != 'PRODUCTION' %}
+                    {% if config['MODE'] != 'PRODUCTION' and False %}
                         {{ config['MODE'] }}
                     {% else %}
-                        <img src="/static/images/shared-delivery-logo.png" class="d-inline-block align-top" alt="Shared Delivery Logo">
+                        <img src="/static/img/logo.svg" class="d-inline-block align-top" alt="lokalwirkt Logo">
                     {% endif %}
                 </a>
 
