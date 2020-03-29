@@ -9054,6 +9054,9 @@ a.btn-icon, button.btn-icon {
   cursor: pointer;
   z-index: 2000; }
 
+.map-not-revisited {
+  font-style: italic; }
+
 #opening-times-form .fa {
   color: #999;
   cursor: pointer; }
