@@ -54,7 +54,7 @@ def es_index_store(store, refresh=True):
     store_dict = store.to_dict(children=True)
     if store.lat and store.lon:
         store_dict['location'] = '%s,%s' % (store.lat, store.lon)
-    store['revisit_required'] = store.revisit_required
+    store_dict['revisit_required'] = store.revisit_required
     categories = []
     category_slugs = []
     for category in store_dict['category']:

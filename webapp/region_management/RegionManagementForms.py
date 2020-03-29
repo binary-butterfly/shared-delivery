@@ -63,7 +63,7 @@ class RegionForm(FlaskForm):
         default='#0f2965'
     )
     picture_overlay_color = StringField(
-        label='Farbe für Titel auf Bild',
+        label='Farbe für Bild-Titel',
         validators=[
             ColorValidator(
                 message='Bitte geben Sie eine Farbe ein.'
