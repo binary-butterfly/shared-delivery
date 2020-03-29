@@ -64,7 +64,6 @@ def es_index_store(store, refresh=True):
     store_dict['category_slug'] = category_slugs
     for key in store_dict['region'].keys():
         store_dict['region_%s' % key] = store_dict['region'][key]
-    print(store_dict)
     es.index(
         index=index_name,
         id='store-%s' % store.id,

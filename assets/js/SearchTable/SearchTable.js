@@ -44,7 +44,7 @@ export default class SearchTable extends Component {
 
     updateData() {
         this.saveParams();
-        $.post(this.apiUrl, this.params)
+        $.post(this.apiUrl, this.getParams())
             .then(data => {
                 if (data.status)
                     return;
@@ -57,6 +57,10 @@ export default class SearchTable extends Component {
                     pageMax: (data.count) ? Math.ceil(data.count / this.state.itemsPerPage) : 1
                 });
             });
+    }
+
+    getParams() {
+        return this.params;
     }
 
     componentDidUpdate(prevProps, prevState, snapshot) {
@@ -335,6 +339,7 @@ export default class SearchTable extends Component {
             </a>
         )
     }
+
     renderTableRows() {
         let rows = [];
         for (let i = 0; i < this.state.data.length; i++) {

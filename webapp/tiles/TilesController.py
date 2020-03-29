@@ -13,7 +13,8 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 from sqlalchemy import or_, not_
 from flask import Blueprint, render_template, abort
 
-from ..models import Region, Category, Store, OpeningTime
+from ..models import Region, Category, Store
+from .TilesForms import StoreSearchForm
 
 tiles = Blueprint('tiles', __name__, template_folder='templates')
 
@@ -22,6 +23,12 @@ tiles = Blueprint('tiles', __name__, template_folder='templates')
 def regions_main():
     regions = Region.query.order_by(Region.name).all()
     return render_template('frontpage.html', regions=regions)
+
+
+@tiles.route('/stores')
+def stores_main():
+    form = StoreSearchForm()
+    return render_template('stores-frontend.html', form=form)
 
 
 @tiles.route('/region/<string:region_slug>')

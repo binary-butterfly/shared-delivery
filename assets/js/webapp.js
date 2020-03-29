@@ -17,6 +17,7 @@ import OpeningTimesForm from "./OpeningTimesForm";
 import SearchTableUser from "./SearchTable/SearchTableUser";
 import SearchTableStoreSuggestion from "./SearchTable/SearchTableStoreSuggestion";
 import SearchTableCategory from './SearchTable/SearchTableCategory';
+import StoreSearch from "./SearchTable/StoreSearch";
 
 $(document).ready(function () {
     window.common = new Common();
@@ -41,6 +42,12 @@ $(document).ready(function () {
         );
     }
 
+    if (document.getElementById('store-frontend-search-results')) {
+        ReactDOM.render(
+            <StoreSearch ref={(storeSearch) => {window.storeSearch = storeSearch}} />,
+            document.getElementById("store-frontend-search-results")
+        );
+    }
     if (document.getElementById('store-map')) {
         ReactDOM.render(
             <StoreMap ref={(storeMap) => {window.storeMap = storeMap}} />,

@@ -131,7 +131,6 @@ export default class StoreForm extends Component {
                     </label>
                 </p>
                 {this.renderOpeningTimes('pickup', this.state.pickupOpen)}
-
                 <label htmlFor="onlineshop" style={{marginTop: '10px'}}>
                     <input
                         type="checkbox"

@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field, action_button with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                {{ _('Geschäfte suchen') }}
+            </h1>
+        </div>
+    </div>
+    <form method="post" action="#" id="store-frontend-search-form">
+        <div class="row row-form">
+            {{ form_field(form.q, 6) }}
+            {{ form_field(form.region_id, 4) }}
+            {{ form_field(form.submit, 2, 'input-submit-emptylabel' ) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.no_revisit_required, 12, 'input-checkbox') }}
+        </div>
+        {{ form.csrf_token }}
+        <div id="store-frontend-search-results"></div>
+    </form>
+{% endblock %}
+

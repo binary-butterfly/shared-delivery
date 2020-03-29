@@ -10,36 +10,31 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-from flask import current_app
-from ..common.response import json_response
-from ..extensions import csrf
-from ..models import Store
-from .StoreApiRequest import get_data
-
-from .StoreApiController import store_api
+from flask_wtf import FlaskForm
+from wtforms import validators
+from wtforms import StringField, BooleanField, SelectField
+from ..common.form import SearchBaseForm
+from ..common.form_field import RegionField
 
 
-@store_api.route('/api/stores/search', methods=['GET', 'POST'])
-@csrf.exempt
-def api_stores_search():
-    data, count = get_data()
-    return json_response({
-        'status': 0,
-        'data': data,
-        'count:': count
-    }, cors=True)
-
-
-@store_api.route('/api/store/<int:store_id>')
-@csrf.exempt
-def api_store(store_id):
-    store = Store.query.get(store_id)
-    if not store:
-        return json_response({
-            'status': 404
-        })
-    return json_response({
-        'status': 0,
-        'data': store.to_dict(children=True)
-    }, cors=True)
-
+class StoreSearchForm(SearchBaseForm):
+    q = StringField(
+        label='Freitext'
+    )
+    region_id = RegionField(
+        label='Region',
+        all_option=True,
+        validators=[
+            validators.Optional()
+        ]
+    )
+    no_revisit_required = BooleanField(
+        label='Nur Geschäfte mit Corona-aktuelle Daten zeigen'
+    )
+    sort_field = SelectField(
+        label='Sortier-Feld',
+        choices=[
+            ('name', 'Name'),
+            ('created', 'Erstellt')
+        ]
+    )
