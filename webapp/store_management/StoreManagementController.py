@@ -82,7 +82,7 @@ def store_edit(store_id):
             opening_times_data[field] = getattr(form, 'opening_times_%s' % field)
             delattr(form, 'opening_times_%s' % field)
         form.populate_obj(store)
-        store.revisited_admin = datetime.utcnow()
+        setattr(store, 'revisited_%s' % current_user.role, datetime.utcnow())
         db.session.add(store)
         db.session.commit()
         save_opening_times_form(form, opening_times_data, store)

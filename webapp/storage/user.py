@@ -61,7 +61,7 @@ class User(db.Model, BaseModel, UserMixin):
     postalcode = db.Column(db.String(255))
     locality = db.Column(db.String(255))
     country = db.Column(db.String(2))
-    role = db.Column(db.Enum('admin', 'government'))
+    role = db.Column(db.Enum('admin', 'government', 'organization'))
 
     language = db.Column(db.Enum('de', 'en'), default='de')
 
