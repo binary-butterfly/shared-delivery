@@ -27889,6 +27889,7 @@ var StoreForm = /*#__PURE__*/function (_Component) {
       this.setState({
         initialized: true,
         openingTimes: openingTimes,
+        store: opeing_time_store,
         allOpen: openingTimes.all.length > 0,
         deliveryOpen: openingTimes.delivery.length > 0,
         pickupOpen: openingTimes.pickup.length > 0
@@ -27946,6 +27947,16 @@ var StoreForm = /*#__PURE__*/function (_Component) {
         defaultChecked: this.state.allOpen,
         onClick: this.triggerOpenSwitch.bind(this, 'all')
       }), ' ', "Gesch\xE4ft hat ge\xF6ffnet")), this.renderOpeningTimes('all', this.state.allOpen), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "delivery",
+        style: {
+          marginTop: '10px'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+        type: "checkbox",
+        name: "delivery",
+        defaultChecked: this.state.store.delivery || this.state.openingTimes.delivery.length,
+        id: "delivery"
+      }), ' ', "Bietet Lieferung"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "delivery_switch",
         style: {
           marginTop: '10px'
@@ -27956,7 +27967,17 @@ var StoreForm = /*#__PURE__*/function (_Component) {
         id: "delivery_switch",
         defaultChecked: this.state.deliveryOpen,
         onClick: this.triggerOpenSwitch.bind(this, 'delivery')
-      }), ' ', "Abweichende Lieferzeiten")), this.renderOpeningTimes('delivery', this.state.deliveryOpen), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+      }), ' ', "Abweichende Lieferzeiten"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null)), this.renderOpeningTimes('delivery', this.state.deliveryOpen), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "pickup",
+        style: {
+          marginTop: '10px'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+        type: "checkbox",
+        name: "pickup",
+        defaultChecked: this.state.store.pickup || this.state.openingTimes.pickup.length,
+        id: "pickup"
+      }), ' ', "Bietet Abholung"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
         htmlFor: "pickup_switch",
         style: {
           marginTop: '10px'
@@ -27967,7 +27988,17 @@ var StoreForm = /*#__PURE__*/function (_Component) {
         id: "pickup_switch",
         defaultChecked: this.state.pickupOpen,
         onClick: this.triggerOpenSwitch.bind(this, 'pickup')
-      }), ' ', "Abweichende Abholzeiten")), this.renderOpeningTimes('pickup', this.state.pickupOpen));
+      }), ' ', "Abweichende Abholzeiten")), this.renderOpeningTimes('pickup', this.state.pickupOpen), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("label", {
+        htmlFor: "onlineshop",
+        style: {
+          marginTop: '10px'
+        }
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("input", {
+        type: "checkbox",
+        name: "onlineshop",
+        defaultChecked: this.state.store.onlineshop,
+        id: "onlineshop"
+      }), ' ', "Hat Onlineshop"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null));
     }
   }, {
     key: "renderOpeningTimes",

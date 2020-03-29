@@ -39,7 +39,7 @@ def api_stores():
 
     if form.region.data and form.region.data not in ['None', '_all']:
         stores = stores.filter_by(region_id=form.region.data)
-    else:
+    elif not current_user.has_capability('admin'):
         stores = stores.filter(Store.region_id.in_(current_user.region_ids))
 
     if form.revisit_required.data and form.revisit_required.data not in ['None', '_all']:
@@ -79,7 +79,7 @@ def api_store_suggestions():
 
     if form.region.data and form.region.data not in ['None', '_all']:
         stores = stores.filter_by(region_id=form.region.data)
-    else:
+    elif not current_user.has_capability('admin'):
         stores = stores.filter(Store.region_id.in_(current_user.region_ids))
 
     if form.settled.data and form.settled.data not in ['None', '_all']:

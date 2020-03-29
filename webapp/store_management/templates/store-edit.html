@@ -55,6 +55,7 @@
 {% block scripts %}
     <script>
         var opening_times = {{ opening_times|tojson|safe }};
+        var opeing_time_store = {{ store.to_dict()|tojson|safe }};
     </script>
     {{ super() }}
 {% endblock %}

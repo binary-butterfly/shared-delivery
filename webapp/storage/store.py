@@ -22,7 +22,7 @@ class Store(db.Model, BaseModel):
         'id', 'created', 'modified', 'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality',
         'country', 'lat', 'lon', 'website', 'email', 'phone', 'mobile', 'fax', 'description', 'website_crowdfunding',
         'website_coupon', 'wheelchair', 'licence', 'brand', 'osm_id', 'revisited_government', 'revisited_store',
-        'delivery', 'pickup'
+        'delivery', 'pickup', 'onlineshop'
     ]
 
     version = '0.9.0'
@@ -65,6 +65,7 @@ class Store(db.Model, BaseModel):
 
     delivery = db.Column(db.Boolean)
     pickup = db.Column(db.Boolean)
+    onlineshop = db.Column(db.Boolean)
 
     licence = db.Column(db.String(255))
     description = db.Column(db.Text)

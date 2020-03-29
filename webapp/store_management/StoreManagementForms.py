@@ -196,6 +196,15 @@ class StoreBaseForm(FlaskForm):
         label='Öffnungszeiten',
         min_entries=0
     )
+    delivery = BooleanField(
+        label='Lieferung'
+    )
+    pickup = BooleanField(
+        label='Abholung'
+    )
+    onlineshop = BooleanField(
+        label='Onlineshop'
+    )
     delivery_switch = BooleanField(
         label='Abweichende Lieferzeiten'
     )

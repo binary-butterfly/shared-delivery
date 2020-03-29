@@ -27,6 +27,7 @@ export default class StoreForm extends Component {
         this.setState({
             initialized: true,
             openingTimes: openingTimes,
+            store: opeing_time_store,
             allOpen: openingTimes.all.length > 0,
             deliveryOpen: openingTimes.delivery.length > 0,
             pickupOpen: openingTimes.pickup.length > 0
@@ -87,6 +88,15 @@ export default class StoreForm extends Component {
                 </p>
                 {this.renderOpeningTimes('all', this.state.allOpen)}
                 <p>
+                    <label htmlFor="delivery" style={{marginTop: '10px'}}>
+                        <input
+                            type="checkbox"
+                            name="delivery"
+                            defaultChecked={this.state.store.delivery || this.state.openingTimes.delivery.length}
+                            id="delivery"
+                        />{' '}
+                        Bietet Lieferung
+                    </label><br/>
                     <label htmlFor="delivery_switch" style={{marginTop: '10px'}}>
                         <input
                             type="checkbox"
@@ -96,10 +106,19 @@ export default class StoreForm extends Component {
                             onClick={this.triggerOpenSwitch.bind(this, 'delivery')}
                         />{' '}
                         Abweichende Lieferzeiten
-                    </label>
+                    </label><br/>
                 </p>
                 {this.renderOpeningTimes('delivery', this.state.deliveryOpen)}
                 <p>
+                    <label htmlFor="pickup" style={{marginTop: '10px'}}>
+                        <input
+                            type="checkbox"
+                            name="pickup"
+                            defaultChecked={this.state.store.pickup || this.state.openingTimes.pickup.length}
+                            id="pickup"
+                        />{' '}
+                        Bietet Abholung
+                    </label><br/>
                     <label htmlFor="pickup_switch" style={{marginTop: '10px'}}>
                         <input
                             type="checkbox"
@@ -112,6 +131,16 @@ export default class StoreForm extends Component {
                     </label>
                 </p>
                 {this.renderOpeningTimes('pickup', this.state.pickupOpen)}
+
+                <label htmlFor="onlineshop" style={{marginTop: '10px'}}>
+                    <input
+                        type="checkbox"
+                        name="onlineshop"
+                        defaultChecked={this.state.store.onlineshop}
+                        id="onlineshop"
+                    />{' '}
+                    Hat Onlineshop
+                </label><br/>
             </div>
         );
     }

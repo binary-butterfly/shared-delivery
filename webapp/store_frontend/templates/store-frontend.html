@@ -71,8 +71,18 @@
         <div class="col-md-6">
             <h2>Öffnungszeiten</h2>
             <p>
+
+                {% set current_type = 'all' %}
                 {% for opening_time in store.opening_time %}
+                    {% if current_type != opening_time.type %}
+                        {% if opening_time.type == 'delivery' %}
+                            <h3>Abweichende Versand-Lieferzeiten</h3>
+                        {% elif opening_time.type == 'pickup' %}
+                            <h3>Abweichende Versand-Lieferzeiten</h3>
+                        {% endif %}
+                    {% endif %}
                     {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
+                    {% set current_type = opening_time.type %}
                 {% else %}
                     Keine Öffnungszseiten hinterlegt.
                 {% endfor %}
