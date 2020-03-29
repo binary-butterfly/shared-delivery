@@ -1,6 +1,6 @@
 {% macro locality_svg(region) %}
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 264.583 132.292"
-         version="1.1" id="bochum" width="100%" height="100%" preserveAspectRatio="xMinYMid">
+         version="1.1" id="svg-city-{{ region.id }}" width="100%" height="100%" preserveAspectRatio="xMinYMid">
         <style>
             text.cityname {
                 font-style: normal;
@@ -36,7 +36,7 @@
             }
 
         </style>
-        <defs id="defs815">
+        <defs id="svg-def-{{ region.id }}">
             <linearGradient
                     id="linearGradient_main"
                     x1="18.976"
@@ -46,23 +46,23 @@
                     gradientUnits="userSpaceOnUse"
                     gradientTransform="translate(.107 -.004)"
             >
-                <stop style="stop-color:{{ region.style_color }};stop-opacity:1" offset="0" id="linearGradient_main_start"/>
-                <stop style="stop-color:{{ region.style_color }};stop-opacity:.8" offset="1" id="linearGradient_main_end"/>
+                <stop style="stop-color:{{ region.style_color }};stop-opacity:1" offset="0" id="svg-def-gradient-start-{{ region.id }}"/>
+                <stop style="stop-color:{{ region.style_color }};stop-opacity:.8" offset="1" id="svg-def-gradient-end-{{ region.id }}"/>
             </linearGradient>
 
         </defs>
-        <g id="layer1" transform="translate(0 -164.708)">
-            <g id="g28-0-7-6"
+        <g id="svg-layer-{{ region.id }}" transform="translate(0 -164.708)">
+            <g id="svg-g-{{ region.id }}"
                style="clip-rule:evenodd;fill:#000000;fill-opacity:0.99564586;fill-rule:evenodd;image-rendering:optimizeQuality;shape-rendering:geometricPrecision;text-rendering:geometricPrecision"
                transform="matrix(.31518 0 0 .30693 156.095 147.46)" clip-path="none">
                 <path
-                        id="path26-0-7"
+                        id="svg-path-{{ region.id }}"
                         d="M-194.217 268.51v37.543h-31.139v36.437L-237 334.855l-32.81 21.48.15.356v26.784l-10.272-4.866-9.284 4.272v-14.005l-9.465-4.628-1.284-69.825h-7.403l-1.613 64.8-5.94-2.928-12.69 4.669v-26.307h-59.95v49.173l-20.569-19.226-22.958 21.442.06.159h-5.793v22.35l-13.226-.039-8.3 16.813h3.822l.03 11.512-15.286.04-.029 4.352-10.51 7.476-.06-.08v-30.144h-14.54c-.445 15.948-.438 11.848.017 19.831 0 29.873 23.94 48.888 47.633 48.88l744.362.012c28.764 0 47.467-24.6 47.467-48.892.005-4.341-.015-40.212-.015-40.212s-5.165-12.145-38.162-20.511l-.885-14.201c.933-.38 1.925-.936 2.982-1.68l4.03 2.443c2.847.647 5.049.976 6.604.986 1.516.034 2.75-.298 3.701-.996 4.28-3.391 6.63-5.505 7.055-6.344 1.839-2.446 2.335-5.412 1.492-8.9a9.492 9.492 0 00-1.198-2.742c-.176-.38-1.132-1.539-2.87-3.48-.3-.374-.534-.77-.7-1.19-.148-.395-.214-.858-.2-1.388.344-2.42.442-3.85.296-4.288-.178-1.135-.652-2.192-1.422-3.17-.568-.706-1.202-1.176-1.905-1.412-.19-.068-.47-.107-.839-.116-1.461.13-2.275.155-2.442.072-.542-.081-1.055-.316-1.54-.701-.498-.401-1.008-1-1.53-1.796-3.235-5.718-5.18-8.779-5.831-9.183-1.36-1.47-3.068-2.204-5.123-2.203h-.004c-5.904.427-9.981 1.778-12.234 4.053-.992.953-1.766 2.25-2.318 3.893-.461 1.157-.98 3.684-1.56 7.58-.109.472-.213.738-.312.8-.133.094-.274.081-.42-.038-1.063-1.001-1.864-1.572-2.403-1.712a4.295 4.295 0 00-2.388-.143c-2.055.472-4.502 1.987-7.341 4.544-5.265 4.974-7.288 9.415-6.07 13.321.533 1.996 1.824 3.992 3.874 5.99 2.215 2.133 4.512 3.6 6.888 4.402 1.334.442 2.647.611 3.942.505.364.073 2.231-.382 5.602-1.362.762-.154 1.45-.187 2.063-.102.573.064 1.223.307 1.953.73l4.338 3.182c.524.35 1.052.613 1.585.797l-.294 12.57c-17.013-3.75-40.505-6.467-72.9-6.467l-.567-9.632 17.937-.043-19.919-53.874-.01-.025-18.725 53.99 15.71-.037-.312 7.23c-14.451-6.1-23.98-11.9-32.171-14.62l-.4-6.764 17.938-.042-19.92-53.875-.01-.025-18.724 53.99 15.71-.037-.233 5.373c-8.269-1.178-16.006 1.885-27.57 12.552l-33.29-46.56-1.043-16.294h-7.585l-1.462 16.293h-24.78l-1.583-1.588h-9.045l-2.657 21.845-12.898-6.884-26.393 14.202v8.307H24.413v-22.43h-28.9v-11.118l-15.644-8.267v-18l-17.734-15.628-11.524 9.93c-.587 11.853-2.15 17.86-1.731 22.993-5.806 1.477-16.298 1.168-29.856.388h-28.72v41.46h-8.868v-52.18h-6.42c-1.492-10.8-10.986-19.108-22.48-19.108h-.775v-12.858z"
                         style="fill:#000000;fill-opacity:0.99564586;stroke-width:0.99999994"/>
             </g>
-            <rect class="rounded-bg" id="rect1366" width="264.583" height="132.292" x=".107" y="164.704" rx="15"/>
-            <text xml:space="preserve" x="12" y="280" id="cityname-line-2" class="cityname">{{ region.name }}</text>
-            <text xml:space="preserve" x="12" y="252" id="cityname-line-1" class="cityname"/>
+            <rect class="rounded-bg" id="svg-rect-{{ region.id }}" width="264.583" height="132.292" x=".107" y="164.704" rx="15"/>
+            <text xml:space="preserve" x="12" y="280" id="svg-cityname-line-2-{{ region.id }}" class="cityname">{{ region.name }}</text>
+            <text xml:space="preserve" x="12" y="252" id="svg-cityname-line-1-{{ region.id }}" class="cityname"/>
         </g>
     </svg>
 {% endmacro %}
