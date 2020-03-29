@@ -17,7 +17,7 @@ class BaseConfig:
     INSTANCE_FOLDER_PATH = os.path.join('/tmp', 'instance')
 
     PROJECT_NAME = "shared-delivery"
-    PROJECT_VERSION = '1.0.6'
+    PROJECT_VERSION = '1.0.7'
 
     PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
     LOG_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'logs'))
