@@ -25,15 +25,11 @@ from ..extensions import db, mail
 from .base import BaseModel
 
 
-class AnonymousUser(AnonymousUserMixin):
-    id = None
-    states = []
-
-    def has_capability(self, capability):
-        return False
-
-
-login_manager.anonymous_user = AnonymousUser
+user_region = db.Table(
+    'user_region',
+    db.Column('user_id', db.Integer, db.ForeignKey('user.id')),
+    db.Column('region_id', db.Integer, db.ForeignKey('region.id'))
+)
 
 
 class User(db.Model, BaseModel, UserMixin):
@@ -46,7 +42,7 @@ class User(db.Model, BaseModel, UserMixin):
 
     version = '0.9.1'
 
-    region_id = db.Column(db.Integer, db.ForeignKey('region.id'))
+    region = db.relationship("Region", secondary=user_region, backref=db.backref('user', lazy='dynamic'))
 
     _email = db.Column('email', db.String(255), unique=True)
     _password = db.Column('password', db.String(255), nullable=False)
@@ -65,6 +61,7 @@ class User(db.Model, BaseModel, UserMixin):
     postalcode = db.Column(db.String(255))
     locality = db.Column(db.String(255))
     country = db.Column(db.String(2))
+    role = db.Column(db.Enum('admin', 'government'))
 
     language = db.Column(db.Enum('de', 'en'), default='de')
 
@@ -98,6 +95,13 @@ class User(db.Model, BaseModel, UserMixin):
         if self.password is None:
             return False
         return bcrypt.verify(password, self.password)
+
+    @property
+    def region_ids(self):
+        result = []
+        for region in self.region:
+            result.append(region.id)
+        return result
 
     @classmethod
     def authenticate(self, email, password, remember):

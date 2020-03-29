@@ -1,5 +1,5 @@
 
-export default class StoreGeocode {
+export default class StoreForm {
     baseUrl = 'https://nominatim.openstreetmap.org/search?';
     address = {
         country: 'Deutschland',
@@ -9,24 +9,27 @@ export default class StoreGeocode {
         q: ''
     };
     constructor() {
-        document.getElementById('store-form').onsubmit = (evt) => this.submitData(evt);
+        $('#category').multiselect(window.common.multiselect_options);
+        if (!document.getElementById('store-new-form'))
+            return;
+        document.getElementById('store-new-form').onsubmit = (evt) => this.submitData(evt);
         document.getElementById('address').onkeydown = (evt) => this.resetGeocode(evt);
         document.getElementById('postalcode').onkeydown = (evt) => this.resetGeocode(evt);
         document.getElementById('locality').onkeydown = (evt) => this.resetGeocode(evt);
     }
 
     resetGeocode() {
-        document.getElementById('store-form').classList.remove('geocoded');
+        document.getElementById('store-new-form').classList.remove('geocoded');
         document.getElementById('geocoding-error').style.display = 'none';
     }
 
     setGeocodeError() {
         document.getElementById('geocoding-error').style.display = 'block';
-        document.getElementById('store-form').classList.add('geocoded');
+        document.getElementById('store-new-form').classList.add('geocoded');
     }
 
     submitData(evt) {
-        if (document.getElementById('store-form').classList.contains('geocoded')) {
+        if (document.getElementById('store-new-form').classList.contains('geocoded')) {
             return;
         }
         evt.preventDefault();
@@ -62,7 +65,7 @@ export default class StoreGeocode {
         }
         document.getElementById('lat').value = String(geocoded.lat);
         document.getElementById('lon').value = String(geocoded.lon);
-        document.getElementById('store-form').classList.add('geocoded');
+        document.getElementById('store-new-form').classList.add('geocoded');
         document.getElementById('submit').click();
     }
 

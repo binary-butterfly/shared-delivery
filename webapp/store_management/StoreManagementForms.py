@@ -16,9 +16,10 @@ from wtforms import validators
 from wtforms import StringField, TextAreaField, SelectField, SubmitField, HiddenField, FormField, FieldList, \
     BooleanField
 from ..common.form import SearchBaseForm
-from ..common.countrycodes import country_codes
 from ..common.form_field import RegionField, CategoryField, TimeStringField
+from ..common.form_validator import ValidateMimeType
 from ..common.form_filter import float_filter
+from ..common.form_field import ExtendedFileField
 
 
 class StoreSearchForm(SearchBaseForm):
@@ -28,6 +29,18 @@ class StoreSearchForm(SearchBaseForm):
     region = RegionField(
         label='Region',
         all_option=True,
+        limit_allowed=True,
+        validators=[
+            validators.Optional()
+        ]
+    )
+    revisit_required = SelectField(
+        label='Benötigt überarbeitung',
+        choices=[
+            ('_all', 'beliebig'),
+            ('yes', 'ja'),
+            ('no', 'nein')
+        ],
         validators=[
             validators.Optional()
         ]
@@ -45,6 +58,7 @@ class StoreSuggestionSearchForm(SearchBaseForm):
     region = RegionField(
         label='Region',
         all_option=True,
+        limit_allowed=True,
         validators=[
             validators.Optional()
         ]
@@ -198,13 +212,34 @@ class StoreBaseForm(FlaskForm):
         label='Öffnungszeiten',
         min_entries=0
     )
+    logo = ExtendedFileField(
+        label='Logo',
+        validators=[
+            ValidateMimeType(
+                mimetypes=['image/jpeg', 'image/png', 'image/svg+xml'],
+                allow_empty=True,
+                message='Bitte ein PNG-, JPG- oder SVG-Bild hochladen!'
+            )
+        ]
+    )
+    picture = ExtendedFileField(
+        label='Bild',
+        validators=[
+            ValidateMimeType(
+                mimetypes=['image/jpeg', 'image/png', 'image/svg+xml'],
+                allow_empty=True,
+                message='Bitte ein PNG-, JPG- oder SVG-Bild hochladen!'
+            )
+        ]
+    )
     submit = SubmitField(_('speichern'))
 
 
 class StoreForm(StoreBaseForm):
     region = RegionField(
         label=_('Region'),
-        validators = [
+        limit_allowed=True,
+        validators=[
             validators.NoneOf(
                 ['0'],
                 message='Bitte geben Sie eine Region an'

@@ -22,6 +22,7 @@ class BaseConfig:
     PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
     LOG_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'logs'))
     TEMP_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'temp'))
+    IMG_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'static', 'img'))
 
     DEBUG = False
     TESTING = False
@@ -45,7 +46,74 @@ class BaseConfig:
     ITEMS_PER_PAGE = 25
     ITEMS_PER_API = 25
 
+    THUMBNAIL_SIZES = [
+        [1110, 555],
+        [350, 175]
+    ]
+
     ELASTICSEARCH_STORE_INDEX = 'shared-delivery-store'
 
     OVERPASS_BASE_URL = 'https://overpass-api.de/api/interpreter'
 
+    OVERPASS_SOURCES = {
+        'shop': {
+            'bakery': 'Bäckerei, Konditorei',
+            'beverages': 'Getränkemarkt',
+            'butcher': 'Metzgerei, Fleischerei',
+            'cheese': 'Käseladen',
+            'chocolate': 'Schokoladenladen',
+            'coffee': 'Kaffeeladen',
+            'confectionery': 'Süßwarenhändler',
+            'convenience': 'Dorfladen, Kiosk, Hofladen',
+            'gasstation': 'Tankstelle',
+            'deli': 'Feinkostladen',
+            'greengrocer': 'Obst- und Gemüsehändler',
+            'health_food': 'Naturkost- oder Bioladen',
+            'seafood': 'Fischfachgeschäft',
+            'spices': 'Gewürzladen',
+            'tea': 'Teegeschäft',
+            'department_store': 'Kaufhaus',
+            'supermarket': 'Supermarkt, Einkaufszentrum',
+            'baby_goods': 'Babyfachmarkt',
+            'chemist': 'Drogerie',
+            'hairdresser': 'Frisör',
+            'hearing_aids': 'Hörgeräteakustiker',
+            'medical_supply': 'Sanitätshaus',
+            'optician': 'Optiker',
+            'appliance': 'Haushaltsgeräte',
+            'doityourself': 'Baumarkt',
+            'electrical': 'Elektronikmarkt',
+            'florist': 'Florist, Blumenladen, Blumenhandel',
+            'garden_centre': 'Garten-Center',
+            'locksmith': 'Schlüsseldienst',
+            'trade': 'Baustoffhandel',
+            'furniture': 'Möbelhaus, Einrichtungshaus, Wohnstudio',
+            'computer': 'Computer-Fachhändler',
+            'mobile_phone': 'Handy-Shop',
+            'bicycle': 'Fahrradgeschäft, Fahrradwerkstatt, Fahrradverleih, Fahrradservice',
+            'car': 'Autohaus',
+            'car_repair': 'Autowerkstatt, Autoreparatur, Reifenservice',
+            'fuel': 'Brennstoff',
+            'sports': 'Sportbedarf',
+            'craft': 'Künstler- und Bastelbedarf',
+            'musical_instrument': 'Musikhaus, Musikinstrumentengeschäft',
+            'books': 'Buchhandlung',
+            'newsagent': 'Zeitungshändler, Lottoladen',
+            'stationery': 'Schreibwaren, Bürobedarf',
+            'dry_cleaning': 'Chemische Reinigung',
+            'funeral_directors': 'Bestattungsunternehmen',
+            'laundry': 'Wäscherei, Reinigung, Waschsalon',
+            'pet': 'Zoo- oder Tierhandlung',
+            'toys': 'Spielzeuggeschäft',
+            'private_engagement': 'Nachbarschaftshilfe, private Angebote',
+            'club': 'Vereine helfen'
+        },
+        'amenity': {
+            'doctors': 'Arztpraxis, Ärztehaus',
+            'cafe': 'Café, Eiscafé, Bistro',
+            'restaurant': 'Restaurant',
+            'pub': 'Kneipe',
+            'fast_food': 'Schnell-Restaurant, Imbiss',
+            'bar': 'Bar, Nachtlokal'
+        }
+    }

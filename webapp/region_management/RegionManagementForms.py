@@ -13,8 +13,10 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 from flask_wtf import FlaskForm
 from flask_babel import _
 from wtforms import validators
-from wtforms import StringField, TextAreaField, SelectField, SubmitField, HiddenField
+from wtforms import StringField, TextAreaField, SelectField, SubmitField
 from ..common.form import SearchBaseForm
+from ..common.form_validator import ColorValidator, ValidateMimeType
+from ..common.form_field import ExtendedFileField
 
 
 class RegionSearchForm(SearchBaseForm):
@@ -46,10 +48,28 @@ class RegionForm(FlaskForm):
         label=_('Website'),
         validators=[
             validators.url(
-                message='Bitte geben Sie eine URL an'
+                message='Bitte geben Sie eine URL an.'
             ),
             validators.Optional()
         ],
+    )
+    style_color = StringField(
+        label='Stadt-Farbe',
+        validators=[
+            ColorValidator(
+                message='Bitte geben Sie eine Farbe ein.'
+            )
+        ],
+        default='#0f2965'
+    )
+    picture_overlay_color = StringField(
+        label='Farbe für Titel auf Bild',
+        validators=[
+            ColorValidator(
+                message='Bitte geben Sie eine Farbe ein.'
+            )
+        ],
+        default='#000000'
     )
     description = TextAreaField(
         label='Beschreibung'
@@ -63,6 +83,26 @@ class RegionForm(FlaskForm):
             validators.Length(
                 min=12,
                 max=12
+            )
+        ]
+    )
+    logo = ExtendedFileField(
+        label='Logo',
+        validators=[
+            ValidateMimeType(
+                mimetypes=['image/jpeg', 'image/png', 'image/svg+xml'],
+                allow_empty=True,
+                message='Bitte ein PNG-, JPG- oder SVG-Bild hochladen!'
+            )
+        ]
+    )
+    picture = ExtendedFileField(
+        label='Bild',
+        validators=[
+            ValidateMimeType(
+                mimetypes=['image/jpeg', 'image/png', 'image/svg+xml'],
+                allow_empty=True,
+                message='Bitte ein PNG-, JPG- oder SVG-Bild hochladen!'
             )
         ]
     )

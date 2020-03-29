@@ -9,17 +9,22 @@ import Common from './Common';
 import SearchTableStore from "./SearchTable/SearchTableStore";
 import SearchTableRegion from "./SearchTable/SearchTableRegion";
 
+import StoreForm from "./Helper/StoreForm";
+import UserForm from './Helper/UserForm';
+
 import StoreMap from "./StoreMap";
-import StoreGeocode from "./Helper/StoreGeocode";
 import OpeningTimesForm from "./OpeningTimesForm";
 import SearchTableUser from "./SearchTable/SearchTableUser";
 import SearchTableStoreSuggestion from "./SearchTable/SearchTableStoreSuggestion";
-
+import SearchTableCategory from './SearchTable/SearchTableCategory';
 
 $(document).ready(function () {
     window.common = new Common();
-    if (document.getElementById('store-new-form')) {
-        window.storeGeocode = new StoreGeocode();
+    if (document.getElementById('user-form')) {
+        window.userForm = new UserForm();
+    }
+    if (document.getElementById('store-new-form') || document.getElementById('store-form')) {
+        window.storeForm = new StoreForm();
     }
 
     if (document.getElementById('store-map')) {
@@ -53,6 +58,12 @@ $(document).ready(function () {
         ReactDOM.render(
             <SearchTableRegion ref={(searchTableRegion) => {window.searchTableRegion = searchTableRegion}} />,
             document.getElementById("region-search-results")
+        );
+    }
+    if (document.getElementById('category-search-results')) {
+        ReactDOM.render(
+            <SearchTableCategory ref={(searchTableCategory) => {window.searchTableCategory = searchTableCategory}} />,
+            document.getElementById("category-search-results")
         );
     }
     if (document.getElementById('store-search-results')) {

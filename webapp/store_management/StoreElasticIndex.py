@@ -111,7 +111,7 @@ def es_mapping():
                 'type': 'text'
             },
             'region_slug': {
-                'type': 'text'
+                'type': 'keyword'
             },
             'region_description': {
                 'type': 'text'
@@ -133,6 +133,36 @@ def es_mapping():
             },
             'category_slug': {
                 'type': 'keyword'
+            },
+            'brand': {
+                'type': 'text'
+            },
+            'wheelchair': {
+                'type': 'keyword'
+            },
+            'fair_trade': {
+                'type': 'keyword'
+            },
+            'organic': {
+                'type': 'keyword'
+            },
+            'zero_waste': {
+                'type': 'keyword'
+            },
+            'cuisine': {
+                'type': 'keyword'
+            },
+            'origin': {
+                'type': 'keyword'
+            },
+            'diet': {
+                'type': 'keyword'
+            },
+            'payment': {
+                'type': 'keyword'
+            },
+            'revisit_required': {
+                'type': 'boolean'
             },
             'opening_time': {
                 'type': 'nested',

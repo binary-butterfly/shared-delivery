@@ -10,10 +10,10 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-
+import json
 from ..extensions import db
 from .base import BaseModel
-from .category import store_category
+
 
 class Store(db.Model, BaseModel):
     __tablename__ = 'store'
@@ -61,6 +61,7 @@ class Store(db.Model, BaseModel):
     revisited_government = db.Column(db.DateTime)
     revisited_store = db.Column(db.DateTime)
     revisited_user = db.Column(db.DateTime)
+    revisited_admin = db.Column(db.DateTime)
 
     delivery = db.Column(db.Boolean)
     pickup = db.Column(db.Boolean)
@@ -69,10 +70,17 @@ class Store(db.Model, BaseModel):
     description = db.Column(db.Text)
 
     brand = db.Column(db.String(255))
-    wheelchair = db.Column(db.String(255))
+    wheelchair = db.Column(db.Enum('yes', 'limited', 'no', 'designated'))
+    organic = db.Column(db.Enum('yes', 'no', 'only'))
+    fair_trade = db.Column(db.Enum('yes', 'no', 'only'))
+    zero_waste = db.Column(db.Enum('yes', 'no', 'only'))
+    _cuisine = db.Column('cuisine', db.Text)
+    _origin = db.Column('origin', db.Text)
+    _diet = db.Column('diet', db.Text)
+    _payment = db.Column('payment', db.Text)
 
-    logo = db.Column(db.Enum('jpg', 'png'))
-    picture = db.Column(db.Enum('jpg', 'png'))
+    logo = db.Column(db.Enum('jpg', 'png', 'svg'))
+    picture = db.Column(db.Enum('jpg', 'png', 'svg'))
 
     def to_dict(self, children=False):
         result = super().to_dict()
@@ -90,14 +98,99 @@ class Store(db.Model, BaseModel):
 
         return result
 
+    def es_index(self, refresh=True):
+        from ..store_management.StoreElasticImport import es_index_store
+        es_index_store(self, refresh)
+
+    def es_refresh(self):
+        from ..store_management.StoreElasticImport import es_refresh_stores
+        es_refresh_stores()
+
     @property
     def revisit_required(self):
-        return not (self.revisited_government or self.revisited_store or self.revisited_user)
+        return not (self.revisited_government or self.revisited_store or self.revisited_user or self.revisited_admin)
+
+    property_out = {
+        'yes': 'ja',
+        'no': 'nein',
+        'limited': 'eingeschänkt',
+        'only': 'ausschließlich'
+    }
 
     @property
     def wheelchair_out(self):
-        if self.wheelchair == 'yes':
-            return 'ja'
-        if self.wheelchair == 'no':
-            return 'nein'
-        return self.wheelchair
+        return self.property_out.get(self.wheelchair, self.wheelchair)
+
+    @property
+    def organic_out(self):
+        return self.property_out.get(self.organic, self.organic)
+
+    @property
+    def fair_trade_out(self):
+        return self.property_out.get(self.fair_trade, self.fair_trade)
+
+    @property
+    def zero_waste_out(self):
+        return self.property_out.get(self.zero_waste, self.zero_waste)
+
+    def _get_cuisine(self):
+        if not self._cuisine:
+            return []
+        return json.loads(self._cuisine)
+
+    def _set_cuisine(self, cuisine):
+        if cuisine:
+            self._cuisine = json.dumps(cuisine)
+
+    cuisine = db.synonym('_cuisine', descriptor=property(_get_cuisine, _set_cuisine))
+
+    def _get_origin(self):
+        if not self._origin:
+            return []
+        return json.loads(self._origin)
+
+    def _set_origin(self, origin):
+        if origin:
+            self._origin = json.dumps(origin)
+
+    origin = db.synonym('_origin', descriptor=property(_get_origin, _set_origin))
+
+    def _get_diet(self):
+        if not self._diet:
+            return []
+        return json.loads(self._diet)
+
+    def _set_diet(self, diet):
+        if diet:
+            self._diet = json.dumps(diet)
+
+    diet = db.synonym('_diet', descriptor=property(_get_diet, _set_diet))
+
+    def _get_payment(self):
+        if not self._payment:
+            return []
+        return json.loads(self._payment)
+
+    def _set_payment(self, payment):
+        if payment:
+            self._payment = json.dumps(payment)
+
+    def logo_url(self, size):
+        if not self.logo and size == 'full':
+            return '/static/img/store/default.png'
+        if not self.logo:
+            return '/static/img/store/default.%s.png' % size
+        if size == 'full':
+            return '/static/img/store/%s.logo.%s' % (self.id, self.logo)
+        return '/static/img/store/%s.logo.%s.%s' % (self.id, size, self.logo)
+
+    def picture_url(self, size):
+        if not self.picture and size == 'full':
+            return '/static/img/store/default.png'
+        if not self.picture:
+            return '/static/img/store/default.%s.png' % size
+        if size == 'full':
+            return '/static/img/store/%s.picture.%s' % (self.id, self.picture)
+        return '/static/img/store/%s.picture.%s.%s' % (self.id, size, self.picture)
+
+    payment = db.synonym('_payment', descriptor=property(_get_payment, _set_payment))

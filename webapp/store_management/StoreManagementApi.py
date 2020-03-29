@@ -10,6 +10,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
+from sqlalchemy import or_, not_
 from flask import current_app, abort
 from flask_login import current_user
 
@@ -22,7 +23,7 @@ from .StoreManagementController import store_management
 
 @store_management.route('/api/admin/stores', methods=['POST'])
 def api_stores():
-    if not current_user.has_capability('admin'):
+    if not current_user.has_capability('editor'):
         abort(403)
     data = []
 
@@ -38,6 +39,14 @@ def api_stores():
 
     if form.region.data and form.region.data not in ['None', '_all']:
         stores = stores.filter_by(region_id=form.region.data)
+    else:
+        stores = stores.filter(Store.region_id.in_(current_user.region_ids))
+
+    if form.revisit_required.data and form.revisit_required.data not in ['None', '_all']:
+        if form.revisit_required.data == 'yes':
+            stores = stores.filter(not_(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None)))
+        else:
+            stores = stores.filter(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None))
 
     count = stores.count()
     stores = stores.order_by(getattr(getattr(Store, form.sort_field.data), form.sort_order.data)())\
@@ -56,7 +65,7 @@ def api_stores():
 
 @store_management.route('/api/admin/store/suggestions', methods=['POST'])
 def api_store_suggestions():
-    if not current_user.has_capability('admin'):
+    if not current_user.has_capability('editor'):
         abort(403)
     data = []
 

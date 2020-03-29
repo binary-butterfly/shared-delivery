@@ -82,6 +82,18 @@
                     Keine Öffnungszseiten hinterlegt.
                 {% endfor %}
             </p>
+            {% if store.logo %}
+                <h2>Logo</h2>
+                <p>
+                    <img src="{{ store.logo_url(1110) }}" class="img-fluid" alt="Logo">
+                </p>
+            {% endif %}
+            {% if store.picture %}
+                <h2>Logo</h2>
+                <p>
+                    <img src="{{ store.picture_url(1110) }}" class="img-fluid" alt="Logo">
+                </p>
+            {% endif %}
         </div>
     </div>
 {% endblock %}

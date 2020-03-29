@@ -1,4 +1,4 @@
-{% macro locality_svg(region_name) %}
+{% macro locality_svg(region) %}
     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 264.583 132.292"
          version="1.1" id="bochum" width="100%" height="100%" preserveAspectRatio="xMinYMid">
         <style>
@@ -46,8 +46,8 @@
                     gradientUnits="userSpaceOnUse"
                     gradientTransform="translate(.107 -.004)"
             >
-                <stop style="stop-color:#0f2965;stop-opacity:1" offset="0" id="linearGradient_main_start"/>
-                <stop style="stop-color:#0f2965;stop-opacity:.8" offset="1" id="linearGradient_main_end"/>
+                <stop style="stop-color:{{ region.style_color }};stop-opacity:1" offset="0" id="linearGradient_main_start"/>
+                <stop style="stop-color:{{ region.style_color }};stop-opacity:.8" offset="1" id="linearGradient_main_end"/>
             </linearGradient>
 
         </defs>
@@ -61,7 +61,7 @@
                         style="fill:#000000;fill-opacity:0.99564586;stroke-width:0.99999994"/>
             </g>
             <rect class="rounded-bg" id="rect1366" width="264.583" height="132.292" x=".107" y="164.704" rx="15"/>
-            <text xml:space="preserve" x="12" y="280" id="cityname-line-2" class="cityname">{{ region_name }}</text>
+            <text xml:space="preserve" x="12" y="280" id="cityname-line-2" class="cityname">{{ region.name }}</text>
             <text xml:space="preserve" x="12" y="252" id="cityname-line-1" class="cityname"/>
         </g>
     </svg>

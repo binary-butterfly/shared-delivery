@@ -13,8 +13,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 from flask_wtf import FlaskForm
 from flask_babel import _
 from wtforms import validators
-from wtforms import StringField, SubmitField, SelectField
+from wtforms import StringField, SubmitField, SelectField, SelectMultipleField
 from ..common.form import SearchBaseForm
+from ..common.form_field import RegionMultipleField
 
 
 class UserSearchForm(SearchBaseForm):
@@ -59,7 +60,7 @@ class UserForm(FlaskForm):
         ]
     )
     company = StringField(
-        label=_('Unternehmen')
+        label=_('Unternehmen / Organisation / Kommune')
     )
     address = StringField(
         label=_('Strasse und Hausnummer')
@@ -74,8 +75,25 @@ class UserForm(FlaskForm):
         label=_('Telefonnummer'),
         validators=[]
     )
+    region = RegionMultipleField(
+        label='Regionen'
+    )
     submit = SubmitField(_('speichern'))
 
 
 class UserAdminForm(UserForm):
-    pass
+    role = SelectField(
+        label='Rolle',
+        choices=[
+            ('admin', 'Administrator'),
+            ('government', 'Kommune'),
+            ('organisation', 'Organisation')
+        ]
+    )
+    capabilities = SelectMultipleField(
+        label='Rechte',
+        choices=[
+            ('admin', 'Administrator'),
+            ('editor', 'Redakteur')
+        ]
+    )

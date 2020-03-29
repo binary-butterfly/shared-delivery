@@ -2,8 +2,8 @@
   width: 100%;
 }
 
-#store-form .multiselect-container {
-  right: 0;
+.multiselect-container {
+  right: 0 !important;
 }
 
 .multiselect-container > li > a > label {

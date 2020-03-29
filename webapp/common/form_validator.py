@@ -52,6 +52,25 @@ class ValidateMimeType(object):
             raise ValidationError(self.message)
 
 
+class ColorValidator:
+    def __init__(self, message):
+        if not message:
+            message = 'invalid color'
+        self.message = message
+
+    def __call__(self, form, field):
+        if not field.data:
+            raise ValidationError(self.message)
+        try:
+            assert len(field.data) == 7
+            assert field.data[0] == '#'
+            valid_chars = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f']
+            for i in range(1, 7):
+                assert field.data[i].lower() in valid_chars
+        except (AssertionError, ValueError):
+            raise ValidationError(self.message)
+
+
 class ValidateDataRequiredIf(DataRequired):
     def __init__(self, other_field_name, other_field_values, *args, **kwargs):
         self.other_field_name = other_field_name

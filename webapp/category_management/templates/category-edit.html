@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field with context %}
+
+{% block content %}
+    <form method="POST" action="/admin/category/{{ category.id }}/edit" id="category-form">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>{{ _('Kategorie bearbeiten') }}</h1>
+            </div>
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.name, 12) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.logo, 6) }}
+            {{ form_field(form.picture, 6) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.description, 12) }}
+        </div>
+        <div class="row row-form">
+            {{ form_field(form.submit, 12, 'input-submit') }}
+        </div>
+        {{ form.csrf_token }}
+    </form>
+{% endblock %}

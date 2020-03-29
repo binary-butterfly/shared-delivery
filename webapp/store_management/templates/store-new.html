@@ -2,7 +2,7 @@
 {% from "macros.html" import form_field with context %}
 
 {% block content %}
-    <form method="POST" action="/admin/store/new" id="store-new-form">
+    <form method="POST" action="/admin/store/new" id="store-new-form" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ _('Geschäft hinzufügen') }}</h1>
@@ -17,9 +17,14 @@
             {{ form_field(form.postalcode, 2) }}
             {{ form_field(form.locality, 4) }}
         </div>
+        <div id="geocoding-error" class="row row-form">
+            Leider können wir diese Adresse nicht finden.
+        </div>
         <div class="row row-form">
-            {{ form_field(form.region, 6) }}
-            {{ form_field(form.website, 6) }}
+            {{ form_field(form.region, 3) }}
+            {{ form_field(form.website, 3) }}
+            {{ form_field(form.logo, 3) }}
+            {{ form_field(form.picture, 3) }}
         </div>
         <div class="row row-form">
             {{ form_field(form.email, 3) }}

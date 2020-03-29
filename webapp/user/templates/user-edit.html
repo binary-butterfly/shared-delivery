@@ -11,15 +11,23 @@
         <div class="row row-form">
             {{ form_field(form.firstname, 4) }}
             {{ form_field(form.lastname, 4) }}
-            {{ form_field(form.email, 4) }}
+            {{ form_field(form.company, 4) }}
         </div>
         <div class="row row-form">
-            {{ form_field(form.address, 6) }}
+            {{ form_field(form.email, 3) }}
+            {{ form_field(form.address, 4) }}
             {{ form_field(form.postalcode, 2) }}
-            {{ form_field(form.locality, 4) }}
+            {{ form_field(form.locality, 3) }}
         </div>
+        {% if current_user.has_capability('admin') %}
+            <div class="row row-form">
+                {{ form_field(form.role, 4) }}
+                {{ form_field(form.capabilities, 4) }}
+                {{ form_field(form.region, 4) }}
+            </div>
+        {% endif %}
         <div class="row row-form">
-            {{ form_field(form.submit, 12) }}
+            {{ form_field(form.submit, 12, 'input-submit') }}
         </div>
         {{ form.csrf_token }}
     </form>

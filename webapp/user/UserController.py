@@ -134,13 +134,13 @@ def recover_check():
 
 @user.route('/user/<int:user_id>/switch')
 def user_switch(user_id):
+    if not current_user.has_capability('admin'):
+        abort(403)
     newuser = User.query.get(user_id)
     if not newuser:
         abort(403)
-    if current_user.has_capability('admin'):
-        session['emulate-user-id'] = user_id
-        return redirect('/')
-    abort(403)
+    session['emulate-user-id'] = user_id
+    return redirect('/')
 
 
 @user.route('/user/switch-back')

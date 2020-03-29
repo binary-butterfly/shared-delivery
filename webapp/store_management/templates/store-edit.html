@@ -2,7 +2,7 @@
 {% from "macros.html" import form_field with context %}
 
 {% block content %}
-    <form method="POST" action="/admin/store/{{ store.id }}/edit" id="store-form">
+    <form method="POST" action="/admin/store/{{ store.id }}/edit" id="store-form" enctype="multipart/form-data">
         <div class="row">
             <div class="col-md-12">
                 <h1>{{ _('Geschäft bearbeiten') }}</h1>
@@ -28,8 +28,10 @@
             {{ form_field(form.locality, 4) }}
         </div>
         <div class="row row-form">
-            {{ form_field(form.region, 6) }}
-            {{ form_field(form.website, 6) }}
+            {{ form_field(form.region, 3) }}
+            {{ form_field(form.website, 3) }}
+            {{ form_field(form.logo, 3) }}
+            {{ form_field(form.picture, 3) }}
         </div>
         <div class="row row-form">
             {{ form_field(form.email, 3) }}

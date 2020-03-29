@@ -24,7 +24,7 @@ class DefaultConfig(BaseConfig):
 
     SECRET_KEY = ''
     SECURITY_PASSWORD_SALT = ''
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@mysql/userinterface'
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:root@mysql/shared-delivery'
     SQLALCHEMY_POOL_SIZE = 100
     SQLALCHEMY_POOL_RECYCLE = 600
 

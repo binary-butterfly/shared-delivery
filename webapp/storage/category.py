@@ -27,7 +27,7 @@ class Category(db.Model, BaseModel):
     __tablename__ = 'category'
 
     fields = [
-        'slug', 'name', 'description'
+        'id', 'created', 'modified', 'slug', 'name', 'description'
     ]
 
     version = '0.9.0'
@@ -40,5 +40,5 @@ class Category(db.Model, BaseModel):
 
     priority = db.Column(db.Integer)
 
-    logo = db.Column(db.Enum('jpg', 'png'))
-    picture = db.Column(db.Enum('jpg', 'png'))
+    logo = db.Column(db.Enum('jpg', 'png', 'svg'))
+    picture = db.Column(db.Enum('jpg', 'png', 'svg'))

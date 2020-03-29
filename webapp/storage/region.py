@@ -39,8 +39,10 @@ class Region(db.Model, BaseModel):
     lat = db.Column(db.Numeric(precision=8, scale=6), default=0)
     lon = db.Column(db.Numeric(precision=9, scale=6), default=0)
 
-    logo = db.Column(db.Enum('jpg', 'png'))
-    picture = db.Column(db.Enum('jpg', 'png'))
+    logo = db.Column(db.Enum('jpg', 'png', 'svg'))
+    picture = db.Column(db.Enum('jpg', 'png', 'svg'))
+    style_color = db.Column(db.String(7))
+    picture_overlay_color = db.Column(db.String(7))
 
 
 @event.listens_for(Region, 'before_insert')

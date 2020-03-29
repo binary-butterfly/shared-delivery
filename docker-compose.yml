@@ -74,6 +74,8 @@ services:
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:7.6.1
     container_name: shared-delivery-elasticsearch
+    ports:
+      - 9200:9200
     volumes:
       - shared-delivery-elastic:/usr/share/elasticsearch/data
     environment:

@@ -30,6 +30,7 @@ from .region_management import region_management
 from .store_map import store_map
 from .tiles import tiles
 from .store_frontend import store_frontend
+from .category_management import category_management
 
 __all__ = ['launch']
 
@@ -41,7 +42,8 @@ DEFAULT_BLUEPRINTS = [
     region_management,
     store_map,
     tiles,
-    store_frontend
+    store_frontend,
+    category_management
 ]
 
 

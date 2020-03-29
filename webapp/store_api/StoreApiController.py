@@ -17,3 +17,4 @@ store_api = Blueprint('store_api', __name__, template_folder='templates')
 
 from . import StoreApiGeo
 from . import StoreApiSearch
+from . import StoreApiSuggest

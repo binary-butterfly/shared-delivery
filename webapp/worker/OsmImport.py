@@ -10,6 +10,7 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
+import re
 import requests
 from time import sleep
 from datetime import datetime
@@ -18,7 +19,7 @@ from flask import current_app
 from ..extensions import db, logger, celery
 from ..models import Region, Store, Category, OpeningTime
 from ..store_management.StoreManagementHelper import create_store_revision
-from ..store_management.StoreElasticImport import es_index_stores
+from ..store_management.StoreElasticImport import es_refresh_stores
 
 
 @celery.task
@@ -32,27 +33,13 @@ def import_osm(region_id):
         return
     if region.sync_status == 'syncing':
         return
-
-    sources = {
-        'shop': {
-            'bakery': 'Bäckerei',
-            'supermarket': 'Supermarkt',
-            'pharmacy': 'Apotheke'
-        },
-        'amenity': {
-            'doctors': 'Arztpraxis, Ärztehaus',
-            'cafe': 'Café, Eiscafé, Bistro',
-            'restaurant': 'Restaurant',
-            'pub': 'Kneipe',
-            'fast_food': 'Schnell-Restaurant, Imbiss',
-            'bar': 'Bar, Nachtlokal'
-        }
-    }
-
-    for base_key, sub_source in sources.items():
+    region.sync_status = 'syncing'
+    db.session.add(region)
+    db.session.commit()
+    for base_key, sub_source in current_app.config['OVERPASS_SOURCES'].items():
         for category_slug, category_name in sub_source.items():
             import_single_osm(region, base_key, upsert_category(category_slug, category_name))
-    es_index_stores()
+    es_refresh_stores()
     region.sync_status = 'idle'
     db.session.add(region)
     db.session.commit()
@@ -70,6 +57,12 @@ def upsert_category(category_slug, category_name):
 
 
 def import_single_osm(region, base_key, category):
+    logger.info('osm', 'download region %s (%s): %s %s' % (
+        region.name,
+        region.regionalschluessel,
+        base_key,
+        category.name
+    ))
     url_param = '[out:json];area["de:regionalschluessel"=%s];nwr[%s=%s](area);out body;' % (
         region.regionalschluessel,
         base_key,
@@ -77,46 +70,78 @@ def import_single_osm(region, base_key, category):
     )
     result = requests.get(current_app.config['OVERPASS_BASE_URL'], {'data': url_param})
     if result.status_code != 200:
-        logger.info('osm', 'bad status code at %s' % category.slug)
+        logger.info('osm', 'bad status code %s at %s: %s' % (result.status_code, region.name, category.name))
         return
     for store_raw in result.json().get('elements', []):
-        store = Store.query.filter_by(osm_id=store_raw.get('id')).first()
-        if not store:
-            store = Store()
-            store.osm_id = store_raw.get('id')
-            store.region_id = region.id
-            store.licence = 'ODbL'
-            store.category = [category]
-        elif category not in store.category:
-            store.category.append(category)
-        store.name = store_raw.get('tags', {}).get('name')
-        if not store.name:
-            continue
-        store.lat = store_raw.get('lat')
-        store.lon = store_raw.get('lon')
-        store_details = store_raw.get('tags', {})
-        store.address = store_details.get('addr:street', '')
-        if store.address and store_details.get('addr:housenumber', ''):
-            store.address += ' '
-        store.address += store_details.get('addr:housenumber', '')
-        store.postalcode = store_details.get('addr:postcode', '')
-        if not store.address:
-            store.address = None
-        store.locality = store_details.get('addr:city')
-        store.country = 'DE'
-        store.brand = store_details.get('brand')
-        store.wheelchair = store_details.get('wheelchair')
-        store.phone = store_details.get('phone')
-        if not store.website:
-            store.phone = store_details.get('contact:phone')
-        store.website = store_details.get('website')
-        if not store.website:
-            store.website = store_details.get('contact:website')
-        db.session.add(store)
-        db.session.commit()
-        save_opening_hours(store.id, store_details.get('opening_hours'))
-        create_store_revision(store)
+        save_poi(store_raw, region, category)
     sleep(2)
+
+
+def save_poi(store_raw, region, category):
+    store = Store.query.filter_by(osm_id=store_raw.get('id')).first()
+    if not store:
+        store = Store()
+        store.osm_id = store_raw.get('id')
+        store.region_id = region.id
+        store.licence = 'ODbL'
+        store.category = [category]
+    elif category not in store.category:
+        store.category.append(category)
+    if not store.revisit_required:
+        return
+    store.name = store_raw.get('tags', {}).get('name')
+    if not store.name:
+        return
+    store.lat = store_raw.get('lat')
+    store.lon = store_raw.get('lon')
+    if not store.lat or not store.lon:
+        return
+    store_details = store_raw.get('tags', {})
+    store.address = store_details.get('addr:street', '')
+    if store.address and store_details.get('addr:housenumber', ''):
+        store.address += ' '
+    store.address += store_details.get('addr:housenumber', '')
+    store.postalcode = store_details.get('addr:postcode', '')
+    if not store.address:
+        store.address = None
+    store.locality = store_details.get('addr:city', region.name)
+    store.country = 'DE'
+    store.brand = store_details.get('brand')
+    if store_details.get('wheelchair') in ['yes', 'limited', 'no', 'designated']:
+        store.wheelchair = store_details.get('wheelchair')
+    if store_details.get('organic') in ['yes', 'no', 'only']:
+        store.organic = store_details.get('organic')
+    if store_details.get('fair_trade') in ['yes', 'no', 'only']:
+        store.fair_trade = store_details.get('fair_trade')
+    if store_details.get('zero_waste') in ['yes', 'no']:
+        store.zero_waste = store_details.get('zero_waste')
+    store.cuisine = get_tag('cuisine', store_raw)
+    store.origin = get_tag('origin', store_raw)
+    store.diet = get_tag('diet', store_raw)
+    store.payment = get_tag('payment', store_raw)
+    store.phone = store_details.get('phone')
+    if not store.website:
+        store.phone = store_details.get('contact:phone')
+    store.website = store_details.get('website')
+    if not store.website:
+        store.website = store_details.get('contact:website')
+    db.session.add(store)
+    db.session.commit()
+    save_opening_hours(store.id, store_details.get('opening_hours'))
+    create_store_revision(store)
+    store.es_index(refresh=False)
+
+
+def get_tag(tag, store_raw):
+    tags = []
+    for value in re.findall(r"[\w']+", store_raw.get(tag, '')):
+        if tag not in ['yes', 'no']:
+            tags.append(tag)
+    for key in store_raw.keys():
+        if len(key.split(':')) > 1 and key.split(':')[0] == tag:
+            if store_raw[key] == 'yes':
+                tags.append(key.split(':')[2])
+    return tags
 
 
 def save_opening_hours(store_id, osm_opening_time):

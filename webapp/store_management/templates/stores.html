@@ -15,6 +15,7 @@
         <div class="row row-form">
             {{ form_field(form.name, 3) }}
             {{ form_field(form.region, 3) }}
+            {{ form_field(form.revisit_required, 3) }}
             {{ form_field(form.submit, 3, 'input-submit-emptylabel' ) }}
         </div>
         {{ form.csrf_token }}

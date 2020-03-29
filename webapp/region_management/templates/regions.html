@@ -10,7 +10,12 @@
             </h1>
         </div>
     </div>
-    <form method="post" action="#" id="region-search-form">
+    <form
+            method="post"
+            action="#"
+            id="region-search-form"
+            data-capabilities="{% if current_user.has_capability('admin') %}edit{% endif %}"
+    >
         <div class="row row-form">
             {{ form_field(form.name, 3) }}
             {{ form_field(form.submit, 3, 'input-submit-emptylabel' ) }}

@@ -16,7 +16,6 @@ export default class StoreForm extends Component {
     };
 
     componentDidMount() {
-        $('#category').multiselect(window.common.multiselect_options);
         let openingTimes = {
             all: [],
             delivery: [],

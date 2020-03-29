@@ -11,13 +11,14 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 """
 
 
-from flask import Blueprint, render_template, flash, redirect
-from flask_login import login_required
+from flask import Blueprint, render_template, flash, redirect, abort
+from flask_login import login_required, current_user
 
 from ..extensions import db
 from ..models import Region
 from .RegionManagementForms import RegionSearchForm, RegionForm, RegionDeleteForm, RegionSyncForm
 from ..worker.OsmImport import import_osm_delay
+from ..common.file_upload import upload_files
 
 region_management = Blueprint('region_management', __name__, template_folder='templates')
 
@@ -27,21 +28,35 @@ from . import RegionManagementApi
 @region_management.route('/admin/regions')
 @login_required
 def regions_main():
+    if not current_user.has_capability('editor'):
+        abort(403)
     form = RegionSearchForm()
     return render_template('regions.html', form=form)
+
+
+@region_management.route('/admin/region/<int:region_id>/show')
+@login_required
+def region_show(region_id):
+    if not current_user.has_capability('editor'):
+        abort(403)
+    region = Region.query.get_or_404(region_id)
+    return render_template('region-show.html', region=region)
 
 
 @region_management.route('/admin/region/new', methods=['GET', 'POST'])
 @login_required
 def region_new():
+    if not current_user.has_capability('admin'):
+        abort(403)
     form = RegionForm()
     if form.validate_on_submit():
         region = Region()
         form.populate_obj(region)
-        region.sync_status = 'syncing'
+        region.sync_status = 'sync-start'
         db.session.add(region)
         db.session.commit()
         import_osm_delay.delay(region.id)
+        upload_files(form, region, 'region')
         flash('Region erfolgreich gespeichert', 'success')
         return redirect('/admin/regions')
     return render_template('region-new.html', form=form)
@@ -50,12 +65,15 @@ def region_new():
 @region_management.route('/admin/region/<int:region_id>/edit', methods=['GET', 'POST'])
 @login_required
 def region_edit(region_id):
+    if not current_user.has_capability('admin'):
+        abort(403)
     region = Region.query.get_or_404(region_id)
     form = RegionForm(obj=region)
     if form.validate_on_submit():
         form.populate_obj(region)
         db.session.add(region)
         db.session.commit()
+        upload_files(form, region, 'region')
         flash('Region erfolgreich gespeichert', 'success')
         return redirect('/admin/regions')
     return render_template('region-edit.html', form=form, region=region)
@@ -64,15 +82,18 @@ def region_edit(region_id):
 @region_management.route('/admin/region/<int:region_id>/sync', methods=['GET', 'POST'])
 @login_required
 def region_sync(region_id):
+    if not current_user.has_capability('admin'):
+        abort(403)
     region = Region.query.get_or_404(region_id)
     form = RegionSyncForm(obj=region)
     if form.validate_on_submit():
         if form.abort.data:
             return redirect('/admin/regions')
-        region.sync_status = 'syncing'
+        region.sync_status = 'sync-start'
         db.session.add(region)
         db.session.commit()
         import_osm_delay.delay(region.id)
         flash('Synchronisation erfolgreich gestartet', 'success')
         return redirect('/admin/regions')
     return render_template('region-sync.html', form=form, region=region)
+

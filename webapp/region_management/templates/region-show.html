@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+{% from "macros.html" import action_button with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                {{ region.name }}
+                {{ action_button('edit', url_for('region_management.region_edit', region_id=region.id)) }}
+                {{ action_button('custom', url_for('region_management.region_sync', region_id=region.id), 'OpenStreetMap Download', 'map') }}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                {% if region.website %}
+                    <tr>
+                        <td>Website</td>
+                        <td>
+                            <a href="{{ region.website }}">{{ region.website }}</a>
+                        </td>
+                    </tr>
+                {% endif %}
+                {% if region.regionalschluessel %}
+                    <tr>
+                        <td>Regionalschlüssel</td>
+                        <td>{{ region.regionalschluessel }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

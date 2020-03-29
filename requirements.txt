@@ -23,4 +23,5 @@ qrcode
 celery
 elasticsearch
 osm-humanized-opening-hours
+Pillow
 

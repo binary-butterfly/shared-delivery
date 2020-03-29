@@ -8846,8 +8846,8 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
 .btn-group.bootstrap-multiselect {
   width: 100%; }
 
-#store-form .multiselect-container {
-  right: 0; }
+.multiselect-container {
+  right: 0 !important; }
 
 .multiselect-container > li > a > label {
   width: 100%;
@@ -8968,6 +8968,10 @@ a.btn-icon, button.btn-icon {
 .image-select-box {
   text-align: center; }
 
+#geocoding-error {
+  color: #990000;
+  display: none; }
+
 #content .bootstrap-select {
   margin: 0 4px; }
 
@@ -9026,13 +9030,14 @@ a.btn-icon, button.btn-icon {
 
 #store-map-box {
   height: 600px;
-  position: relative; }
+  position: relative;
+  margin-bottom: 30px; }
 
 #store-map-overlay {
   position: absolute;
   top: 50%;
   left: 0;
-  right: 0px;
+  right: 0;
   bottom: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.5);
   box-shadow: 0 4px 8px 0 rgba(255, 255, 255, 0.5);

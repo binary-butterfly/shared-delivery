@@ -1,0 +1,25 @@
+{% extends "layout.html" %}
+{% from "macros.html" import action_button with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>
+                {{ category.name }} in {{ category.category.name }}
+                {{ action_button('edit', url_for('category_management.category_edit', category_id=category.id)) }}
+            </h1>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <table class="table">
+                {% if category.description %}
+                    <tr>
+                        <td>Beschreibung</td>
+                        <td>{{ category.description }}</td>
+                    </tr>
+                {% endif %}
+            </table>
+        </div>
+    </div>
+{% endblock %}

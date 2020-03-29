@@ -12,7 +12,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 from flask import current_app, render_template, redirect, flash, abort
 from flask_login import current_user, login_required
-from .UserManagementForms import UserForm, UserSearchForm
+from .UserManagementForms import UserForm, UserSearchForm, UserAdminForm
 from ..extensions import db
 from ..models import User
 from ..common.helpers import get_random_password
@@ -43,7 +43,10 @@ def user_show(user_id):
 def user_new():
     if not current_user.has_capability('admin'):
         abort(403)
-    form = UserForm()
+    if current_user.has_capability('admin'):
+        form = UserAdminForm()
+    else:
+        form = UserForm()
     if form.validate_on_submit():
         user = User()
         form.populate_obj(user)
@@ -61,7 +64,10 @@ def user_edit(store_id):
     if not current_user.has_capability('admin'):
         abort(403)
     user = User.query.get_or_404(store_id)
-    form = UserForm(obj=user)
+    if current_user.has_capability('admin'):
+        form = UserAdminForm(obj=user)
+    else:
+        form = UserForm(obj=user)
     if form.validate_on_submit():
         form.populate_obj(user)
         db.session.add(user)

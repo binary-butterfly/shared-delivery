@@ -15,7 +15,7 @@
                 <h2><a href="/store/{{ store.id }}">{{ store.name }}</a></h2>
                 <a href="/region/{{ region.slug }}/{{ category.slug }}">
                     <img
-                            src="/static/img/store/{% if store.picture %}{{ store.id }}.350.{{ store.picture }}{% else %}default.350.png{% endif %}"
+                            src="{{ store.picture_url(350) }}"
                             alt="{{ store.name }}"
                     >
                 </a>
@@ -24,10 +24,33 @@
     </div>
     <div class="row">
         <div class="col-md-12">
-            <h1>{{ _('Karte') }}</h1>
+            <h1>{{ _('Finde Deine ') }} {{ category.name }}</h1>
             <div id="store-map"></div>
         </div>
     </div>
+    {% if stores_help|length %}
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Wir brauchen noch Hilfe bei folgenden Geschäften</h2>
+                <p>
+                    Kannst Du uns helfen, Öffnungszeiten und andere Informationen für die folgenden Geschäfte zu finden?
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            {% for store in stores_help %}
+                <div class="col-md-4 image-select-box">
+                    <h2><a href="/store/{{ store.id }}">{{ store.name }}</a></h2>
+                    <a href="/region/{{ region.slug }}/{{ category.slug }}">
+                        <img
+                                src="{{ store.picture_url(350) }}"
+                                alt="{{ store.name }}"
+                        >
+                    </a>
+                </div>
+            {% endfor %}
+        </div>
+    {% endif %}
 {% endblock %}
 
 {% block scripts %}

@@ -13,7 +13,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 import math
 from flask import request
 from flask_login import current_user
-from wtforms import DecimalField, StringField, SelectMultipleField, SelectField
+from wtforms import DecimalField, StringField, SelectMultipleField, SelectField, FileField
 from wtforms.utils import unset_value
 from decimal import Decimal
 from ..models import Region, Category
@@ -62,14 +62,22 @@ class TimeStringField(StringField):
             setattr(obj, name, 0)
 
 
+class ExtendedFileField(FileField):
+    def populate_obj(self, obj, name):
+        setattr(obj, name, None)
+
+
 class RegionField(SelectField):
-    def __init__(self, all_option=False, **kwargs):
+    def __init__(self, all_option=False, limit_allowed=False, **kwargs):
         self.simple_validate = getattr(kwargs['_form'], 'simple_validate', False)
         super(RegionField, self).__init__(**kwargs)
         self.choices = [('_all', 'beliebig')] if all_option else [('0', 'bitte wählen')]
         if self.simple_validate:
             return
         regions = Region.query
+        if limit_allowed and not current_user.has_capability('admin'):
+            regions = regions.filter(Region.user.contains(current_user))
+
         regions = regions.order_by(Region.name).all()
         for region in regions:
             self.choices.append((str(region.id), region.name))
@@ -86,6 +94,40 @@ class RegionField(SelectField):
 
     def populate_obj(self, obj, name):
         setattr(obj, '%s_id' % name, int(self.data))
+
+
+class RegionMultipleField(SelectMultipleField):
+    def __init__(self, all_option=False, **kwargs):
+        self.simple_validate = getattr(kwargs['_form'], 'simple_validate', False)
+        super(RegionMultipleField, self).__init__(**kwargs)
+        self.choices = [('_all', 'beliebig')] if all_option else [('0', 'bitte wählen')]
+        if self.simple_validate:
+            return
+        self.regions = Region.query
+        self.regions = self.regions.order_by(Region.name).all()
+        for region in self.regions:
+            self.choices.append((str(region.id), region.name))
+
+    def pre_validate(self, form):
+        if self.simple_validate:
+            return
+        super(RegionMultipleField, self).pre_validate(form)
+
+    def process(self, formdata, data=unset_value):
+        if data != unset_value and request.method == 'GET':
+            result = []
+            for item in data:
+                result.append(str(item.id))
+            data = result
+        super(RegionMultipleField, self).process(formdata, data)
+
+    def populate_obj(self, obj, name):
+        result = []
+        for item in self.data:
+            for region in self.regions:
+                if region.id == int(item):
+                    result.append(region)
+        setattr(obj, '%s' % name, result)
 
 
 class CategoryField(SelectMultipleField):
