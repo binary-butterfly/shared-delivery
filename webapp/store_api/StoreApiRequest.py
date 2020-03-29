@@ -72,7 +72,7 @@ def get_data(limit=None):
     if data.get('region-slug'):
         elastic_request.set_fq('region_slug', data.get('region-slug'))
     if data.get('region-id'):
-        elastic_request.set_fq('region-id', data.get('region-id'))
+        elastic_request.set_fq('region_id', data.get('region-id'))
     if data.get('revisit-required'):
         elastic_request.set_fq('revisit_required', data.get('revisit-required', type=int) == 1)
     if limit:
