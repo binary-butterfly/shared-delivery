@@ -24,7 +24,14 @@ store_frontend = Blueprint('store_frontend', __name__, template_folder='template
 @store_frontend.route('/store/<int:store_id>')
 def store_frontend_main(store_id):
     store = Store.query.get_or_404(store_id)
-    opening_times = OpeningTime.query.filter_by(store_id=store.id).order_by(OpeningTime.weekday, OpeningTime.open).all()
+    opening_times_raw = OpeningTime.query.filter_by(store_id=store.id).order_by(OpeningTime.weekday, OpeningTime.open).all()
+    opening_times = {
+        'all': [],
+        'delivery': [],
+        'pickup': []
+    }
+    for opening_time_raw in opening_times_raw:
+        opening_times[opening_time_raw.type].append(opening_time_raw)
     return render_template('store-frontend.html', store=store, opening_times=opening_times)
 
 
