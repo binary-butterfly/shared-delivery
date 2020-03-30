@@ -17823,17 +17823,7 @@ var StoreMap = /*#__PURE__*/function (_Component) {
       this.map.on('load', function (data) {
         deref_map.resolve(data);
       });
-      var data = {};
-
-      if (map_config['region-slug']) {
-        data['region-slug'] = map_config['region-slug'];
-      }
-
-      if (map_config['category-slug']) {
-        data['category-slug'] = map_config['category-slug'];
-      }
-
-      jquery__WEBPACK_IMPORTED_MODULE_10___default.a.get(this.geoApiUrl, data, function (data) {
+      jquery__WEBPACK_IMPORTED_MODULE_10___default.a.get(this.geoApiUrl, this.getParams(), function (data) {
         if (map_config.highlighted) {
           for (var i = 0; i < data.features.length; i++) {
             if (data.features[i].properties.id === map_config.highlighted) {
@@ -17844,11 +17834,63 @@ var StoreMap = /*#__PURE__*/function (_Component) {
 
         deref_data.resolve(data);
       });
+      jquery__WEBPACK_IMPORTED_MODULE_10___default()('#store-map-search-form').submit(function (evt) {
+        evt.preventDefault();
+
+        _this2.updateData();
+      });
+      jquery__WEBPACK_IMPORTED_MODULE_10___default()('#region_id').change(function () {
+        return _this2.updateData();
+      });
+    }
+  }, {
+    key: "updateData",
+    value: function updateData() {
+      var _this3 = this;
+
+      jquery__WEBPACK_IMPORTED_MODULE_10___default.a.get(this.geoApiUrl, this.getParams(), function (data) {
+        if (map_config.highlighted) {
+          for (var i = 0; i < data.features.length; i++) {
+            if (data.features[i].properties.id === map_config.highlighted) {
+              data.features[i].properties.highlighted = true;
+            }
+          }
+        }
+
+        _this3.map.getSource('store-source').setData(data);
+      });
+    }
+  }, {
+    key: "getParams",
+    value: function getParams() {
+      var data = {};
+
+      if (map_config['region-slug']) {
+        data['region-slug'] = map_config['region-slug'];
+      }
+
+      if (map_config['category-slug']) {
+        data['category-slug'] = map_config['category-slug'];
+      }
+
+      if (document.getElementById('store-map-search-form')) {
+        data['revisit-required'] = 0;
+
+        if (document.getElementById('q').value) {
+          data.q = document.getElementById('q').value;
+        }
+
+        if (document.getElementById('region_id').value) {
+          data['region-id'] = document.getElementById('region_id').value;
+        }
+      }
+
+      return data;
     }
   }, {
     key: "initMapData",
     value: function initMapData(mapready, data) {
-      var _this3 = this;
+      var _this4 = this;
 
       this.map.addSource('store-source', {
         type: 'geojson',
@@ -17886,22 +17928,22 @@ var StoreMap = /*#__PURE__*/function (_Component) {
         }
       });
       this.map.on('click', 'store-points', function (e) {
-        _this3.setOverlayId(e.features[0].properties.id);
+        _this4.setOverlayId(e.features[0].properties.id);
       });
       this.map.on('mouseenter', 'store-points', function () {
-        _this3.map.getCanvasContainer().style.cursor = 'pointer';
+        _this4.map.getCanvasContainer().style.cursor = 'pointer';
       });
       this.map.on('mouseleave', 'store-points', function () {
-        _this3.map.getCanvasContainer().style.cursor = '';
+        _this4.map.getCanvasContainer().style.cursor = '';
       });
     }
   }, {
     key: "setOverlayId",
     value: function setOverlayId(store_id) {
-      var _this4 = this;
+      var _this5 = this;
 
       jquery__WEBPACK_IMPORTED_MODULE_10___default.a.get('/api/store/' + store_id).then(function (data) {
-        _this4.setState({
+        _this5.setState({
           overlayData: data.data
         });
       });
@@ -17909,10 +17951,10 @@ var StoreMap = /*#__PURE__*/function (_Component) {
   }, {
     key: "updateGeojson",
     value: function updateGeojson() {
-      var _this5 = this;
+      var _this6 = this;
 
       jquery__WEBPACK_IMPORTED_MODULE_10___default.a.get('/api/stores/geo').then(function (data) {
-        _this5.map.getSource('store-source').setData(_this5.geojson);
+        _this6.map.getSource('store-source').setData(_this6.geojson);
       });
     }
   }, {

@@ -29,14 +29,8 @@ export default class StoreMap extends Component {
         this.map.on('load', function (data) {
             deref_map.resolve(data);
         });
-        let data = {};
-        if (map_config['region-slug']) {
-            data['region-slug'] = map_config['region-slug'];
-        }
-        if (map_config['category-slug']) {
-            data['category-slug'] = map_config['category-slug'];
-        }
-        $.get(this.geoApiUrl, data, function (data) {
+
+        $.get(this.geoApiUrl, this.getParams(), (data) => {
             if (map_config.highlighted) {
                 for (let i = 0; i <  data.features.length; i++) {
                     if (data.features[i].properties.id === map_config.highlighted) {
@@ -46,7 +40,46 @@ export default class StoreMap extends Component {
             }
             deref_data.resolve(data);
         });
+
+        $('#store-map-search-form').submit((evt) => {
+            evt.preventDefault();
+            this.updateData();
+        });
+        $('#region_id').change(() => this.updateData());
     };
+
+    updateData() {
+        $.get(this.geoApiUrl, this.getParams(), (data) => {
+            if (map_config.highlighted) {
+                for (let i = 0; i <  data.features.length; i++) {
+                    if (data.features[i].properties.id === map_config.highlighted) {
+                        data.features[i].properties.highlighted = true;
+                    }
+                }
+            }
+            this.map.getSource('store-source').setData(data);
+        });
+    }
+
+    getParams() {
+        let data = {};
+        if (map_config['region-slug']) {
+            data['region-slug'] = map_config['region-slug'];
+        }
+        if (map_config['category-slug']) {
+            data['category-slug'] = map_config['category-slug'];
+        }
+        if (document.getElementById('store-map-search-form')) {
+            data['revisit-required'] = 0;
+            if (document.getElementById('q').value) {
+                data.q = document.getElementById('q').value;
+            }
+            if (document.getElementById('region_id').value) {
+                data['region-id'] = document.getElementById('region_id').value;
+            }
+        }
+        return data;
+    }
 
     initMapData(mapready, data) {
         this.map.addSource('store-source', {

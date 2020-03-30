@@ -5,6 +5,20 @@
     <div class="row">
         <div class="col-md-12">
             <h1>{{ _('Karte') }}</h1>
+        </div>
+    </div>
+    <form method="post" action="#" id="store-map-search-form">
+        <div class="row row-form">
+            {{ form_field(form.q, 6) }}
+            {{ form_field(form.region_id, 4) }}
+            {{ form_field(form.submit, 2, 'input-submit-emptylabel' ) }}
+        </div>
+        {{ form.csrf_token }}
+    </form>
+    <div class="row row-form">
+        <div class="col-md-12">
+            Es werden nur Geschäfte mit aktualisierten Öffnungszeiten angezeigt. Wenn Sie die Öffnungszeiten eines
+            weiteren Geschäftes, freuen wir uns über die Eingabe <a href="/stores">in unserer Suche</a>.
             <div id="store-map"></div>
         </div>
     </div>

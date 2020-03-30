@@ -12,11 +12,12 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 
 
 from flask import Blueprint, render_template, flash, redirect
-from flask_login import login_required
+from ..tiles.TilesForms import StoreSearchForm
 
 store_map = Blueprint('store_map', __name__, template_folder='templates')
 
 
 @store_map.route('/store-map')
 def regions_main():
-    return render_template('map.html')
+    form = StoreSearchForm()
+    return render_template('map.html', form=form)
