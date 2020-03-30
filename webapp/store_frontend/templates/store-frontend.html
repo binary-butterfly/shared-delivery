@@ -27,6 +27,14 @@
     {% endif %}
     <div class="row">
         <div class="col-md-6">
+            {% if store.delivery or store.pickup %}
+            <p style="color: #3fb000; font-size: 1.2rem;">
+                Bietet
+                {% if store.delivery %}Lieferung{% endif %}
+                {% if store.delivery and store.pickup %}und{% endif %}
+                {% if store.pikup %}Abholung{% endif %}
+            </p>
+            {% endif %}
             {% if store.address %}
                 <p>
                     {{ store.address }}<br>
