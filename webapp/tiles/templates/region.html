@@ -22,8 +22,8 @@
     </div>
     <div class="row">
         {% for category in categories %}
-            <div class="col-md-4 md-6 tile">
-                <div class="bg-{{ (loop.index % 2) + 1 }}">
+            <div class="col-md-4 col-sm-6 col-xs-12 tile">
+                <div class="{{ category.slug }} bg-{{ (loop.index % 2) + 1 }}">
                     <h2><a href="/region/{{ region.slug }}/{{ category.slug }}">{{ category.name }}</a></h2>
                     {% if region.picture %}
                         <a href="/region/{{ region.slug }}/{{ category.slug }}">
