@@ -74,7 +74,7 @@ def import_single_osm(region, base_key, category):
         return
     for store_raw in result.json().get('elements', []):
         save_poi(store_raw, region, category)
-    sleep(2)
+    sleep(current_app.config['OVERPASS_WAIT_TIME'])
 
 
 def save_poi(store_raw, region, category):

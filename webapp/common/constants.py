@@ -54,7 +54,7 @@ class BaseConfig:
     ELASTICSEARCH_STORE_INDEX = 'shared-delivery-store'
 
     OVERPASS_BASE_URL = 'https://overpass-api.de/api/interpreter'
-
+    OVERPASS_WAIT_TIME = 20
     OVERPASS_SOURCES = {
         'shop': {
             'bakery': 'Bäckerei, Konditorei',
