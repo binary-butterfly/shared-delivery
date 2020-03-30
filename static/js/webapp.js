@@ -28049,12 +28049,12 @@ var StoreForm = /*#__PURE__*/function (_Component) {
     }
   }, {
     key: "renderOpeningTimes",
-    value: function renderOpeningTimes(type, condition) {
+    value: function renderOpeningTimes(area, condition) {
       if (!condition) return;
       var result = [];
 
-      for (var i = 0; i < this.state.openingTimes[type].length; i++) {
-        result.push(this.renderOpeningTime(this.state.openingTimes[type][i], i));
+      for (var i = 0; i < this.state.openingTimes[area].length; i++) {
+        result.push(this.renderOpeningTime(area, this.state.openingTimes[area][i], i));
       }
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -28066,10 +28066,13 @@ var StoreForm = /*#__PURE__*/function (_Component) {
     value: function setWeekday(area, position, evt) {
       var openingTimes = this.state.openingTimes;
       openingTimes[area][position].weekday = evt.target.value;
+      this.setState({
+        openingTimes: openingTimes
+      });
     }
   }, {
     key: "renderOpeningTime",
-    value: function renderOpeningTime(opening_time, position) {
+    value: function renderOpeningTime(area, opening_time, position) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "row"
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
@@ -28077,8 +28080,8 @@ var StoreForm = /*#__PURE__*/function (_Component) {
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("select", {
         className: "form-control",
         value: opening_time.weekday,
-        name: "opening_times_".concat(opening_time.type, "-").concat(position, "-weekday"),
-        onChange: this.setWeekday.bind(this, opening_time.type, position)
+        name: "opening_times_".concat(area, "-").concat(position, "-weekday"),
+        onChange: this.setWeekday.bind(this, area, position)
       }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("option", {
         value: "1"
       }, "Montag"), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("option", {

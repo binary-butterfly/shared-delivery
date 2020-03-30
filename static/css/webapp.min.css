@@ -8869,6 +8869,10 @@ h2 {
 a, a:visited, a:hover, a:active {
   color: #b4001d; }
 
+blockquote {
+  padding-left: 15px;
+  font-style: italic; }
+
 #header-wrapper {
   position: fixed;
   top: 0;
@@ -8876,6 +8880,9 @@ a, a:visited, a:hover, a:active {
   right: 0;
   z-index: 3000;
   background-color: #FFFFFF; }
+
+#header-wrapper a {
+  color: #000; }
 
 #content-wrapper {
   padding-top: 25px;

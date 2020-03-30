@@ -144,12 +144,12 @@ export default class StoreForm extends Component {
         );
     }
 
-    renderOpeningTimes(type, condition) {
+    renderOpeningTimes(area, condition) {
         if (!condition)
             return;
         let result = [];
-        for (let i = 0; i < this.state.openingTimes[type].length; i++) {
-            result.push(this.renderOpeningTime(this.state.openingTimes[type][i], i));
+        for (let i = 0; i < this.state.openingTimes[area].length; i++) {
+            result.push(this.renderOpeningTime(area, this.state.openingTimes[area][i], i));
         }
         return (
             <div className="container">
@@ -160,17 +160,20 @@ export default class StoreForm extends Component {
     setWeekday(area, position, evt) {
         let openingTimes = this.state.openingTimes;
         openingTimes[area][position].weekday = evt.target.value;
+        this.setState({
+            openingTimes: openingTimes
+        });
     }
 
-    renderOpeningTime(opening_time, position) {
+    renderOpeningTime(area, opening_time, position) {
         return (
             <div className="row">
                 <div className="col-4">
                     <select
                         className="form-control"
                         value={opening_time.weekday}
-                        name={`opening_times_${opening_time.type}-${position}-weekday`}
-                        onChange={this.setWeekday.bind(this, opening_time.type, position)}
+                        name={`opening_times_${area}-${position}-weekday`}
+                        onChange={this.setWeekday.bind(this, area, position)}
                     >
                         <option value="1">Montag</option>
                         <option value="2">Dienstag</option>
