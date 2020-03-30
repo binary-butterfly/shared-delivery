@@ -145,12 +145,16 @@ def register_global_filters(app):
                 )
             else:
                 return template_datetime(datetime_from, format) + link + template_datetime(datetime_till, format)
-
         return dict(combine_datetime=combine_datetime)
 
     @app.context_processor
-    def inject_now():
-        return {'now': datetime.datetime.now()}
+    def inject_data():
+        from flask import url_for, request
+        try:
+            current_path = url_for(request.endpoint)
+        except:
+            current_path = ''
+        return {'now': datetime.datetime.now(), 'current_path': current_path}
 
     @app.template_filter('urlencode')
     def urlencode(data):

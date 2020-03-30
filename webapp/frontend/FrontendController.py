@@ -42,6 +42,21 @@ def browserconfig_xml():
     return render_template('browserconfig.xml')
 
 
+@frontend.route('/die-idee')
+def die_idee():
+    return render_template('idee.html')
+
+
+@frontend.route('/ueber-uns')
+def ueber_uns():
+    return render_template('ueber-uns.html')
+
+
+@frontend.route('/mitmachen')
+def mitmachen():
+    return render_template('mitmachen.html')
+
+
 @frontend.route('/api')
 def api():
     return render_template('api.html')
@@ -55,8 +70,3 @@ def datenschutz():
 @frontend.route('/impressum')
 def impressum():
     return render_template('impressum.html')
-
-
-@frontend.route('/mitmachen')
-def mitmachen():
-    return render_template('mitmachen.html')

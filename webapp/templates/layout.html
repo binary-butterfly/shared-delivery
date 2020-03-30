@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="de">
 <head>
     <title>{% block title %}lokalwirkt{% endblock %}</title>
     {% block head %}
@@ -11,8 +11,8 @@
 
         <meta property="og:title" content="lokalwirkt">
         <meta property="og:type" content="website"/>
-        <meta property="og:url" content="" />
-        <meta property="og:image" content="" />
+        <meta property="og:url" content="{{ config['PROJECT_URL'] }}{{ current_path }}" />
+        <meta property="og:image" content="{{ config['PROJECT_URL'] }}/static/img/logo.svg" />
         <meta property="og:description" content="" />
 
         <link rel="apple-touch-icon" sizes="180x180" href="/static/img/favicon/apple-touch-icon.png">
@@ -75,8 +75,10 @@
                             <a class="nav-link dropdown-toggle" href="#" id="region-dropdown"
                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ _('Infos') }}</a>
                             <div class="dropdown-menu" aria-labelledby="region-dropdown">
+                                <a class="dropdown-item" href="/die-idee">{{ _('Die Idee') }}</a>
+                                <a class="dropdown-item" href="/ueber-uns">{{ _('Über uns') }}</a>
                                 <a class="dropdown-item" href="/mitmachen">{{ _('Mitmachen') }}</a>
-                                <a class="dropdown-item" href="/api">{{ _('API') }}</a>
+                                <a class="dropdown-item" href="/api">{{ _('Schnittstelle (API)') }}</a>
                                 <a class="dropdown-item" href="/datenschutz">{{ _('Datenschutz') }}</a>
                                 <a class="dropdown-item" href="/impressum">{{ _('Impressum') }}</a>
                             </div>

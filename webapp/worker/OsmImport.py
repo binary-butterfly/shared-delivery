@@ -68,10 +68,15 @@ def import_single_osm(region, base_key, category):
         base_key,
         category.slug
     )
+
     result = requests.get(current_app.config['OVERPASS_BASE_URL'], {'data': url_param})
     if result.status_code != 200:
-        logger.info('osm', 'bad status code %s at %s: %s' % (result.status_code, region.name, category.name))
-        return
+        logger.info('osm', 'bad status code %s at %s: %s, try again' % (result.status_code, region.name, category.name))
+        sleep(current_app.config['OVERPASS_WAIT_TIME'] * 2)
+        result = requests.get(current_app.config['OVERPASS_BASE_URL'], {'data': url_param})
+        if result.status_code != 200:
+            logger.info('osm', 'bad status code %s at %s: %s, give up' % (result.status_code, region.name, category.name))
+            return
     for store_raw in result.json().get('elements', []):
         save_poi(store_raw, region, category)
     sleep(current_app.config['OVERPASS_WAIT_TIME'])
