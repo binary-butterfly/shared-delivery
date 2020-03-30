@@ -17880,7 +17880,7 @@ var StoreMap = /*#__PURE__*/function (_Component) {
           data.q = document.getElementById('q').value;
         }
 
-        if (document.getElementById('region_id').value) {
+        if (document.getElementById('region_id').value && document.getElementById('region_id').value !== '_all') {
           data['region-id'] = document.getElementById('region_id').value;
         }
       }
