@@ -178,6 +178,8 @@ def store_suggestion_show(suggestion_id):
         for new_opening_time in object_dump.data.get('opening_time', []):
             new_opening_times_dict[new_opening_time.get('type', 'all')].append(new_opening_time)
         save_opening_times({'all': True, 'delivery': True, 'pickup': True}, new_opening_times_dict, store)
+        es_index_store_delay.delay(store.id)
+        create_store_revision_delay.delay(store.id)
         object_dump.settled = True
         db.session.add(object_dump)
         db.session.commit()
