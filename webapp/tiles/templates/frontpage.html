@@ -14,17 +14,21 @@
     </div>
     <div class="row">
         {% for region in regions %}
-            <div class="col-md-4 col-6 tile">
-                <a href="/region/{{ region.slug }}">
-                    {% if region.picture %}
-                        <img
-                                src="/static/img/region/{{ region.id }}.picture.350.{{ region.picture }}"
-                                alt="{{ region.name }}"
-                        >
-                    {% else %}
-                        {{ locality_svg(region) }}
-                    {% endif %}
-                </a>
+            <div class="col-md-4 col-sm-6 col-xs-12 tile">
+				<div class="tilecontent">
+					<a href="/region/{{ region.slug }}">
+						<span>
+						{% if region.picture %}
+							<img
+									src="/static/img/region/{{ region.id }}.picture.350.{{ region.picture }}"
+									alt="{{ region.name }}"
+							>
+						{% else %}
+							{{ region.name }}
+						{% endif %}
+						</span>
+					</a>
+				</div>
             </div>
         {% endfor %}
     </div>
