@@ -63,11 +63,10 @@ def region_new():
 
 
 @region_management.route('/admin/region/<int:region_id>/edit', methods=['GET', 'POST'])
-@login_required
 def region_edit(region_id):
-    if not current_user.has_capability('admin'):
-        abort(403)
     region = Region.query.get_or_404(region_id)
+    if not current_user.has_capability('admin') and region not in current_user.region:
+        abort(403)
     form = RegionForm(obj=region)
     if form.validate_on_submit():
         form.populate_obj(region)

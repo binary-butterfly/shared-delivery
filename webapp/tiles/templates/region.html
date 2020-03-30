@@ -10,20 +10,28 @@
                 </p>
             {% endif %}
             <p>
-                Welches Geschäft hat in {{ region.name }} wann offen? Welches Geschäft liefert? Dies wollen wir hier beantworten.
+                {% if region.description %}
+                    {{ region.description }}
+                {% else %}
+                    Welches Geschäft hat in {{ region.name }} wann offen? Welches Geschäft liefert? Dies wollen wir hier beantworten.
+                {% endif %}
             </p>
         </div>
     </div>
     <div class="row">
         {% for category in categories %}
-            <div class="col-md-4 image-select-box">
-                <h2><a href="/region/{{ region.slug }}/{{ category.slug }}">{{ category.name }}</a></h2>
-                <a href="/region/{{ region.slug }}/{{ category.slug }}">
-                    <img
-                            src="/static/img/category/{% if category.picture %}{{ category.id }}.350.{{ category.picture }}{% else %}default.350.png{% endif %}"
-                            alt="{{ category.name }}"
-                    >
-                </a>
+            <div class="col-md-4 md-6 tile">
+                <div class="bg-{{ (loop.index % 2) + 1 }}">
+                    <h2><a href="/region/{{ region.slug }}/{{ category.slug }}">{{ category.name }}</a></h2>
+                    {% if region.picture %}
+                        <a href="/region/{{ region.slug }}/{{ category.slug }}">
+                            <img
+                                    src="/static/img/category/{{ category.id }}.picture.350.{{ category.picture }}"
+                                    alt="{{ category.name }}"
+                            >
+                        </a>
+                    {% endif %}
+                </div>
             </div>
         {% endfor %}
     </div>

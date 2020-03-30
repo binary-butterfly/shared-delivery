@@ -46,7 +46,7 @@ export default class SearchTableStore extends SearchTable {
         return(
             <td>
                 {this.renderActionLink(`/admin/region/${row.id}/show`, 'info', true)}
-                {this.renderActionLink(`/admin/region/${row.id}/edit`, 'edit', this.capabilities.includes('edit'))}
+                {this.renderActionLink(`/admin/region/${row.id}/edit`, 'edit', this.capabilities.includes('edit') || row.own)}
                 {this.renderTableCellActionIcon(`/admin/region/${row.id}/sync`, 'refresh', 'OpenStreetMap abrufen', this.capabilities.includes('edit'))}
             </td>
         )

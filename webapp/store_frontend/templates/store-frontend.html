@@ -11,6 +11,9 @@
                     {{ action_button('delete', url_for('store_management.store_delete', store_id=store.id)) }}
                 {% endif %}
             </h1>
+            {% if store.description %}
+                {{ store.description }}
+            {% endif %}
         </div>
     </div>
     {% if store.revisit_required %}

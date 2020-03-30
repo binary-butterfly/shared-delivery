@@ -43,6 +43,8 @@ def api_regions():
         .all()
     for region in regions:
         item = region.to_dict()
+        if not current_user.has_capability('admin') and region in current_user.region:
+            item['own'] = True
         data.append(item)
     return json_response({
         'data': data,

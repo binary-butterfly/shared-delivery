@@ -11,7 +11,7 @@
     </div>
     <div class="row">
         {% for store in stores %}
-            <div class="col-md-4 image-select-box">
+            <div class="col-md-4 tile">
                 <h2><a href="/store/{{ store.id }}">{{ store.name }}</a></h2>
                 <a href="/region/{{ region.slug }}/{{ category.slug }}">
                     <img
@@ -39,14 +39,19 @@
         </div>
         <div class="row">
             {% for store in stores_help %}
-                <div class="col-md-4 image-select-box">
-                    <h2><a href="/store/{{ store.id }}">{{ store.name }}</a></h2>
-                    <a href="/region/{{ region.slug }}/{{ category.slug }}">
-                        <img
-                                src="{{ store.picture_url(350) }}"
-                                alt="{{ store.name }}"
-                        >
-                    </a>
+                <div class="col-md-4 tile">
+                    <div class="bg-{{ (loop.index % 2) + 1 }}">
+                        <h2><a href="/store/{{ store.id }}">{{ store.name }}</a></h2>
+                        {% if store.picture %}
+                            <a href="/region/{{ region.slug }}/{{ category.slug }}">
+                                <img
+                                        src="{{ store.picture_url(350) }}"
+                                        alt="{{ store.name }}"
+                                >
+                            </a>
+                        {% endif %}
+                        <a href="/store/{{ store.id }}/suggest" class="btn">jetzt Infos eintragen</a>
+                    </div>
                 </div>
             {% endfor %}
         </div>

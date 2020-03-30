@@ -37,7 +37,7 @@ def regions_categories(region_slug):
     if not region:
         abort(404)
     categories = Category.query\
-        .filter(Category.store.any())\
+        .filter(Category.store.any(region_id=region.id, deleted=False))\
         .order_by(Category.priority.asc(), Category.name.asc()).all()
     return render_template('region.html', region=region, categories=categories)
 

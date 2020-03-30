@@ -12,6 +12,10 @@ h2 {
   font-size: 1.85rem;
 }
 
+a, a:visited, a:hover, a:active {
+  color: #b4001d;
+}
+
 #header-wrapper {
   position: fixed;
   top: 0;
@@ -123,6 +127,7 @@ h2.nextarea {
   -webkit-filter: grayscale(100%);
 }
 
+
 a.btn-default {
   border-color: #ccc;
   color: #333;
@@ -136,11 +141,8 @@ a.btn-icon, button.btn-icon {
   margin: 0 7px 7px 0;
 }
 
-.image-select-box {
-  text-align: center;
-}
-
 #geocoding-error {
   color: #990000;
   display: none;
 }
+

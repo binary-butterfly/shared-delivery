@@ -8866,6 +8866,9 @@ h1 {
 h2 {
   font-size: 1.85rem; }
 
+a, a:visited, a:hover, a:active {
+  color: #b4001d; }
+
 #header-wrapper {
   position: fixed;
   top: 0;
@@ -8965,9 +8968,6 @@ a.btn-icon, button.btn-icon {
   text-align: center;
   margin: 0 7px 7px 0; }
 
-.image-select-box {
-  text-align: center; }
-
 #geocoding-error {
   color: #990000;
   display: none; }
@@ -9061,8 +9061,26 @@ a.btn-icon, button.btn-icon {
   color: #999;
   cursor: pointer; }
 
-.image-select-box {
-  margin-bottom: 30px; }
+.tile {
+  margin-bottom: 30px;
+  text-align: center;
+  padding: 10px; }
+
+.tile .bg-1, .tile .bg-2 {
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #CCC; }
+
+.tile h2 {
+  font-size: 1.3rem; }
+
+.tile a {
+  display: block;
+  color: #000;
+  min-height: 45px; }
+
+.tile .btn {
+  background-color: #a9f4bd; }
 
 .store-revisit-box {
   border: 1px solid #999;

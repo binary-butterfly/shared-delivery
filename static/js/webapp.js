@@ -27648,7 +27648,7 @@ var SearchTableStore = /*#__PURE__*/function (_SearchTable) {
   }, {
     key: "renderTableCellActions",
     value: function renderTableCellActions(row) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, this.renderActionLink("/admin/region/".concat(row.id, "/show"), 'info', true), this.renderActionLink("/admin/region/".concat(row.id, "/edit"), 'edit', this.capabilities.includes('edit')), this.renderTableCellActionIcon("/admin/region/".concat(row.id, "/sync"), 'refresh', 'OpenStreetMap abrufen', this.capabilities.includes('edit')));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, this.renderActionLink("/admin/region/".concat(row.id, "/show"), 'info', true), this.renderActionLink("/admin/region/".concat(row.id, "/edit"), 'edit', this.capabilities.includes('edit') || row.own), this.renderTableCellActionIcon("/admin/region/".concat(row.id, "/sync"), 'refresh', 'OpenStreetMap abrufen', this.capabilities.includes('edit')));
     }
   }]);
 
@@ -28543,7 +28543,7 @@ var StoreSearch = /*#__PURE__*/function (_SearchTable) {
 
         for (var j = 0; j < 3; j++) {
           if (this.state.data.length > i * 3 + j) {
-            row.push(this.renderStore(this.state.data[i * 3 + j]));
+            row.push(this.renderStore(this.state.data[i * 3 + j], i));
           }
         }
 
@@ -28558,12 +28558,14 @@ var StoreSearch = /*#__PURE__*/function (_SearchTable) {
     }
   }, {
     key: "renderStore",
-    value: function renderStore(store) {
+    value: function renderStore(store, num) {
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-        className: "col-md-4"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h3", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
+        className: "col-md-4 col-6 tile"
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
+        className: "bg-".concat(num % 2 + 1)
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("h2", null, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
         href: "/store/".concat(store.id)
-      }, store.name)));
+      }, store.name))));
     }
   }]);
 

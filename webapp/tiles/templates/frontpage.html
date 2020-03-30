@@ -12,11 +12,11 @@
     </div>
     <div class="row">
         {% for region in regions %}
-            <div class="col-md-4 col-6 image-select-box">
+            <div class="col-md-4 col-6 tile">
                 <a href="/region/{{ region.slug }}">
                     {% if region.picture %}
                         <img
-                                src="/static/img/region/{% if region.picture %}{{ region.id }}.350.{{ region.picture }}{% else %}default.350.png{% endif %}"
+                                src="/static/img/region/{{ region.id }}.picture.350.{{ region.picture }}"
                                 alt="{{ region.name }}"
                         >
                     {% else %}

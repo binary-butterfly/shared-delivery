@@ -1,3 +1,25 @@
-.image-select-box {
+.tile {
   margin-bottom: 30px;
+  text-align: center;
+  padding: 10px;
+}
+
+.tile .bg-1, .tile .bg-2 {
+  padding: 10px;
+  border-radius: 15px;
+  border: 1px solid #CCC;
+}
+
+.tile h2 {
+  font-size: 1.3rem;
+}
+
+.tile a {
+  display: block;
+  color: #000;
+  min-height: 45px;
+}
+
+.tile .btn {
+  background-color: #a9f4bd;
 }

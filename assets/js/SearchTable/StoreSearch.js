@@ -54,7 +54,7 @@ export default class StoreSearch extends SearchTable {
             let row = [];
             for (let j = 0; j < 3; j++) {
                 if (this.state.data.length > (i * 3) + j) {
-                    row.push(this.renderStore(this.state.data[(i * 3) + j]));
+                    row.push(this.renderStore(this.state.data[(i * 3) + j], i));
                 }
             }
             rows.push(
@@ -70,10 +70,12 @@ export default class StoreSearch extends SearchTable {
         )
     }
 
-    renderStore(store) {
+    renderStore(store, num) {
         return (
-            <div className="col-md-4">
-                <h3><a href={`/store/${store.id}`}>{store.name}</a></h3>
+            <div className="col-md-4 col-6 tile">
+                <div className={`bg-${(num % 2) + 1}`}>
+                    <h2><a href={`/store/${store.id}`}>{store.name}</a></h2>
+                </div>
             </div>
         )
     }
