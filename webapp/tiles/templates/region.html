@@ -6,15 +6,16 @@
 	{% if region.picture %}
     <div class="row">
         <div class="col-md-12">
-               <div class="region-picture" style="background-image:url(/static/img/region/{{ region.id }}.1110.{{ region.picture }})"></div>
+               <div class="region-picture" style="background-image:url({{ region.picture_url(1110) }})"></div>
                 <!--img src="/static/img/region/{{ region.id }}.1110.{{ region.picture }}" alt="{{ region.name }}"-->
+				{{ region.picture_url(1110) }}
         </div>
     </div>
 	 {% endif %}
 	<div class="row">
 	{% if region.logo %}
 		<div class="col-md-3" class="region-logo">
-		{{ region.logo }}
+		{{ region.logo_url(350) }}
 		</div>
 		<div class="col-md-9">
 		{% else %}
