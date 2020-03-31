@@ -119,7 +119,7 @@
             lon: {{ store.lon }},
             zoom: 14,
             token: '{{ config.MAPBOX_TOKEN }}',
-            'category-slug': '{{ store.category[0].slug }}',
+            'category-slug': '{{ store.category[0].slug if store.category.count() else None }}',
             'region-slug': '{{ store.region.slug }}',
             highlighted: {{ store.id }}
         }
