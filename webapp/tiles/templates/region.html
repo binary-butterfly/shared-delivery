@@ -3,14 +3,26 @@
 {% block bodyclass %}region tiles-category{% endblock %}
 
 {% block content %}
+	{% if region.picture %}
     <div class="row">
         <div class="col-md-12">
-            <h1>{{ _('Lokale Geschäfte in ') }}{{ region.name }}</h1>
-            {% if region.picture %}
-                <p>
-                    <img src="/static/img/region/{{ region.id }}.1110.{{ region.picture }}" alt="{{ region.name }}">
-                </p>
-            {% endif %}
+               <div class="region-picture" style="background-image:url({{ region.picture_url(1110) }})"></div>
+                <!--img src="/static/img/region/{{ region.id }}.1110.{{ region.picture }}" alt="{{ region.name }}"-->
+
+        </div>
+    </div>
+	 {% endif %}
+	<div class="row">
+	{% if region.logo %}
+		<div class="col-md-3" class="region-logo">
+		{{ region.logo_url(350) }}
+		</div>
+		<div class="col-md-9">
+		{% else %}
+		<div class="col-md-12">
+		{% endif %}
+		 <h1>{{ _('Lokale Geschäfte in ') }}{{ region.name }}</h1>
+            
             <p>
                 {% if region.description %}
                     {{ region.description }}
@@ -18,8 +30,10 @@
                     Welches Geschäft hat in {{ region.name }} wann offen? Welches Geschäft liefert? Dies wollen wir hier beantworten.
                 {% endif %}
             </p>
-        </div>
-    </div>
+		
+		</div>
+		
+	</div>
     <div class="row">
         {% for category in categories %}
             <div class="col-md-4 col-sm-6 col-xs-12 tile">
