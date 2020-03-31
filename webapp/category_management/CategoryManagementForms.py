@@ -47,18 +47,6 @@ class CategoryForm(FlaskForm):
     description = TextAreaField(
         label='Beschreibung'
     )
-    regionalschluessel = StringField(
-        label='Categoryalschlüssel',
-        validators=[
-            validators.DataRequired(
-                message='Bitte geben Sie einen Categoryalschlüssel an'
-            ),
-            validators.Length(
-                min=12,
-                max=12
-            )
-        ]
-    )
     logo = ExtendedFileField(
         label='Logo',
         validators=[

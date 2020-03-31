@@ -57,7 +57,8 @@ def category_new():
         import_osm_delay.delay(category.id)
         upload_files(form, category, 'category')
         flash('Category erfolgreich gespeichert', 'success')
-        return redirect('/admin/categorys')
+        return redirect('/admin/categories')
+    print(form.errors)
     return render_template('category-new.html', form=form)
 
 

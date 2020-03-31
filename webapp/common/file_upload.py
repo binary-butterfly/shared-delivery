@@ -17,7 +17,7 @@ from ..extensions import db
 
 
 def upload_files(form, obj, obj_type):
-    if form.logo.data:
+    if form.logo.data and request.files.get('logo'):
         ending = mimetype_deref[request.files.get('logo').content_type]
         form.logo.data.save(
             os.path.join(current_app.config['IMG_DIR'], obj_type, '%s.logo.%s' % (obj.id, ending))
@@ -27,7 +27,7 @@ def upload_files(form, obj, obj_type):
         obj.logo = ending
         db.session.add(obj)
 
-    if form.picture.data:
+    if form.picture.data and request.files.get('picture'):
         ending = mimetype_deref[request.files.get('picture').content_type]
         form.picture.data.save(
             os.path.join(current_app.config['IMG_DIR'], obj_type, '%s.picture.%s' % (obj.id, ending))
