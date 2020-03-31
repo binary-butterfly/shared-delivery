@@ -42,3 +42,21 @@ class Category(db.Model, BaseModel):
 
     logo = db.Column(db.Enum('jpg', 'png', 'svg'))
     picture = db.Column(db.Enum('jpg', 'png', 'svg'))
+
+    def logo_url(self, size):
+        if not self.logo and size == 'full':
+            return '/static/img/category/default.png'
+        if not self.logo:
+            return '/static/img/category/default.%s.png' % size
+        if size == 'full':
+            return '/static/img/category/%s.logo.%s' % (self.id, self.logo)
+        return '/static/img/category/%s.logo.%s.%s' % (self.id, size, self.logo)
+
+    def picture_url(self, size):
+        if not self.picture and size == 'full':
+            return '/static/img/category/default.png'
+        if not self.picture:
+            return '/static/img/category/default.%s.png' % size
+        if size == 'full':
+            return '/static/img/category/%s.picture.%s' % (self.id, self.picture)
+        return '/static/img/category/%s.picture.%s.%s' % (self.id, size, self.picture)

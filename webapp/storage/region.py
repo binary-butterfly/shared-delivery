@@ -44,6 +44,23 @@ class Region(db.Model, BaseModel):
     style_color = db.Column(db.String(7))
     picture_overlay_color = db.Column(db.String(7))
 
+    def logo_url(self, size):
+        if not self.logo and size == 'full':
+            return '/static/img/region/default.png'
+        if not self.logo:
+            return '/static/img/region/default.%s.png' % size
+        if size == 'full':
+            return '/static/img/region/%s.logo.%s' % (self.id, self.logo)
+        return '/static/img/region/%s.logo.%s.%s' % (self.id, size, self.logo)
+
+    def picture_url(self, size):
+        if not self.picture and size == 'full':
+            return '/static/img/region/default.png'
+        if not self.picture:
+            return '/static/img/region/default.%s.png' % size
+        if size == 'full':
+            return '/static/img/region/%s.picture.%s' % (self.id, self.picture)
+        return '/static/img/region/%s.picture.%s.%s' % (self.id, size, self.picture)
 
 @event.listens_for(Region, 'before_insert')
 @event.listens_for(Region, 'before_update')
