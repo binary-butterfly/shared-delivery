@@ -5,7 +5,9 @@
   "main": "index.js",
   "private": true,
   "scripts": {
-    "gulp:watch": "gulp watch"
+    "gulp:watch": "gulp watch",
+    "gulp:deploy": "gulp deploy",
+    "gulp:webpack": "gulp webpack"
   },
   "author": "binary butterfly GmbH",
   "license": "BSD-3-Clause",
