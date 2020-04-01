@@ -17,15 +17,12 @@
   text-align: left;
 }
 
-.frontpage .tile a {
-  font-weight: bold;
-}
 
 .tile .btn {
   background-color: #a9f4bd;
 }
 
-.tilecontent {
+.frontpage .tilecontent {
   border-radius: 10px;
   background-image: url(/static/img/region/skyline.svg);
   background-repeat: no-repeat;
@@ -34,13 +31,14 @@
   min-height: 120px;
 }
 
-.frontpage .tilecontent a {
+.frontpage .tilecontent a, .tiles-category .tilecontent a {
   border-radius: 10px;
   color: #fff;
   height: 120px;
   display: flex;
   justify-content: space-between;
   flex-direction: column;
+  font-weight: bold;
 }
 
 .frontpage .tilecontent span {
@@ -50,4 +48,274 @@
 
 .region h2 {
   border-bottom: 1px solid #CCC;
+}
+
+.tiles-category .tile span {
+  color: #fff;
+  font-weight: 700;
+  font-size: 1.2rem;
+  text-align: left;
+  margin: 10px;
+}
+
+.tiles-category .tilecontent {
+  background-repeat: no-repeat;
+  background-position: right bottom;
+  background-size: 62px;
+}
+
+.tiles-category .tile:nth-child(5n) a {
+	background: linear-gradient(45deg, rgba(245, 124, 0, 1) 15%, rgba(245, 124, 0, .8) 85%);
+}
+.tiles-category .tile:nth-child(5n+1) a {
+	background: linear-gradient(45deg, rgba(194, 24, 91, 1) 15%, rgba(194, 24, 91, .8) 85%);
+}
+.tiles-category .tile:nth-child(5n+2) a {
+	background: linear-gradient(45deg, rgba(25, 118, 210, 1) 15%, rgba(25, 118, 210, .8) 85%);
+}
+.tiles-category .tile:nth-child(5n+3) a {
+	background: linear-gradient(45deg, rgba(0, 121, 107, 1) 15%, rgba(0, 121, 107, .8) 85%);
+}
+.tiles-category .tile:nth-child(5n+4) a {
+	background: linear-gradient(45deg, rgba(56, 142, 60, 1) 15%, rgba(56, 142, 60, .8) 85%);
+}
+
+.tiles-category .car_repair .tilecontent {
+  background-image: url(/static/img/category-svg/build.svg);
+}
+
+.tiles-category .baby_goods .tilecontent {
+  background-image: url(/static/img/category-svg/child_friendly.svg);
+}
+
+.tiles-category .bakery .tilecontent {
+  background-image: url(/static/img/category-svg/cake.svg);
+}
+
+.tiles-category .bar .tilecontent {
+  background-image: url(/static/img/category-svg/local_bar.svg);
+}
+
+.tiles-category .cafe .tilecontent {
+  background-image: url(/static/img/category-svg/local_cafe.svg);
+}
+
+.tiles-category .car .tilecontent {
+  background-image: url(/static/img/category-svg/time_to_leave.svg);
+}
+
+.tiles-category .doityourself .tilecontent {
+  background-image: url(/static/img/category-svg/format_paint.svg);
+}
+
+.tiles-category .doctors .tilecontent {
+  background-image: url(/static/img/category-svg/local_hospital.svg);
+}
+
+.tiles-category .pharmacy .tilecontent {
+  background-image: url(/static/img/category-svg/local_pharmacy.svg);
+}
+
+.tiles-category .funeral_directors .tilecontent {
+  background-image: url(/static/img/category-svg/hourglass_empty.svg);
+}
+
+.tiles-category .convenience .tilecontent {
+  background-image: url(/static/img/category-svg/storefront.svg);
+}
+
+.tiles-category .books .tilecontent {
+  background-image: url(/static/img/category-svg/menu_book.svg);
+}
+
+.tiles-category .computer .tilecontent {
+  background-image: url(/static/img/category-svg/computer.svg);
+}
+
+.tiles-category .doctors .tilecontent {
+  background-image: url(/static/img/category-svg/local_hospital.svg);
+}
+
+.tiles-category .trade .tilecontent {
+  background-image: url(/static/img/category-svg/grain.svg);
+}
+
+.tiles-category .funeral_directors .tilecontent {
+  background-image: url(/static/img/category-svg/hourglass_empty.svg);
+}
+
+.tiles-category .chemist .tilecontent {
+  background-image: url(/static/img/category-svg/healing.svg);
+}
+
+.tiles-category .bicycle .tilecontent {
+  background-image: url(/static/img/category-svg/directions_bike.svg);
+}
+
+.tiles-category .deli .tilecontent {
+  background-image: url(/static/img/category-svg/cheese.svg);
+}
+
+.tiles-category .cheese .tilecontent {
+  background-image: url(/static/img/category-svg/cheese.svg);
+}
+
+.tiles-category .seafood .tilecontent {
+  background-image: url(/static/img/category-svg/fish.svg);
+}
+
+.tiles-category .florist .tilecontent {
+  background-image: url(/static/img/category-svg/local_florist.svg);
+}
+
+.tiles-category .hairdresser .tilecontent {
+  background-image: url(/static/img/category-svg/content-cut.svg);
+}
+
+.tiles-category .garden_centre .tilecontent {
+  background-image: url(/static/img/category-svg/nature.svg);
+}
+
+.tiles-category .beverages .tilecontent {
+  background-image: url(/static/img/category-svg/bottle-soda-classic.svg);
+}
+
+.tiles-category .mobile_phone .tilecontent {
+  background-image: url(/static/img/category-svg/phone_android.svg);
+}
+
+.tiles-category .hearing_aids .tilecontent {
+  background-image: url(/static/img/category-svg/hearing.svg);
+}
+
+.tiles-category .coffee .tilecontent {
+  background-image: url(/static/img/category-svg/free_breakfast.svg);
+}
+
+.tiles-category .department_store .tilecontent {
+  background-image: url(/static/img/category-svg/store_mall_directory.svg);
+}
+
+.tiles-category .pub .tilecontent {
+  background-image: url(/static/img/category-svg/glass-mug-variant.svg);
+}
+
+.tiles-category .craft .tilecontent {
+  background-image: url(/static/img/category-svg/color_lens.svg);
+}
+
+.tiles-category .butcher .tilecontent {
+  background-image: url(/static/img/category-svg/sausage.svg);
+}
+
+.tiles-category .musical_instrument .tilecontent {
+  background-image: url(/static/img/category-svg/musnote.svg);
+}
+
+.tiles-category .health_food .tilecontent {
+  background-image: url(/static/img/category-svg/emoji_nature.svg);
+}
+
+.tiles-category .greengrocer .tilecontent {
+  background-image: url(/static/img/category-svg/carrot.svg);
+}
+
+.tiles-category .medical_supply .tilecontent {
+  background-image: url(/static/img/category-svg/accessible_forward.svg);
+}
+
+.tiles-category .locksmith .tilecontent {
+  background-image: url(/static/img/category-svg/vpn_key.svg);
+}
+
+.tiles-category .fast_food .tilecontent {
+  background-image: url(/static/img/category-svg/fastfood.svg);
+}
+
+.tiles-category .chocolate .tilecontent {
+  background-image: url(/static/img/category-svg/bug_report.svg);
+}
+
+.tiles-category .stationery .tilecontent {
+  background-image: url(/static/img/category-svg/email.svg);
+}
+
+.tiles-category .supermarket .tilecontent {
+  background-image: url(/static/img/category-svg/local_grocery_store.svg);
+}
+
+.tiles-category .confectionery .tilecontent {
+  background-image: url(/static/img/category-svg/cookie.svg);
+}
+
+.tiles-category .tea .tilecontent {
+  background-image: url(/static/img/category-svg/food_beverage.svg);
+}
+
+.tiles-category .laundry .tilecontent {
+  background-image: url(/static/img/category-svg/laundry.svg);
+}
+
+.tiles-category .newsagent .tilecontent {
+  background-image: url(/static/img/category-svg/fiber_new.svg);
+}
+
+.tiles-category .pet .tilecontent {
+  background-image: url(/static/img/category-svg/pets.svg);
+}
+
+.tiles-category .optician .tilecontent {
+  background-image: url(/static/img/category-svg/pets.svg);
+}
+
+.tiles-category .restaurant .tilecontent {
+  background-image: url(/static/img/category-svg/restaurant.svg);
+}
+
+.tiles-category .furniture .tilecontent {
+  background-image: url(/static/img/category-svg/weekend.svg);
+}
+
+.tiles-category .sports .tilecontent {
+  background-image: url(/static/img/category-svg/sports_tennis.svg);
+}
+
+.tiles-category .dry_cleaning .tilecontent {
+  background-image: url(/static/img/category-svg/laundry.svg);
+}
+
+.tiles-category .gasstation .tilecontent {
+  background-image: url(/static/img/category-svg/local_gas_station.svg);
+}
+
+.tiles-category .spices .tilecontent {
+  background-image: url(/static/img/category-svg/shaker-outline.svg);
+}
+
+.tiles-category .appliance .tilecontent {
+  background-image: url(/static/img/category-svg/toaster-oven.svg);
+}
+
+.tiles-category .electrical .tilecontent {
+  background-image: url(/static/img/category-svg/toaster-oven.svg);
+}
+
+.tiles-category .fuel .tilecontent {
+  background-image: url(/static/img/category-svg/local_gas_station.svg);
+}
+
+.tiles-category .toys .tilecontent {
+  background-image: url(/static/img/category-svg/toys.svg);
+}
+
+.tiles-category .private_engagement .tilecontent {
+  background-image: url(/static/img/category-svg/hand-heart.svg);
+}
+
+.tiles-category .club .tilecontent {
+  background-image: url(/static/img/category-svg/account-group.svg);
+}
+
+.tiles-category .jewelery .tilecontent {
+  background-image: url(/static/img/category-svg/diamond-stone.svg);
 }

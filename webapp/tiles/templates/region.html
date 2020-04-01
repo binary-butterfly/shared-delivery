@@ -38,9 +38,11 @@
         {% if region.category_style == 'summarized' %}
             {% for key, category in config['SUMMARIZE_CATEGORIES'].items() %}
                 {% if key == 0 %}{{ continue }}{% endif %}
-                <div class="col-md-4 col-sm-6 col-xs-12 tile">
-                    <div class="{{ category.slug }} bg-{{ (loop.index % 2) + 1 }}">
-                        <h3><a href="/region/{{ region.slug }}/{{ category.slug }}">{{ category.name }}</a></h3>
+                <div class="col-md-4 col-sm-6 col-xs-12 tile {{ category.slug }}">
+                    <div class="tilecontent">
+                        <a href="/region/{{ region.slug }}/{{ category.slug }}">
+                            <span>{{ category.name }}</span>
+                        </a>
                     </div>
                 </div>
             {% endfor %}
@@ -52,17 +54,11 @@
                 </div>
                 {% endif %}
                 {% for category in summary.get('items', []) %}
-                    <div class="col-md-4 col-sm-6 col-xs-12 tile">
-                        <div class="{{ category.slug }} bg-{{ (loop.index % 2) + 1 }}">
-                            <h3><a href="/region/{{ region.slug }}/{{ category.slug }}">{{ category.name }}</a></h3>
-                            {% if region.picture %}
-                                <a href="/region/{{ region.slug }}/{{ category.slug }}">
-                                    <img
-                                            src="{{ category.picture_url(350) }}"
-                                            alt="{{ category.name }}"
-                                    >
-                                </a>
-                            {% endif %}
+                    <div class="col-md-4 col-sm-6 col-xs-12 tile {{ category.slug }}">
+                        <div class="tilecontent">
+                            <a href="/region/{{ region.slug }}/{{ category.slug }}">
+                                <span>{{ category.name }}</span>
+                            </a>
                         </div>
                     </div>
                 {% endfor %}
