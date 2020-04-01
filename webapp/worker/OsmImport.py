@@ -86,6 +86,8 @@ def import_single_osm(region, base_key, category):
 
 
 def save_poi(store_raw, region, category):
+    if not store_raw.get('tags', {}).get('name'):
+        return
     store = Store.query.filter_by(osm_id=store_raw.get('id')).first()
     if not store:
         store = Store()
