@@ -35,20 +35,38 @@
 		
 	</div>
     <div class="row">
-        {% for category in categories %}
-            <div class="col-md-4 col-sm-6 col-xs-12 tile">
-                <div class="{{ category.slug }} bg-{{ (loop.index % 2) + 1 }}">
-                    <h2><a href="/region/{{ region.slug }}/{{ category.slug }}">{{ category.name }}</a></h2>
-                    {% if region.picture %}
-                        <a href="/region/{{ region.slug }}/{{ category.slug }}">
-                            <img
-                                    src="/static/img/category/{{ category.id }}.picture.350.{{ category.picture }}"
-                                    alt="{{ category.name }}"
-                            >
-                        </a>
-                    {% endif %}
+        {% if region.category_style == 'summarized' %}
+            {% for key, category in config['SUMMARIZE_CATEGORIES'].items() %}
+                {% if key == 0 %}{{ continue }}{% endif %}
+                <div class="col-md-4 col-sm-6 col-xs-12 tile">
+                    <div class="{{ category.slug }} bg-{{ (loop.index % 2) + 1 }}">
+                        <h3><a href="/region/{{ region.slug }}/{{ category.slug }}">{{ category.name }}</a></h3>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
+            {% endfor %}
+        {% else %}
+            {% for summary in categories.values() %}
+                {% if summary.get('items', [])|length %}
+                <div class="col-md-12">
+                    <h2>{{ summary['name'] }}</h2>
+                </div>
+                {% endif %}
+                {% for category in summary.get('items', []) %}
+                    <div class="col-md-4 col-sm-6 col-xs-12 tile">
+                        <div class="{{ category.slug }} bg-{{ (loop.index % 2) + 1 }}">
+                            <h3><a href="/region/{{ region.slug }}/{{ category.slug }}">{{ category.name }}</a></h3>
+                            {% if region.picture %}
+                                <a href="/region/{{ region.slug }}/{{ category.slug }}">
+                                    <img
+                                            src="{{ category.picture_url(350) }}"
+                                            alt="{{ category.name }}"
+                                    >
+                                </a>
+                            {% endif %}
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
     </div>
 {% endblock %}

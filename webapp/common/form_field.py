@@ -11,7 +11,7 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 """
 
 import math
-from flask import request
+from flask import request, current_app
 from flask_login import current_user
 from wtforms import DecimalField, StringField, SelectMultipleField, SelectField, FileField
 from wtforms.utils import unset_value
@@ -65,6 +65,14 @@ class TimeStringField(StringField):
 class ExtendedFileField(FileField):
     def populate_obj(self, obj, name):
         setattr(obj, name, None)
+
+
+class SummarizeCategoryField(SelectField):
+    def __init__(self, **kwargs):
+        super(SummarizeCategoryField, self).__init__(**kwargs)
+        self.choices = []
+        for key, category in current_app.config['SUMMARIZE_CATEGORIES'].items():
+            self.choices.append((str(key), category['name']))
 
 
 class RegionField(SelectField):

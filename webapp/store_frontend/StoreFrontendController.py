@@ -65,7 +65,7 @@ def store_frontend_suggest(store_id):
         object_dump.object_id = store.id
         db.session.add(object_dump)
         db.session.commit()
-        flash('Danke für Deinen Verbesserungsvorschlag!', 'success')
+        flash('Danke für Deinen Verbesserungsvorschlag! Wir schauen kurz drüber und schalten diesen dann normalerweise binnen 24 Stunden frei.', 'success')
         return redirect('/store/%s' % store.id)
     return render_template('store-suggest.html', store=store, opening_times=get_opening_times_for_form(store.id), form=form)
 

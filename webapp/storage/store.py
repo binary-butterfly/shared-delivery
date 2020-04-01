@@ -62,6 +62,7 @@ class Store(db.Model, BaseModel):
     revisited_store = db.Column(db.DateTime)
     revisited_user = db.Column(db.DateTime)
     revisited_admin = db.Column(db.DateTime)
+    revisited_organisation = db.Column(db.DateTime)
 
     delivery = db.Column(db.Boolean)
     pickup = db.Column(db.Boolean)
@@ -109,7 +110,7 @@ class Store(db.Model, BaseModel):
 
     @property
     def revisit_required(self):
-        return not (self.revisited_government or self.revisited_store or self.revisited_user or self.revisited_admin)
+        return not (self.revisited_government or self.revisited_store or self.revisited_user or self.revisited_admin or self.revisited_organisation)
 
     property_out = {
         'yes': 'ja',

@@ -45,6 +45,7 @@ def category_show(category_id):
 
 @category_management.route('/admin/category/new', methods=['GET', 'POST'])
 def category_new():
+    abort(403)
     if not current_user.has_capability('admin'):
         abort(403)
     form = CategoryForm()
@@ -58,12 +59,12 @@ def category_new():
         upload_files(form, category, 'category')
         flash('Category erfolgreich gespeichert', 'success')
         return redirect('/admin/categories')
-    print(form.errors)
     return render_template('category-new.html', form=form)
 
 
 @category_management.route('/admin/category/<int:category_id>/edit', methods=['GET', 'POST'])
 def category_edit(category_id):
+    abort(403)
     if not current_user.has_capability('admin'):
         abort(403)
     category = Category.query.get_or_404(category_id)
@@ -74,5 +75,5 @@ def category_edit(category_id):
         db.session.commit()
         upload_files(form, category, 'category')
         flash('Category erfolgreich gespeichert', 'success')
-        return redirect('/admin/categorys')
+        return redirect('/admin/categories')
     return render_template('category-edit.html', form=form, category=category)

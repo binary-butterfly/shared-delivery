@@ -44,6 +44,13 @@ class RegionForm(FlaskForm):
             )
         ]
     )
+    category_style = SelectField(
+        label='Kategorie-Stil',
+        choices=[
+            ('detailed', 'detailliert'),
+            ('summarized', 'zusammengefasst')
+        ]
+    )
     website = StringField(
         label=_('Website'),
         validators=[

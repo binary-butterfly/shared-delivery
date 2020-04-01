@@ -40,6 +40,8 @@ class Category(db.Model, BaseModel):
 
     priority = db.Column(db.Integer)
 
+    summarize_category = db.Column(db.Integer)
+
     logo = db.Column(db.Enum('jpg', 'png', 'svg'))
     picture = db.Column(db.Enum('jpg', 'png', 'svg'))
 

@@ -17,7 +17,7 @@ class BaseConfig:
     INSTANCE_FOLDER_PATH = os.path.join('/tmp', 'instance')
 
     PROJECT_NAME = "shared-delivery"
-    PROJECT_VERSION = '1.0.11'
+    PROJECT_VERSION = '1.0.12'
 
     PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
     LOG_DIR = os.path.abspath(os.path.join(PROJECT_ROOT, os.pardir, 'logs'))
@@ -56,64 +56,128 @@ class BaseConfig:
     OVERPASS_BASE_URL = 'https://overpass-api.de/api/interpreter'
     OVERPASS_WAIT_TIME = 20
     OVERPASS_SOURCES = {
-        'shop': {
-            'bakery': 'Bäckerei, Konditorei',
-            'beverages': 'Getränkemarkt',
-            'butcher': 'Metzgerei, Fleischerei',
-            'cheese': 'Käseladen',
-            'chocolate': 'Schokoladenladen',
-            'coffee': 'Kaffeeladen',
-            'confectionery': 'Süßwarenhändler',
-            'convenience': 'Dorfladen, Kiosk, Hofladen',
-            'gasstation': 'Tankstelle',
-            'deli': 'Feinkostladen',
-            'greengrocer': 'Obst- und Gemüsehändler',
-            'health_food': 'Naturkost- oder Bioladen',
-            'seafood': 'Fischfachgeschäft',
-            'spices': 'Gewürzladen',
-            'tea': 'Teegeschäft',
-            'department_store': 'Kaufhaus',
-            'supermarket': 'Supermarkt, Einkaufszentrum',
-            'baby_goods': 'Babyfachmarkt',
-            'chemist': 'Drogerie',
-            'hairdresser': 'Frisör',
-            'hearing_aids': 'Hörgeräteakustiker',
-            'medical_supply': 'Sanitätshaus',
-            'optician': 'Optiker',
-            'appliance': 'Haushaltsgeräte',
-            'doityourself': 'Baumarkt',
-            'electrical': 'Elektronikmarkt',
-            'florist': 'Florist, Blumenladen, Blumenhandel',
-            'garden_centre': 'Garten-Center',
-            'locksmith': 'Schlüsseldienst',
-            'trade': 'Baustoffhandel',
-            'furniture': 'Möbelhaus, Einrichtungshaus, Wohnstudio',
-            'computer': 'Computer-Fachhändler',
-            'mobile_phone': 'Handy-Shop',
-            'bicycle': 'Fahrradgeschäft, Fahrradwerkstatt, Fahrradverleih, Fahrradservice',
-            'car': 'Autohaus',
-            'car_repair': 'Autowerkstatt, Autoreparatur, Reifenservice',
-            'fuel': 'Brennstoff',
-            'sports': 'Sportbedarf',
-            'craft': 'Künstler- und Bastelbedarf',
-            'musical_instrument': 'Musikhaus, Musikinstrumentengeschäft',
-            'books': 'Buchhandlung',
-            'newsagent': 'Zeitungshändler, Lottoladen',
-            'stationery': 'Schreibwaren, Bürobedarf',
-            'dry_cleaning': 'Chemische Reinigung',
-            'funeral_directors': 'Bestattungsunternehmen',
-            'laundry': 'Wäscherei, Reinigung, Waschsalon',
-            'pet': 'Zoo- oder Tierhandlung',
-            'toys': 'Spielzeuggeschäft',
-            'private_engagement': 'Nachbarschaftshilfe, private Angebote',
-            'club': 'Vereine helfen'
+        "shop": {
+            "alcohol": {"osm": True, "summary": 3, "name": "Spirituosenladen"},
+            "bakery": {"osm": True, "summary": 3, "name": "Bäckerei, Konditorei"},
+            "beverages": {"osm": True, "summary": 3, "name": "Getränkemarkt"},
+            "butcher": {"osm": True, "summary": 3, "name": "Metzgerei, Fleischerei"},
+            "cheese": {"osm": True, "summary": 3, "name": "Käseladen"},
+            "chocolate": {"osm": True, "summary": 3, "name": "Schokoladenladen"},
+            "coffee": {"osm": True, "summary": 3, "name": "Kaffeeladen"},
+            "confectionery": {"osm": True, "summary": 3, "name": "Süßwarenhändler"},
+            "convenience": {"osm": True, "summary": 3, "name": "Kleines Lebensmittelgeschäft"},
+            "deli": {"osm": True, "summary": 3, "name": "Feinkostladen"},
+            "farm": {"osm": True, "summary": 3, "name": "Hofladen"},
+            "greengrocer": {"osm": True, "summary": 3, "name": "Obst- und Gemüsehändler"},
+            "health_food": {"osm": True, "summary": 3, "name": "Naturkost- oder Bioladen"},
+            "pastry": {"osm": True, "summary": 3, "name": "Konditoreiwaren"},
+            "seafood": {"osm": True, "summary": 3, "name": "Fischfachgeschäft"},
+            "spices": {"osm": True, "summary": 3, "name": "Gewürzladen"},
+            "tea": {"osm": True, "summary": 3, "name": "Teegeschäft"},
+
+            "department_store": {"osm": True, "summary": 3, "name": "Warenhaus, Kaufhaus"},
+            "general": {"osm": True, "summary": 3, "name": "Gemischtwarenhandlung, Dorfladen"},
+            "kiosk": {"osm": True, "summary": 3, "name": "Kiosk, Büdchen"},
+            "supermarket": {"osm": True, "summary": 3, "name": "Supermarkt, Einkaufszentrum"},
+
+            "baby_goods": {"osm": True, "summary": 3, "name": "Babyfachmarkt"},
+
+            "chemist": {"osm": True, "summary": 3, "name": "Drogerie"},
+            "hairdresser": {"osm": True, "summary": 4, "name": "Frisör"},
+            "hearing_aids": {"osm": True, "summary": 4, "name": "Hörgeräteakustiker"},
+            "medical_supply": {"osm": True, "summary": 3, "name": "Sanitätshaus"},
+            "optician": {"osm": True, "summary": 4, "name": "Optiker"},
+
+            "appliance": {"osm": True, "summary": 5, "name": "Haushaltsgeräte"},
+            "doityourself": {"osm": True, "summary": 5, "name": "Baumarkt"},
+            "electrical": {"osm": True, "summary": 5, "name": "Elektronikmarkt"},
+            "florist": {"osm": True, "summary": 3, "name": "Florist, Blumenladen, Blumenhandel"},
+            "garden_centre": {"osm": True, "summary": 5, "name": "Garten-Center"},
+            "houseware": {"osm": True, "summary": 3, "name": "Haushaltsartikel"},
+            "locksmith": {"osm": True, "summary": 3, "name": "Schlüsseldienst"},
+            "trade": {"osm": True, "summary": 5, "name": "Baustoffhandel"},
+
+            "furniture": {"osm": True, "summary": 3, "name": "Möbelhaus, Einrichtungshaus, Wohnstudio"},
+            "computer": {"osm": True, "summary": 3, "name": "Computer-Fachhändler"},
+            "mobile_phone": {"osm": True, "summary": 3, "name": "Handy-Shop"},
+
+            "bicycle": {"osm": True, "summary": 5, "name": "Fahrradgeschäft"},
+            "car": {"osm": True, "summary": 5, "name": "Autohaus"},
+            "car_repair": {"osm": True, "summary": 5, "name": "Autowerkstatt, Reifenservice"},
+            "fuel": {"osm": True, "summary": 5, "name": "Brennstoff"},
+            "sports": {"osm": True, "summary": 3, "name": "Sportbedarf"},
+
+            "craft": {"osm": True, "summary": 3, "name": "Künstler- und Bastelbedarf"},
+            "musical_instrument": {"osm": True, "summary": 3, "name": "Musikinstrumentengeschäft"},
+
+            "books": {"osm": True, "summary": 3, "name": "Buchhandlung"},
+            "newsagent": {"osm": True, "summary": 3, "name": "Zeitungshändler, Lottoladen"},
+            "stationery": {"osm": True, "summary": 3, "name": "Schreibwaren, Bürobedarf"},
+
+            "dry_cleaning": {"osm": True, "summary": 4, "name": "Chemische Reinigung"},
+            "funeral_directors": {"osm": True, "summary": 4, "name": "Bestattungsunternehmen"},
+            "laundry": {"osm": True, "summary": 4, "name": "Reinigung, Waschsalon"},
+            "pet": {"osm": True, "summary": 3, "name": "Zoo- oder Tierhandlung"},
+            "toys": {"osm": True, "summary": 3, "name": "Spielzeuggeschäft"},
+
+            "private_engagement": {"osm": False, "summary": 6, "name": "Nachbarschaftshilfe, private Angebote"},
+            "club": {"osm": False, "summary": 6, "name": "Vereine helfen"}
         },
-        'amenity': {
-            'doctors': 'Arztpraxis, Ärztehaus',
-            'cafe': 'Café, Eiscafé, Bistro',
-            'restaurant': 'Restaurant',
-            'pub': 'Kneipe',
-            'fast_food': 'Schnell-Restaurant, Imbiss',
-            'bar': 'Bar, Nachtlokal'
+        "amenity": {
+            "bar": {"osm": True, "summary": 2, "name": "Bar"},
+            "cafe": {"osm": True, "summary": 2, "name": "Café, Eiscafé, Bistro, Teeladen, Kaffeeladen"},
+            "fast_food": {"osm": True, "summary": 2, "name": "Schnell-Restaurant, Imbiss"},
+            "ice_cream": {"osm": True, "summary": 2, "name": "Eisdiele"},
+            "pub": {"osm": True, "summary": 2, "name": "Kneipe"},
+            "restaurant": {"osm": True, "summary": 2, "name": "Restaurant"},
+
+            "fuel": {"osm": True, "summary": 5, "name": "Tankstelle"},
+
+            "clinic": {"osm": True, "summary": 1, "name": "Klinik"},
+            "dentist": {"osm": True, "summary": 1, "name": "Zahnarztpraxis"},
+            "doctors": {"osm": True, "summary": 1, "name": "Arztpraxis"},
+            "hospital": {"osm": True, "summary": 1, "name": "Krankenhaus"},
+            "pharmacy": {"osm": True, "summary": 1, "name": "Apotheke"},
+            "veterinary": {"osm": True, "summary": 1, "name": "Tierarztpraxis"},
+
+            "public_bookcase": {"osm": True, "summary": 4, "name": "Bücherschrank"},
+            "animal_boarding": {"osm": True, "summary": 4, "name": "Tierpension"},
+            "animal_shelter": {"osm": True, "summary": 4, "name": "Tierheim"},
+            "childcare": {"osm": True, "summary": 4, "name": "Kinderbetreuung"},
+            "internet_cafe": {"osm": True, "summary": 4, "name": "Internet Café"},
+            "marketplace": {"osm": True, "summary": 3, "name": "Markt"},
+            "place_of_worship": {"osm": True, "summary": 4, "name": "Religiöse Einrichtung"},
+            "post_office": {"osm": True, "summary": 3, "name": "Postamt"}
+        }
+    }
+
+    SUMMARIZE_CATEGORIES = {
+        1: {
+            'name': 'Ärztliche Versorgung',
+            'slug': 'medical-care',
+        },
+        2: {
+            'name': 'Gastronomie',
+            'slug': 'gastronomy'
+        },
+        3: {
+            'name': 'Einzelhandel',
+            'slug': 'retail'
+        },
+        4: {
+            'name': 'Dienstleistungn',
+            'slug': 'services'
+        },
+        5: {
+            'name': 'Gewerbe',
+            'slug': 'trade'
+        },
+        6: {
+            'name': 'Private Angebote',
+            'slug': 'private-offers'
+        },
+        0: {
+            'name': 'Weiteres',
+            'slug': 'misc'
         }
     }

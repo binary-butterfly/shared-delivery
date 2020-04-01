@@ -8866,9 +8866,15 @@ h1 {
 h2 {
   font-size: 1.85rem; }
 
+/*
 a, a:visited, a:hover, a:active {
-  color: #b4001d; }
+  color: #b4001d;
+}
 
+a.btn, a.btn:visited, a.btn:hover, a.btn:active {
+  color: #FFF;
+}
+*/
 blockquote {
   padding-left: 15px;
   font-style: italic; }
@@ -9078,16 +9084,40 @@ a.btn-icon, button.btn-icon {
   border-radius: 15px;
   border: 1px solid #CCC; }
 
-.tile h2 {
-  font-size: 1.3rem; }
-
 .tile a {
-  display: block;
   color: #000;
-  min-height: 45px; }
+  min-height: 45px;
+  font-size: 1.4rem;
+  text-align: left; }
+
+.frontpage .tile a {
+  font-weight: bold; }
 
 .tile .btn {
   background-color: #a9f4bd; }
+
+.tilecontent {
+  border-radius: 10px;
+  background-image: url(/static/img/region/skyline.svg);
+  background-repeat: no-repeat;
+  background-position: -10px;
+  background-size: 100% auto;
+  min-height: 120px; }
+
+.frontpage .tilecontent a {
+  border-radius: 10px;
+  color: #fff;
+  height: 120px;
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column; }
+
+.frontpage .tilecontent span {
+  margin-top: auto;
+  padding: 0 0 10px 10px; }
+
+.region h2 {
+  border-bottom: 1px solid #CCC; }
 
 .store-revisit-box {
   border: 1px solid #999;

@@ -37,22 +37,25 @@ def import_osm(region_id):
     db.session.add(region)
     db.session.commit()
     for base_key, sub_source in current_app.config['OVERPASS_SOURCES'].items():
-        for category_slug, category_name in sub_source.items():
-            import_single_osm(region, base_key, upsert_category(category_slug, category_name))
+        for category_slug, category_data in sub_source.items():
+            category = upsert_category(category_slug, category_data)
+            if category_data['osm'] and False:
+                import_single_osm(region, base_key, category)
     es_refresh_stores()
     region.sync_status = 'idle'
     db.session.add(region)
     db.session.commit()
 
 
-def upsert_category(category_slug, category_name):
+def upsert_category(category_slug, category_data):
     category = Category.query.filter_by(slug=category_slug).first()
     if not category:
         category = Category()
         category.slug = category_slug
-        category.name = category_name
-        db.session.add(category)
-        db.session.commit()
+    category.name = category_data['name']
+    category.summarize_category = category_data['summary']
+    db.session.add(category)
+    db.session.commit()
     return category
 
 

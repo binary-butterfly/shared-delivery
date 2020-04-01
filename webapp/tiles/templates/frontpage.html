@@ -16,18 +16,19 @@
         {% for region in regions %}
             <div class="col-md-4 col-sm-6 col-xs-12 tile">
 				<div class="tilecontent">
-					<a href="/region/{{ region.slug }}">
-						<span>
-						{% if region.picture %}
-							<img
-									src="/static/img/region/{{ region.id }}.picture.350.{{ region.picture }}"
-									alt="{{ region.name }}"
-							>
-						{% else %}
-							{{ region.name }}
-						{% endif %}
-						</span>
-					</a>
+                    <a
+                            href="/region/{{ region.slug }}"
+                            style="background: linear-gradient(45deg, rgba({{ region.style_color_rgb }}, 1) 15%, rgba({{ region.style_color_rgb }}, .8) 85%);"
+                    >
+                        {% if region.picture %}
+                            <img
+                                    src="/static/img/region/{{ region.id }}.picture.350.{{ region.picture }}"
+                                    alt="{{ region.name }}"
+                            >
+                        {% else %}
+                            <span style="color: {{ region.picture_overlay_color }}">{{ region.name }}</span>
+                        {% endif %}
+                    </a>
 				</div>
             </div>
         {% endfor %}
