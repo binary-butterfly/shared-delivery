@@ -2,6 +2,8 @@ config.py
 *.py[cod]
 .idea
 
+/node_modules
+
 bin
 venv
 tmp

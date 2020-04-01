@@ -10,14 +10,11 @@ import cache from 'gulp-cached';
 import remember from 'gulp-remember';
 import concat from 'gulp-concat';
 import gulpif from 'gulp-if';
-import source from 'vinyl-source-stream';
-import cssnanoe from 'gulp-cssnano';
 import gulpWebpack from 'webpack-stream';
 import webpack from 'webpack';
 import "@babel/polyfill";
 
 const basePaths = {
-    packages: './node_modules',
     dest: './static',
     src: './assets'
 };
@@ -43,11 +40,6 @@ const webpackConfigurationProduction = require('./assets/webpack.production.conf
 const webpackClientConfiguration = require('./assets/webpack.client.config.js');
 const webpackClientConfigurationProduction = require('./assets/webpack.client.production.config');
 
-
-let handleError = function (err) {
-    console.log(err.toString());
-    this.emit('end');
-};
 
 let enabled = {
     rev: 0

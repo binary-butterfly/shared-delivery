@@ -20,9 +20,9 @@ ENV HOME /home/webdev
 
 RUN mkdir /app && chown webdev:webdev /app
 WORKDIR /app
-COPY --chown=webdev:webdev . /app
-
-RUN ln -s /app/node_modules/gulp/bin/gulp.js /usr/bin/gulp
-
 USER webdev
-RUN npm install
+
+COPY --chown=webdev:webdev ./assets ./assets
+COPY --chown=webdev:webdev ./package.json ./package-lock.json ./.babelrc ./babel.cfg ./gulpfile.babel.js ./
+
+RUN npm ci

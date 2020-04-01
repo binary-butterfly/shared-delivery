@@ -7,8 +7,6 @@ services:
     ports:
       - 5000:5000
     container_name: shared-delivery-flask
-    volumes:
-      - .:/app
     networks:
       shared-delivery:
         aliases:
@@ -20,8 +18,6 @@ services:
       context: .
       dockerfile: Dockerfile.flask
     container_name: shared-delivery-worker
-    volumes:
-      - .:/app
     networks:
       shared-delivery:
         aliases:
@@ -33,15 +29,11 @@ services:
       context: .
       dockerfile: Dockerfile.gulp
     container_name: shared-delivery-gulp
-    volumes:
-      - .:/app
-      - shared-delivery-node-modules:/app/node_modules
     networks:
       shared-delivery:
         aliases:
         - gulp
-    #entrypoint: ['sleep', '600000']
-    entrypoint: ["gulp", 'watch']
+    entrypoint: ["npm", "run", "gulp:watch"]
 
   mysql:
     image: mariadb
@@ -105,7 +97,6 @@ services:
         aliases:
         - rabbitmq
 volumes:
-  shared-delivery-node-modules:
   shared-delivery-mysql:
   shared-delivery-elastic:
 
