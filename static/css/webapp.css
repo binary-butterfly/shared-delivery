@@ -9111,6 +9111,14 @@ a.btn-icon, button.btn-icon {
   flex-direction: column;
   font-weight: bold; }
 
+.tiles-store .tilecontent {
+  border: 1px solid #CCC;
+  border-radius: 10px; }
+
+.tiles-store .tilecontent p a {
+  color: #999;
+  font-size: 1rem; }
+
 .frontpage .tilecontent span {
   margin-top: auto;
   padding: 0 0 10px 10px; }

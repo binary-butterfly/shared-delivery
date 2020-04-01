@@ -14,13 +14,16 @@
     <div class="row">
         {% for store in stores %}
             <div class="col-md-4 tile">
-                <h2><a href="/store/{{ store.id }}">{{ store.name }}</a></h2>
-                <a href="/region/{{ region.slug }}/{{ category.slug }}">
-                    <img
-                            src="{{ store.picture_url(350) }}"
-                            alt="{{ store.name }}"
-                    >
-                </a>
+                <div class="tilecontent">
+                    <h2><a href="/store/{{ store.id }}">{{ store.name }}</a></h2>
+                    <p>
+                        <a href="/store/{{ store.id }}">
+                            {% if store.address %}{{ store.address }}, {% endif %}
+                            {% if store.postalcode %}{{ store.postalcode }}{% endif %}
+                            {% if store.locality %}{{ store.locality }}{% else %}{{ store.region.name }}{% endif %}
+                        </a>
+                    </p>
+                </div>
             </div>
         {% endfor %}
     </div>

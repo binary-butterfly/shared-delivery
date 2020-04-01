@@ -41,6 +41,16 @@
   font-weight: bold;
 }
 
+.tiles-store .tilecontent {
+  border: 1px solid #CCC;
+  border-radius: 10px;
+}
+
+.tiles-store .tilecontent p a {
+  color: #999;
+  font-size: 1rem;
+}
+
 .frontpage .tilecontent span {
   margin-top: auto;
   padding: 0 0 10px 10px;
@@ -63,7 +73,6 @@
   background-position: right bottom;
   background-size: 62px;
 }
-
 
 .tiles-store .tile .btn {
   background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewPort%3D%220%200%2024%2024%22%3E%3Cpath%20d%3D%22M12%20.339C5.95.339%201.05%205.466%201.05%2011.797c0%206.33%204.9%2011.457%2010.95%2011.457%206.05%200%2010.95-5.127%2010.95-11.457C22.95%205.467%2018.05.339%2012%20.339zm1.095%2017.186h-2.19v-6.874h2.19zm0-9.166h-2.19V6.068h2.19z%22%20fill%3D%22%23fff%22%20stroke-width%3D%22.56%22%2F%3E%3C%2Fsvg%3E");
