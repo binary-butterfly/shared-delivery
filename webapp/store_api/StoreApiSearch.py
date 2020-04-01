@@ -26,7 +26,7 @@ def api_stores_search():
     return json_response({
         'status': 0,
         'data': data,
-        'count:': count
+        'count': count
     }, cors=True)
 
 
