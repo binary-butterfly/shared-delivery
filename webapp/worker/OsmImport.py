@@ -39,7 +39,7 @@ def import_osm(region_id):
     for base_key, sub_source in current_app.config['OVERPASS_SOURCES'].items():
         for category_slug, category_data in sub_source.items():
             category = upsert_category(category_slug, category_data)
-            if category_data['osm'] and False:
+            if category_data['osm']:
                 import_single_osm(region, base_key, category)
     es_refresh_stores()
     region.sync_status = 'idle'
