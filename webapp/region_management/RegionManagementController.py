@@ -19,6 +19,7 @@ from ..models import Region
 from .RegionManagementForms import RegionSearchForm, RegionForm, RegionDeleteForm, RegionSyncForm
 from ..worker.OsmImport import import_osm_delay
 from ..common.file_upload import upload_files
+from .RegionManagementHelper import geocode_region_delay
 
 region_management = Blueprint('region_management', __name__, template_folder='templates')
 
@@ -57,6 +58,7 @@ def region_new():
         db.session.commit()
         import_osm_delay.delay(region.id)
         upload_files(form, region, 'region')
+        geocode_region_delay.delay(region.id)
         flash('Region erfolgreich gespeichert', 'success')
         return redirect('/admin/regions')
     return render_template('region-new.html', form=form)
@@ -73,6 +75,7 @@ def region_edit(region_id):
         db.session.add(region)
         db.session.commit()
         upload_files(form, region, 'region')
+        geocode_region_delay.delay(region.id)
         flash('Region erfolgreich gespeichert', 'success')
         return redirect('/admin/regions')
     return render_template('region-edit.html', form=form, region=region)

@@ -165,7 +165,7 @@ class BaseConfig:
             'slug': 'retail'
         },
         4: {
-            'name': 'Dienstleistungn',
+            'name': 'Dienstleistungen',
             'slug': 'services'
         },
         5: {
