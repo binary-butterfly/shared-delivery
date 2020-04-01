@@ -72,6 +72,15 @@ export default class StoreSearch extends SearchTable {
             <div className="col-md-4 col-6 tile">
                 <div className={`bg-${(num % 2) + 1}`}>
                     <h2><a href={`/store/${store.id}`}>{store.name}</a></h2>
+                    <p style={{color: '#999'}}>
+                        {store.address !== null &&
+                            <span>{store.address}, </span>
+                        }
+                        {store.postalcode !== null &&
+                            <span>{store.postalcode} </span>
+                        }
+                        {(store.locality) ? store.locality : store.region_name}
+                    </p>
                 </div>
             </div>
         )

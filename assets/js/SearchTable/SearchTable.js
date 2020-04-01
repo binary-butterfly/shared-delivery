@@ -240,7 +240,7 @@ export default class SearchTable extends Component {
         return (
             <div className="d-flex justify-content-start search-table-result-header-text">
                 <span>
-                    {(this.state.resultCount > 10000) ? 'Über ' : ''}{this.state.resultCount} Ergebnis{this.state.resultCount === 1 ? '' : 'se'}
+                    {(this.state.resultCount === 10000) ? 'Über ' : ''}{this.state.resultCount} Ergebnis{this.state.resultCount === 1 ? '' : 'se'}
                 </span>
                 <select id="sort_order" name="sort_order" onChange={(event) => this.formSubmit(event)} className="selectpicker" data-width="fit">
                     <option value="asc" {...attrib_asc}>aufsteigend</option>

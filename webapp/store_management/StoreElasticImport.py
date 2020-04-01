@@ -29,7 +29,7 @@ def es_index_stores(recreate=False):
     if not es.indices.exists_alias(name=current_app.config['ELASTICSEARCH_STORE_INDEX'] + '-latest') or recreate:
         es_create_index()
 
-    stores = Store.query
+    stores = Store.query.filter_by(deleted=False)
     if last_sync and not recreate:
         stores = stores.filter(Store.modified >= last_sync)
 
