@@ -5649,7 +5649,7 @@ var SearchTable = /*#__PURE__*/function (_Component) {
 
       return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("div", {
         className: "d-flex justify-content-start search-table-result-header-text"
-      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("span", null, this.state.resultCount, " Ergebnis", this.state.resultCount === 1 ? '' : 'se'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("select", {
+      }, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("span", null, this.state.resultCount > 10000 ? 'Über ' : '', this.state.resultCount, " Ergebnis", this.state.resultCount === 1 ? '' : 'se'), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_8___default.a.createElement("select", {
         id: "sort_order",
         name: "sort_order",
         onChange: function onChange(event) {
