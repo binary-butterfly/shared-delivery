@@ -40,7 +40,7 @@ def category_show(category_id):
     if not current_user.has_capability('editor'):
         abort(403)
     category = Category.query.get_or_404(category_id)
-    return render_template('category-show.html')
+    return render_template('category-show.html', category=category)
 
 
 @category_management.route('/admin/category/new', methods=['GET', 'POST'])
