@@ -13,6 +13,16 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 from flask import current_app, request
 from ..common.elastic_request import ElasticRequest
 
+fq_fields = [
+    ['category', str],
+    ['category-summary', str],
+    ['category-slug', str],
+    ['category-id', int],
+    ['region', str],
+    ['region-slug', str],
+    ['region-id', int],
+]
+
 
 def get_data(limit=None):
     if request.method == 'GET':
@@ -63,23 +73,21 @@ def get_data(limit=None):
             }
         })
 
-    if data.get('category'):
-        elastic_request.set_fq('category', data.get('category'))
-    if data.get('category-slug'):
-        elastic_request.set_fq('category_slug', data.get('category-slug'))
-    if data.get('region'):
-        elastic_request.set_fq('region_name', data.get('region'))
-    if data.get('region-slug'):
-        elastic_request.set_fq('region_slug', data.get('region-slug'))
-    if data.get('region-id'):
-        elastic_request.set_fq('region_id', data.get('region-id'))
     if data.get('revisit-required'):
         elastic_request.set_fq('revisit_required', data.get('revisit-required', type=int) == 1)
+    for fq_field in fq_fields:
+        if data.get(fq_field[0], type=fq_field[1]):
+            elastic_request.set_fq(fq_field[0].replace('-', '_'), data.get(fq_field[0], type=fq_field[1]))
     if limit:
         elastic_request.set_limit(limit)
     else:
         elastic_request.set_limit(current_app.config['ITEMS_PER_API'])
         elastic_request.set_skip(current_app.config['ITEMS_PER_API'] * (data.get('page', 1, type=int) - 1))
+
+    elastic_request.set_sort_field(data.get('sort-field', 'name.sort'))
+    elastic_request.set_sort_order(data.get('sort-order', 'asc'))
+    if data.get('random-seed'):
+        elastic_request.set_random_seed(data.get('random-seed'))
 
     elastic_request.query()
     return elastic_request.get_results(), elastic_request.get_result_count()

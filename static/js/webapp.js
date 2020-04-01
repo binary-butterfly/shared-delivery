@@ -28529,8 +28529,8 @@ var StoreSearch = /*#__PURE__*/function (_SearchTable) {
     _this = _super.call(this, props);
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "params", {
-      sort_field: 'name',
-      sort_order: 'asc',
+      'sort-field': 'random',
+      'sort-order': 'asc',
       page: 1
     });
 
@@ -28541,10 +28541,16 @@ var StoreSearch = /*#__PURE__*/function (_SearchTable) {
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "varPrefix", 'storeSearch');
 
     _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "sortDef", [{
-      key: 'name',
+      key: 'random',
+      name: 'Zufall'
+    }, {
+      key: 'name.sort',
       name: 'Name'
     }]);
 
+    _babel_runtime_helpers_defineProperty__WEBPACK_IMPORTED_MODULE_6___default()(_babel_runtime_helpers_assertThisInitialized__WEBPACK_IMPORTED_MODULE_2___default()(_this), "loadParamsRegExp", [/\/store\/(.*)/g]);
+
+    _this.params['random-seed'] = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
     $('#no_revisit_required').change(function () {
       _this.updateData();
     });
@@ -28554,13 +28560,7 @@ var StoreSearch = /*#__PURE__*/function (_SearchTable) {
   _babel_runtime_helpers_createClass__WEBPACK_IMPORTED_MODULE_1___default()(StoreSearch, [{
     key: "getParams",
     value: function getParams() {
-      console.log(this.params);
       var params = Object.assign({}, this.params);
-
-      if (params.region_id) {
-        params['region-id'] = params.region_id;
-        delete params.region_id;
-      }
 
       if ($('#no_revisit_required').is(':checked')) {
         params['revisit-required'] = '0';
@@ -28570,17 +28570,17 @@ var StoreSearch = /*#__PURE__*/function (_SearchTable) {
         delete params.no_revisit_required;
       }
 
+      var object_keys = Object.keys(params);
+
+      for (var i = 0; i < object_keys.length; i++) {
+        params[object_keys[i].replace('_', '-')] = params[object_keys[i]];
+      }
+
       return params;
     }
   }, {
-    key: "render",
-    value: function render() {
-      if (!this.state.initialized) {
-        return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
-          className: 'search-table-loading'
-        }, "... wird geladen ...");
-      }
-
+    key: "renderTable",
+    value: function renderTable() {
       var rows = [];
 
       for (var i = 0; i < Math.ceil(this.state.data.length / 3); i++) {

@@ -3,8 +3,8 @@ import SearchTable from './SearchTable'
 
 export default class StoreSearch extends SearchTable {
     params = {
-        sort_field: 'name',
-        sort_order: 'asc',
+        'sort-field': 'random',
+        'sort-order': 'asc',
         page: 1
     };
 
@@ -13,11 +13,16 @@ export default class StoreSearch extends SearchTable {
     varPrefix = 'storeSearch';
 
     sortDef = [
-        { key: 'name', name: 'Name' }
+        { key: 'random', name: 'Zufall'},
+        { key: 'name.sort', name: 'Name' }
+    ];
+    loadParamsRegExp = [
+        /\/store\/(.*)/g
     ];
 
     constructor(props) {
         super(props);
+        this.params['random-seed'] = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
         $('#no_revisit_required').change(() => {
             this.updateData();
         });
@@ -25,30 +30,22 @@ export default class StoreSearch extends SearchTable {
 
 
     getParams() {
-        console.log(this.params);
         let params = Object.assign({}, this.params);
-        if (params.region_id) {
-            params['region-id'] = params.region_id;
-            delete params.region_id;
-        }
         if ($('#no_revisit_required').is(':checked')) {
             params['revisit-required'] = '0';
         }
         if (params.no_revisit_required) {
             delete params.no_revisit_required;
         }
+        let object_keys = Object.keys(params);
+
+        for (let i = 0; i < object_keys.length; i++) {
+            params[object_keys[i].replace('_', '-')] = params[object_keys[i]];
+        }
         return params
     }
 
-    render() {
-        if (!this.state.initialized) {
-            return (
-                <div className={'search-table-loading'}>
-                    ... wird geladen ...
-                </div>
-            );
-
-        }
+    renderTable() {
         let rows = [];
         for (let i = 0; i < Math.ceil(this.state.data.length / 3); i++) {
             let row = [];

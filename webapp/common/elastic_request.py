@@ -17,19 +17,21 @@ from ..extensions import es
 from flask import current_app
 
 
-class ElasticRequest():
+class ElasticRequest:
 
     def __init__(self, index):
-        self.start = time.time()
         self.index = index
-        self.limit = current_app.config['ITEMS_PER_PAGE']
+        self.limit = 10
         self.skip = 0
-        self.order_by = '_score'
+        self.sort_field = '_score'
+        self.sort_order = 'asc'
         self.source = []
+        self.random_seed = False
         self.datetime_fields = []
 
         self.aggs = {}
         self.query_parts_must = []
+        self.query_parts_should = []
         self.query_parts_filter = []
         self.query_range = {}
 
@@ -95,8 +97,14 @@ class ElasticRequest():
             return
         self.skip = skip
 
-    def set_order_by(self, order_by):
-        self.order_by = order_by
+    def set_sort_field(self, sort_field):
+        self.sort_field = sort_field
+
+    def set_sort_order(self, sort_order):
+        self.sort_order = sort_order
+
+    def set_random_seed(self, random_seed):
+        self.random_seed = random_seed
 
     def set_agg_raw(self, agg_name, agg):
         self.aggs[agg_name] = agg
@@ -161,8 +169,33 @@ class ElasticRequest():
         }
         if len(self.query_parts_must):
             query['query']['bool']['must'] = self.query_parts_must
+        if len(self.query_parts_should):
+            if not len(self.query_parts_must):
+                query['query']['bool']['must'] = []
+            query['query']['bool']['must'].append({
+                'bool': {
+                    'should': self.query_parts_should
+                }
+            })
+
         if len(self.query_parts_filter):
             query['query']['bool']['filter'] = self.query_parts_filter
+
+        if self.sort_field == 'random' and self.random_seed:
+            query = {
+                'query': {
+                    'function_score': {
+                        'query': query['query'],
+                        'random_score': {
+                            'seed': self.random_seed,
+                            'field': '_seq_no'
+                        },
+                        'boost_mode': 'sum'
+                    }
+                }
+            }
+            self.sort_field = '_score'
+
         if self.aggs:
             query['aggs'] = self.aggs
         return query
@@ -172,7 +205,7 @@ class ElasticRequest():
         self.result_raw = es.search(
             index=self.index,
             body=query,
-            sort=self.order_by,
+            sort='%s:%s' % (self.sort_field, self.sort_order),
             _source=','.join(self.source),
             size=self.limit,
             from_=self.skip

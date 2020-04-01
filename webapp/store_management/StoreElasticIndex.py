@@ -57,7 +57,14 @@ def es_mapping():
                 'type': 'integer'
             },
             'name': {
-                'type': 'text'
+                'type': 'text',
+                'fields': {
+                    'sort': {
+                        'type': 'text',
+                        'analyzer': 'sort_analyzer',
+                        'fielddata': True
+                    }
+                }
             },
             'firstname': {
                 'type': 'text'
@@ -188,6 +195,58 @@ def es_mapping():
 def es_settings():
     return {
         'index': {
-            'max_result_window': 65536
+            'max_result_window': 65536,
+            'analysis': {
+                'filter': {
+                    'german_stop': {
+                        "type": 'stop',
+                        "stopwords": '_german_'
+                    },
+                    'german_stemmer': {
+                        "type": 'stemmer',
+                        "language": 'light_german'
+                    },
+                    'custom_stop': {
+                        "type": 'stop',
+                        'stopwords': generate_stopword_list()
+                    }
+                },
+                'char_filter': {
+                    'sort_char_filter': {
+                        'type': 'pattern_replace',
+                        'pattern': '"',
+                        'replace': ''
+                    }
+                },
+                'analyzer': {
+                    'default_analyzer': {
+                        'type': 'custom',
+                        'tokenizer': 'standard',
+                        'filter': [
+                            'lowercase',
+                            'custom_stop',
+                            'german_stop',
+                            'german_stemmer'
+                        ]
+                    },
+                    'sort_analyzer': {
+                        'tokenizer': 'keyword',
+                        'filter': [
+                            'lowercase',
+                            'asciifolding',
+                            'custom_stop',
+                            'german_stop',
+                            'german_stemmer'
+                        ],
+                        'char_filter': [
+                            'sort_char_filter'
+                        ]
+                    }
+                }
+            }
         }
     }
+
+
+def generate_stopword_list():
+    return []
