@@ -256,7 +256,7 @@ class BaseConfig:
             "bbq": {"osm": True, "summary": 0, "name": "Grillplatz"},
             "biergarten": {"osm": True, "summary": 2, "name": "Biergarten"},
             "cafe": {"osm": True, "summary": 2, "name": "Café, Eiscafé, Bistro, Teeladen, Kaffeeladen"},
-            "drinking_water": {"osm": True, "summary": 0, "name": "Trinkwasserstelle"},
+            #"drinking_water": {"osm": True, "summary": 0, "name": "Trinkwasserstelle"},
             "fast_food": {"osm": True, "summary": 2, "name": "Schnell-Restaurant, Imbiss"},
             "food_court": {"osm": True, "summary": 2, "name": "Food Court, Verkaufsstellen verschiedener Restaurants und Imbisse"},
             "ice_cream": {"osm": True, "summary": 2, "name": "Eisdiele"},
@@ -264,8 +264,9 @@ class BaseConfig:
             "restaurant": {"osm": True, "summary": 2, "name": "Restaurant"},
 
             # Education
-            "college": {"osm": True, "summary": 7, "name": "Hochschule"},
+            #"college": {"osm": True, "summary": 7, "name": "Hochschule"},
             "driving_school": {"osm": True, "summary": 4, "name": "Fahrschule"},
+            """
             "kindergarten": {"osm": True, "summary": 7, "name": "Kindergarten"},
             "language_school": {"osm": True, "summary": 7, "name": "Sprachschule"},
             "library": {"osm": True, "summary": 4, "name": "Bibliothek, Bücherei"},
@@ -273,8 +274,9 @@ class BaseConfig:
             "music_school": {"osm": True, "summary": 7, "name": "Musikschule"},
             "school": {"osm": True, "summary": 7, "name": "Schule"},
             "university": {"osm": True, "summary": 7, "name": "Universität"},
-
+            """
             # Transportation
+            """
             "bicycle_parking": {"osm": True, "summary": 8, "name": "Fahrradparkplatz"},
             "bicycle_repair_station": {"osm": True, "summary": 8, "name": "Fahrrad-Reparaturbereich"},
             "bicycle_rental": {"osm": True, "summary": 4, "name": "Fahrradverleihstation"},
@@ -299,7 +301,7 @@ class BaseConfig:
             "atm": {"osm": True, "summary": 9, "name": "Geldautomat / Bankomat"},
             "bank": {"osm": True, "summary": 9, "name": "Bank, Geldinstitut"},
             "bureau_de_change": {"osm": True, "summary": 9, "name": "Geldwechselbüro"},
-
+            """
             # Healthcare
             "baby_hatch": {"osm": True, "summary": 1, "name": "Babyklappe"},
             "clinic": {"osm": True, "summary": 1, "name": "Klinik"},
@@ -310,7 +312,7 @@ class BaseConfig:
             "pharmacy": {"osm": True, "summary": 1, "name": "Apotheke"},
             "social_facility": {"osm": True, "summary": 1, "name": "Soziale Einrichtung, Alters-, Obdachlosen-, Kinderheim, Die Tafel etc."},
             "veterinary": {"osm": True, "summary": 1, "name": "Tierarztpraxis, Tierklinik"},
-
+            """
             # Entertainment, Arts & Culture
             "arts_centre": {"osm": True, "summary": 10, "name": "Kulturzentrum"},
             "brothel": {"osm": True, "summary": 10, "name": "Bordell, Freudenhaus"},
@@ -327,10 +329,10 @@ class BaseConfig:
             "studio": {"osm": True, "summary": 10, "name": "TV, Radio oder Musik Studio"},
             "swingerclub": {"osm": True, "summary": 10, "name": "Swingerclub"},
             "theatre": {"osm": True, "summary": 10, "name": "Theater, Oper, Schauspielhaus"},
-
+            """
             # Others
-            "animal_boarding": {"osm": True, "summary": 0, "name": "Tierpension"},
-            "animal_shelter": {"osm": True, "summary": 0, "name": "Tierheim"},
+            
+            """
             "baking_oven": {"osm": True, "summary": 0, "name": "Backofen"},
             # "bench": {"osm": True, "summary": 0, "name": "Parkbank"},
             "childcare": {"osm": True, "summary": 0, "name": "Kinderbetreuung"},
@@ -369,7 +371,11 @@ class BaseConfig:
             "waste_disposal": {"osm": True, "summary": 0, "name": "Müllabgabestelle"},
             "waste_tranfer_station": {"osm": True, "summary": 0, "name": "Müllumladestation"},
             "watering_place": {"osm": True, "summary": 0, "name": "Wasserstelle"},
+            """
             "water_point": {"osm": True, "summary": 0, "name": "Trinkwasserzapfstelle"},
+
+            "animal_boarding": {"osm": True, "summary": 0, "name": "Tierpension"},
+            "animal_shelter": {"osm": True, "summary": 0, "name": "Tierheim"},
         }
     }
 
@@ -397,25 +403,28 @@ class BaseConfig:
         6: {
             'name': 'Private Angebote',
             'slug': 'private-offers'
-        },
-        7: {
-            'name': 'Bildung',
-            'slug': 'education'
-        },
-        8: {
-            'name': 'Transport',
-            'slug': 'transportation'
-        },
-        9: {
-            'name': 'Finanzen',
-            'slug': 'financial'
-        },
-        10: {
-            'name': 'Unterhaltung, Kunst & Kultur',
-            'slug': 'entertainment'
-        },
-        0: {
-            'name': 'Weiteres',
-            'slug': 'misc'
         }
     }
+
+"""
+7: {
+    'name': 'Bildung',
+    'slug': 'education'
+},
+8: {
+    'name': 'Transport',
+    'slug': 'transportation'
+},
+9: {
+    'name': 'Finanzen',
+    'slug': 'financial'
+},
+10: {
+    'name': 'Unterhaltung, Kunst & Kultur',
+    'slug': 'entertainment'
+},
+0: {
+    'name': 'Weiteres',
+    'slug': 'misc'
+}
+"""
