@@ -72,11 +72,11 @@ def regions_stores(region_slug, category_slug):
         abort(404)
     stores = Store.query\
         .filter_by(deleted=False)\
-        .filter(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None))\
+        .filter(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None, Store.revisited_organisation != None))\
         .filter_by(region_id=region.id)
     stores_help = Store.query \
         .filter_by(deleted=False) \
-        .filter(not_(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None))) \
+        .filter(not_(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None, Store.revisited_organisation != None))) \
         .filter_by(region_id=region.id)
 
     if region.category_style == 'summarized':

@@ -56,6 +56,9 @@ class BaseConfig:
     OVERPASS_BASE_URL = 'https://overpass-api.de/api/interpreter'
     OVERPASS_WAIT_TIME = 20
     OVERPASS_SOURCES = {
+        "tourism": {
+            "hotel": {"osm": True, "summary": 4, "name": "Hotel"}
+        },
         "shop": {
             # Food, beverages
             "alcohol": {"osm": True, "summary": 3, "name": "Spirituosenladen"},

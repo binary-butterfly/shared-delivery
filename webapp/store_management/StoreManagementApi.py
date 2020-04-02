@@ -44,9 +44,9 @@ def api_stores():
 
     if form.revisit_required.data and form.revisit_required.data not in ['None', '_all']:
         if form.revisit_required.data == 'yes':
-            stores = stores.filter(not_(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None)))
+            stores = stores.filter(not_(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None, Store.revisited_organisation != None)))
         else:
-            stores = stores.filter(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None))
+            stores = stores.filter(or_(Store.revisited_government != None, Store.revisited_user != None, Store.revisited_store != None, Store.revisited_admin != None, Store.revisited_organisation != None))
 
     count = stores.count()
     stores = stores.order_by(getattr(getattr(Store, form.sort_field.data), form.sort_order.data)())\

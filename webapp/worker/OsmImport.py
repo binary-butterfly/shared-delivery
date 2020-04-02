@@ -66,7 +66,7 @@ def import_single_osm(region, base_key, category):
         base_key,
         category.name
     ))
-    url_param = '[out:json];area["de:regionalschluessel"=%s];nwr[%s=%s](area);out body;' % (
+    url_param = '[out:json];area["de:regionalschluessel"=%s];nwr[%s=%s](area);out center;' % (
         region.regionalschluessel,
         base_key,
         category.slug
@@ -102,8 +102,12 @@ def save_poi(store_raw, region, category):
     store.name = store_raw.get('tags', {}).get('name')
     if not store.name:
         return
-    store.lat = store_raw.get('lat')
-    store.lon = store_raw.get('lon')
+    if store_raw.get('type') == 'way':
+        store.lat = store_raw.get('center', {}).get('lat')
+        store.lon = store_raw.get('center', {}).get('lon')
+    else:
+        store.lat = store_raw.get('lat')
+        store.lon = store_raw.get('lon')
     if not store.lat or not store.lon:
         return
     store_details = store_raw.get('tags', {})

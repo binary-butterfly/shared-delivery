@@ -8,7 +8,7 @@ import ReactDOM from "react-dom";
 import Common from "./Common";
 import OsmMap from "./OsmMap";
 
-document.write('<link rel="stylesheet" type="text/css" href="/static/css/client.min.css" />');
+document.write('<link rel="stylesheet" type="text/css" href="https://lokalwirkt.de/static/css/client.min.css" />');
 
 $(document).ready(function () {
     window.common = new Common();
