@@ -7,13 +7,13 @@
 }
 
 #lokalwirkt-osm-overlay {
+  z-index: 1500;
   position: absolute;
   bottom: 0;
   left: 0;
   right: 0;
   top: 50%;
   background: rgba(255, 255, 255, 0.8);
-  z-index: 1000;
   padding: 10px;
 }
 

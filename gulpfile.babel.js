@@ -104,7 +104,7 @@ gulp.task('clientStyles', () => {
         .pipe(cache('clientStyles'))
         .pipe(sass.sync().on('error', sass.logError))
         .pipe(autoprefixer())
-        .pipe(gulpif(enabled.rev, cssnanoe()))
+        .pipe(gulpif(enabled.rev, cssnanoe({zindex: false})))
         .pipe(remember('clientStyles'))
         .pipe(concat('client' + ((enabled.rev) ? '.min' : '') + '.css'))
         .pipe(sourcemaps.write('.'))
