@@ -27,6 +27,12 @@ const sassPaths = {
     dest: `${basePaths.dest}/css/`
 };
 
+const sassClientPaths = {
+    src: [`${basePaths.src}/client-sass/base.scss`, `${basePaths.src}/client-sass/webapp.scss`],
+    dest: `${basePaths.dest}/css/`
+};
+
+
 const scriptPaths = {
     src: [`${basePaths.src}/js/base.js`, `${basePaths.src}/js/webapp.js`],
     dest: `${basePaths.dest}/js`
@@ -34,6 +40,9 @@ const scriptPaths = {
 
 const webpackConfiguration = require('./assets/webpack.config.js');
 const webpackConfigurationProduction = require('./assets/webpack.production.config');
+const webpackClientConfiguration = require('./assets/webpack.client.config.js');
+const webpackClientConfigurationProduction = require('./assets/webpack.client.production.config');
+
 
 let handleError = function (err) {
     console.log(err.toString());
@@ -62,6 +71,18 @@ gulp.task('watch', () => {
             }
         }
     });
+    gulp.watch(`${basePaths.src}/client-js/**/**.js`, gulp.series('clientWebpack'));
+    gulp.watch(`${basePaths.src}/client-sass/**/**.*`, gulp.series('clientStyles')).on('change', function(evt) {
+        if (evt.type === 'deleted') {
+            delete cache.caches.clientStyles[evt.path];
+            remember.forget('clientStyles', evt.path);
+        }
+        if (cache.caches.clientStyles) {
+            if (cache.caches.clientStyles['/app/assets/client-sass/webapp.scss']) {
+                delete cache.caches.clientStyles['/app/assets/client-sass/webapp.scss'];
+            }
+        }
+    });
 });
 
 gulp.task('styles', () => {
@@ -77,6 +98,19 @@ gulp.task('styles', () => {
         .pipe(gulp.dest(sassPaths.dest));
 });
 
+gulp.task('clientStyles', () => {
+    return gulp.src(sassClientPaths.src)
+        .pipe(sourcemaps.init())
+        .pipe(cache('clientStyles'))
+        .pipe(sass.sync().on('error', sass.logError))
+        .pipe(autoprefixer())
+        .pipe(gulpif(enabled.rev, cssnanoe()))
+        .pipe(remember('clientStyles'))
+        .pipe(concat('client' + ((enabled.rev) ? '.min' : '') + '.css'))
+        .pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(sassClientPaths.dest));
+});
+
 gulp.task('webpack', () => {
     return gulp.src(scriptPaths.src)
         .pipe(gulpWebpack((enabled.rev) ? webpackConfigurationProduction : webpackConfiguration, webpack).on('error', function() {this.emit('end');}))
@@ -90,6 +124,17 @@ gulp.task('webpack', () => {
 });
 
 
+gulp.task('clientWebpack', () => {
+    return gulp.src(scriptPaths.src)
+        .pipe(gulpWebpack((enabled.rev) ? webpackClientConfigurationProduction : webpackClientConfiguration, webpack).on('error', function() {this.emit('end');}))
+        .pipe(concat('client' + ((enabled.rev) ? '.min' : '') + '.js'))
+        .pipe(gulp.dest(scriptPaths.dest))
+        .pipe(gulpif(enabled.rev, rev.manifest(scriptPaths.dest + '/client-manifest.json', {
+            base: scriptPaths.dest,
+            merge: true,
+        })))
+        .pipe(gulp.dest(scriptPaths.dest));
+});
 
 gulp.task('scripts', () => {
     return browserify({entries: scriptPaths.src})
@@ -104,4 +149,4 @@ gulp.task('scripts', () => {
         .pipe(gulp.dest(scriptPaths.dest));
 });
 
-gulp.task('deploy', gulp.series('setproduction', 'styles', 'webpack'));
+gulp.task('deploy', gulp.series('setproduction', 'styles', 'webpack', 'clientStyles', 'clientWebpack'));

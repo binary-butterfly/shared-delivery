@@ -70,3 +70,8 @@ def datenschutz():
 @frontend.route('/impressum')
 def impressum():
     return render_template('impressum.html')
+
+
+@frontend.route('/client')
+def client_test():
+    return render_template('client.html')

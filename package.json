@@ -57,6 +57,10 @@
     "bootstrap-daterangepicker": "^3.0.3",
     "bootstrap-select": "^1.13.5",
     "lodash.merge": "^4.6.1",
-    "react-simple-timefield": "^3.0.0"
+    "react-simple-timefield": "^3.0.0",
+    "leaflet": "^1.6.0",
+    "leaflet.markercluster": "^1.4.1",
+    "react-leaflet": "^2.6.3",
+    "react-leaflet-markercluster": "^2.0.0-rc3"
   }
 }

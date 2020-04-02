@@ -1,0 +1,35 @@
+{% extends "layout.html" %}
+{% from "macros.html" import form_field, action_button with context %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-md-12">
+            <h1>{{ _('lokalwirkt auf der eigenen Website') }}</h1>
+            <p>
+                lokalwirkt ist OpenData. Das heißt, die Daten sind nicht hier gefangen, sondern können frei auf anderen
+                Websites eingebunden werden. Damit das ganz einfach ist, haben wir Ihnen einmal eine Karte mit den Daten
+                vorbereitet.
+            </p>
+            <div
+                    id="lokalwirkt-map"
+                    data-region="bochum"
+                    data-base-url="{{ config['PROJECT_URL'] }}"
+            >
+            </div>
+            <script src="/static/js/client.js"></script>
+            <h2 style="padding-top: 20px;">Die Karte Nutzen</h2>
+            <p>
+                Um die Karte auf der eigenen Website zu nutzen, müssen Sie ein wenig HTML in Ihre Seite einfügen:
+            </p>
+            <p>
+<pre><code>&lt;div id="lokalwirkt-map" data-region="bochum"&gt;&lt;/div&gt;
+&lt;script src="/static/js/client.js"&gt;&lt;/script&gt;
+</code></pre>
+            </p>
+            <p>
+                Unter <code>data-region</code> muss der Slug der Region eingetragen werden, also die Region in klein
+                geschrieben und mit Bindestrichen statt Leerzeichen.
+            </p>
+        </div>
+    </div>
+{% endblock %}

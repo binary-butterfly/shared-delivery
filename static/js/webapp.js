@@ -18007,7 +18007,7 @@ var StoreMap = /*#__PURE__*/function (_Component) {
       }, this.state.overlayData.website), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null)), this.state.overlayData.brand && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", null, "Kette: ", this.state.overlayData.brand, /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null)), this.state.overlayData.wheelchair && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("span", null, "Rollstuhleignung: ", this.formatWheelchair(this.state.overlayData.wheelchair), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null)))), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("div", {
         className: "col-md-6"
       }, !(this.state.overlayData.revisited_government || this.state.overlayData.revisited_store || this.state.overlayData.revisited_user || this.state.overlayData.revisited_admin) && /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("p", {
-        "class": "map-not-revisited"
+        className: "map-not-revisited"
       }, "Die angezeigten Daten wurden noch nicht f\xFCr Coronoa aktualisiert. Kannst Du uns dabei helfen?", /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("br", null), /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("a", {
         href: "/store/".concat(this.state.overlayData.id, "/suggest"),
         className: "btn btn-primary"

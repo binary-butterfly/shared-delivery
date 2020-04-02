@@ -1,0 +1,26 @@
+#lokalwirkt-osm-map {
+  height: 500px;
+}
+
+#lokalwirkt-osm-box {
+  position: relative;
+}
+
+#lokalwirkt-osm-overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 50%;
+  background: rgba(255, 255, 255, 0.8);
+  z-index: 1000;
+  padding: 10px;
+}
+
+#lokalwirkt-osm-overay-container {
+  display: flex;
+}
+
+#lokalwirkt-osm-overlay-left, #lokalwirkt-osm-overlay-right {
+  flex: 50%;
+}
