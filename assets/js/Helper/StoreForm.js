@@ -9,6 +9,7 @@ export default class StoreForm {
         q: ''
     };
     constructor() {
+        return;
         $('#category').multiselect(window.common.multiselect_options);
         if (!document.getElementById('store-new-form'))
             return;

@@ -20,7 +20,7 @@ from .StoreManagementForms import StoreSearchForm, StoreForm, StoreNewForm, Stor
     StoreSuggestionMergeForm
 from webapp.store_management.StoreElasticImport import es_index_store_delay
 from webapp.store_management.StoreManagementHelper import create_store_revision_delay, get_opening_times_for_form,\
-    save_opening_times, save_opening_times_form
+    save_opening_times, save_opening_times_form, geocode_store_delay
 from ..common.file_upload import upload_files
 
 store_management = Blueprint('store_management', __name__, template_folder='templates')
@@ -49,7 +49,7 @@ def store_show(store_id):
 def store_new():
     if not current_user.has_capability('editor'):
         abort(403)
-    form = StoreNewForm()
+    form = StoreForm()
     if form.validate_on_submit():
         store = Store()
         opening_times_data = {}
@@ -59,10 +59,11 @@ def store_new():
         form.populate_obj(store)
         db.session.add(store)
         db.session.commit()
-        save_opening_times_form(form, opening_times_data, store)
-        es_index_store_delay.delay(store.id)
-        create_store_revision_delay.delay(store.id)
         upload_files(form, store, 'store')
+        geocode_store_delay.delay(store.id)
+        save_opening_times_form(form, opening_times_data, store)
+        es_index_store_delay.apply_async((store.id, ), countdown=5)
+        create_store_revision_delay.apply_async((store.id, ), countdown=5)
         flash('Geschäft erfolgreich gespeichert', 'success')
         return redirect('/admin/stores')
     return render_template('store-new.html', form=form)

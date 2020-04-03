@@ -10,9 +10,41 @@ Redistribution and use in source and binary forms, with or without modification,
 THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 """
 
-from ..extensions import celery
+import requests
+from ..extensions import celery, logger
 from ..models import Store, ObjectDump, OpeningTime
 from ..extensions import db
+
+
+@celery.task
+def geocode_store_delay(region_id):
+    store = Store.query.get(region_id)
+    if store.lat and store.lon:
+        return
+    geocode_store(store)
+
+
+def geocode_store(store):
+    base_url = 'https://nominatim.openstreetmap.org/search'
+    params = {
+        'format': 'json',
+        'q': '%s, %s %s, Deutschland' % (store.address, store.postalcode, store.name)
+    }
+    r = requests.get(base_url, params)
+    if r.status_code != 200:
+        logger.error('region.geocode', 'geocoding region %s failed with http %s' % (store.name, r.status_code))
+        return
+    data = r.json()
+    if not len(data):
+        logger.error('region.geocode', 'geocoding region %s failed with no result' % store.name)
+        return
+    data = data[0]
+    if not data.get('lat') or not data.get('lon'):
+        logger.error('region.geocode', 'geocoding region %s failed with no lat/lon' % store.name)
+    store.lat = data['lat']
+    store.lon = data['lon']
+    db.session.add(store)
+    db.session.commit()
 
 
 @celery.task

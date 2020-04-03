@@ -27732,6 +27732,7 @@ var StoreForm = /*#__PURE__*/function () {
       q: ''
     });
 
+    return;
     $('#category').multiselect(window.common.multiselect_options);
     if (!document.getElementById('store-new-form')) return;
 
