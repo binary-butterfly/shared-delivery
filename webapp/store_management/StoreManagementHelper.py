@@ -28,7 +28,7 @@ def geocode_store(store):
     base_url = 'https://nominatim.openstreetmap.org/search'
     params = {
         'format': 'json',
-        'q': '%s, %s %s, Deutschland' % (store.address, store.postalcode, store.name)
+        'q': '%s, %s %s, Deutschland' % (store.address, store.postalcode, store.locality)
     }
     r = requests.get(base_url, params)
     if r.status_code != 200:
