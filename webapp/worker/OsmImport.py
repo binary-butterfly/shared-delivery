@@ -38,9 +38,8 @@ def import_osm(region_id):
     db.session.commit()
     for base_key, sub_source in current_app.config['OVERPASS_SOURCES'].items():
         for category_slug, category_data in sub_source.items():
-            category = upsert_category(category_slug, category_data)
-            if category_data['osm']:
-                import_single_osm(region, base_key, category)
+            upsert_category(category_slug, category_data)
+        import_single_osm(region, base_key)
     es_refresh_stores()
     region.sync_status = 'idle'
     db.session.add(region)
@@ -59,36 +58,39 @@ def upsert_category(category_slug, category_data):
     return category
 
 
-def import_single_osm(region, base_key, category):
-    logger.info('osm', 'download region %s (%s): %s %s' % (
+def import_single_osm(region, base_key):
+    logger.info('osm', 'download region %s (%s): %s' % (
         region.name,
         region.regionalschluessel,
-        base_key,
-        category.name
+        base_key
     ))
-    url_param = '[out:json];area["de:regionalschluessel"=%s];nwr[%s=%s](area);out center;' % (
+    url_param = '[out:json];area["de:regionalschluessel"=%s];nwr[%s~"."](area);out center;' % (
         region.regionalschluessel,
-        base_key,
-        category.slug
+        base_key
     )
-
     result = requests.get(current_app.config['OVERPASS_BASE_URL'], {'data': url_param})
     if result.status_code != 200:
-        logger.info('osm', 'bad status code %s at %s: %s, try again' % (result.status_code, region.name, category.name))
+        logger.info('osm', 'bad status code %s at %s: %s, try again' % (result.status_code, region.name, base_key))
         sleep(current_app.config['OVERPASS_WAIT_TIME'] * 2)
         result = requests.get(current_app.config['OVERPASS_BASE_URL'], {'data': url_param})
         if result.status_code != 200:
-            logger.info('osm', 'bad status code %s at %s: %s, give up' % (result.status_code, region.name, category.name))
+            logger.info('osm', 'bad status code %s at %s: %s, give up' % (result.status_code, region.name, base_key))
             return
     for store_raw in result.json().get('elements', []):
-        save_poi(store_raw, region, category)
+        save_poi(store_raw, region, base_key)
     sleep(current_app.config['OVERPASS_WAIT_TIME'])
 
 
-def save_poi(store_raw, region, category):
+def save_poi(store_raw, region, base_key):
     if not store_raw.get('tags', {}).get('name'):
         return
     store = Store.query.filter_by(osm_id=store_raw.get('id')).first()
+    if store and not store.revisit_required:
+        return
+    category_slug = store_raw.get('tags', {}).get(base_key)
+    category = Category.query.filter_by(slug=category_slug).first()
+    if not category:
+        return
     if not store:
         store = Store()
         store.osm_id = store_raw.get('id')
@@ -97,8 +99,6 @@ def save_poi(store_raw, region, category):
         store.category = [category]
     elif category not in store.category:
         store.category.append(category)
-    if not store.revisit_required:
-        return
     store.name = store_raw.get('tags', {}).get('name')
     if not store.name:
         return

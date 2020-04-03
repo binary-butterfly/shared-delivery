@@ -264,9 +264,9 @@ class BaseConfig:
             "restaurant": {"osm": True, "summary": 2, "name": "Restaurant"},
 
             # Education
-            #"college": {"osm": True, "summary": 7, "name": "Hochschule"},
+            "college": {"osm": True, "summary": 7, "name": "Hochschule"},
             "driving_school": {"osm": True, "summary": 4, "name": "Fahrschule"},
-            """
+
             "kindergarten": {"osm": True, "summary": 7, "name": "Kindergarten"},
             "language_school": {"osm": True, "summary": 7, "name": "Sprachschule"},
             "library": {"osm": True, "summary": 4, "name": "Bibliothek, Bücherei"},
@@ -274,36 +274,36 @@ class BaseConfig:
             "music_school": {"osm": True, "summary": 7, "name": "Musikschule"},
             "school": {"osm": True, "summary": 7, "name": "Schule"},
             "university": {"osm": True, "summary": 7, "name": "Universität"},
-            """
+
             # Transportation
-            """
-            "bicycle_parking": {"osm": True, "summary": 8, "name": "Fahrradparkplatz"},
-            "bicycle_repair_station": {"osm": True, "summary": 8, "name": "Fahrrad-Reparaturbereich"},
+
+            #"bicycle_parking": {"osm": True, "summary": 8, "name": "Fahrradparkplatz"},
+            #"bicycle_repair_station": {"osm": True, "summary": 8, "name": "Fahrrad-Reparaturbereich"},
             "bicycle_rental": {"osm": True, "summary": 4, "name": "Fahrradverleihstation"},
             "boat_rental": {"osm": True, "summary": 4, "name": "Bootsverleih"},
-            "boat_sharing": {"osm": True, "summary": 8, "name": "Bootssharing"},
-            "bus_station": {"osm": True, "summary": 8, "name": "Busbahnhof"},
+            #"boat_sharing": {"osm": True, "summary": 8, "name": "Bootssharing"},
+            #"bus_station": {"osm": True, "summary": 8, "name": "Busbahnhof"},
             "car_rental": {"osm": True, "summary": 4, "name": "Autoverleih"},
-            "car_sharing": {"osm": True, "summary": 8, "name": "Carsharing-Station"},
+            #"car_sharing": {"osm": True, "summary": 8, "name": "Carsharing-Station"},
             "car_wash": {"osm": True, "summary": 5, "name": "Autowaschanlage"},
             "vehicle_inspection": {"osm": True, "summary": 5, "name": "Fahrzeuginspektion"},
-            "charging_station": {"osm": True, "summary": 8, "name": "Ladestation"},
-            "ferry_terminal": {"osm": True, "summary": 8, "name": "Fährterminal"},
+            #"charging_station": {"osm": True, "summary": 8, "name": "Ladestation"},
+            #"ferry_terminal": {"osm": True, "summary": 8, "name": "Fährterminal"},
             "fuel": {"osm": True, "summary": 5, "name": "Tankstelle"},
             # "grit_bin": {"osm": True, "summary": 0, "name": "Streugutcontainer"},
-            "motorcycle_parking": {"osm": True, "summary": 8, "name": "Motorradparkplatz"},
-            "parking": {"osm": True, "summary": 8, "name": "Parkplatz"},
+            #"motorcycle_parking": {"osm": True, "summary": 8, "name": "Motorradparkplatz"},
+            #"parking": {"osm": True, "summary": 8, "name": "Parkplatz"},
             # "parking_entrance": {"osm": True, "summary": 8, "name": "Ein- und Ausfahrten in Tiefgaragen und Parkhäuser"},
-            "parking_space": {"osm": True, "summary": 8, "name": "Parkplatzstellflächen"},
+            #"parking_space": {"osm": True, "summary": 8, "name": "Parkplatzstellflächen"},
             "taxi": {"osm": True, "summary": 8, "name": "Taxistand"},
 
             # Financial
             "atm": {"osm": True, "summary": 9, "name": "Geldautomat / Bankomat"},
             "bank": {"osm": True, "summary": 9, "name": "Bank, Geldinstitut"},
             "bureau_de_change": {"osm": True, "summary": 9, "name": "Geldwechselbüro"},
-            """
+
             # Healthcare
-            "baby_hatch": {"osm": True, "summary": 1, "name": "Babyklappe"},
+            #"baby_hatch": {"osm": True, "summary": 1, "name": "Babyklappe"},
             "clinic": {"osm": True, "summary": 1, "name": "Klinik"},
             "dentist": {"osm": True, "summary": 1, "name": "Zahnarztpraxis"},
             "doctors": {"osm": True, "summary": 1, "name": "Arztpraxis"},
@@ -312,7 +312,7 @@ class BaseConfig:
             "pharmacy": {"osm": True, "summary": 1, "name": "Apotheke"},
             "social_facility": {"osm": True, "summary": 1, "name": "Soziale Einrichtung, Alters-, Obdachlosen-, Kinderheim, Die Tafel etc."},
             "veterinary": {"osm": True, "summary": 1, "name": "Tierarztpraxis, Tierklinik"},
-            """
+
             # Entertainment, Arts & Culture
             "arts_centre": {"osm": True, "summary": 10, "name": "Kulturzentrum"},
             "brothel": {"osm": True, "summary": 10, "name": "Bordell, Freudenhaus"},
@@ -329,50 +329,50 @@ class BaseConfig:
             "studio": {"osm": True, "summary": 10, "name": "TV, Radio oder Musik Studio"},
             "swingerclub": {"osm": True, "summary": 10, "name": "Swingerclub"},
             "theatre": {"osm": True, "summary": 10, "name": "Theater, Oper, Schauspielhaus"},
-            """
+
             # Others
             
-            """
-            "baking_oven": {"osm": True, "summary": 0, "name": "Backofen"},
+
+            #"baking_oven": {"osm": True, "summary": 0, "name": "Backofen"},
             # "bench": {"osm": True, "summary": 0, "name": "Parkbank"},
             "childcare": {"osm": True, "summary": 0, "name": "Kinderbetreuung"},
             # "clock": {"osm": True, "summary": 0, "name": "Uhr"},
             "conference_centre": {"osm": True, "summary": 0, "name": "Konferenzzentrum"},
             "courthouse": {"osm": True, "summary": 0, "name": "Gericht"},
             "crematorium": {"osm": True, "summary": 0, "name": "Krematorium"},
-            "dive_centre": {"osm": True, "summary": 0, "name": "Tauchbasis"},
-            "embassy": {"osm": True, "summary": 0, "name": "Botschaft, Botschaftsgebäude"},
+            #"dive_centre": {"osm": True, "summary": 0, "name": "Tauchbasis"},
+            #"embassy": {"osm": True, "summary": 0, "name": "Botschaft, Botschaftsgebäude"},
             "fire_station": {"osm": True, "summary": 0, "name": "Feuerwache"},
             # "grave_yard": {"osm": True, "summary": 0, "name": "Gräberfeld"},
             # "hunting_stand": {"osm": True, "summary": 0, "name": "Hochsitz"},
             "internet_cafe": {"osm": True, "summary": 0, "name": "Internet Café"},
-            "kitchen": {"osm": True, "summary": 0, "name": "Öffentlich zugängliche Küche"},
-            "kneipp_water_cure": {"osm": True, "summary": 0, "name": "Fußbad im Außenbereich"},
+            #"kitchen": {"osm": True, "summary": 0, "name": "Öffentlich zugängliche Küche"},
+            #"kneipp_water_cure": {"osm": True, "summary": 0, "name": "Fußbad im Außenbereich"},
             "marketplace": {"osm": True, "summary": 0, "name": "Markt, Wochenmarkt"},
-            "monastery": {"osm": True, "summary": 0, "name": "Kloster"},
-            "photo_booth": {"osm": True, "summary": 0, "name": "Fotoautomat"},
+            #"monastery": {"osm": True, "summary": 0, "name": "Kloster"},
+            #"photo_booth": {"osm": True, "summary": 0, "name": "Fotoautomat"},
             "place_of_worship": {"osm": True, "summary": 0, "name": "Religiöse Einrichtung"},
             "police": {"osm": True, "summary": 0, "name": "Polizeistation"},
-            "post_box": {"osm": True, "summary": 0, "name": "Briefkasten"},
-            "post_depot": {"osm": True, "summary": 0, "name": "Postlager"},
+            #"post_box": {"osm": True, "summary": 0, "name": "Briefkasten"},
+            #"post_depot": {"osm": True, "summary": 0, "name": "Postlager"},
             "post_office": {"osm": True, "summary": 0, "name": "Postamt"},
-            "prison": {"osm": True, "summary": 0, "name": "Gefängnis"},
+            #"prison": {"osm": True, "summary": 0, "name": "Gefängnis"},
             "public_bath": {"osm": True, "summary": 0, "name": "Badehaus, Thermalbad, Solebad"},
             "ranger_station": {"osm": True, "summary": 0, "name": "Besucherstation"},
             "recycling": {"osm": True, "summary": 0, "name": "Recycling-Einrichtung"},
-            "sanitary_dump_station": {"osm": True, "summary": 0, "name": "Sanitäre Entsorgungsstationen"},
-            "shelter": {"osm": True, "summary": 0, "name": "Unterstand"},
-            "shower": {"osm": True, "summary": 0, "name": "Duschen oder Bad"},
-            "telephone": {"osm": True, "summary": 0, "name": "Telefon"},
-            "toilets": {"osm": True, "summary": 0, "name": "Öffentliche Toilette"},
+            #"sanitary_dump_station": {"osm": True, "summary": 0, "name": "Sanitäre Entsorgungsstationen"},
+            #"shelter": {"osm": True, "summary": 0, "name": "Unterstand"},
+            #"shower": {"osm": True, "summary": 0, "name": "Duschen oder Bad"},
+            #"telephone": {"osm": True, "summary": 0, "name": "Telefon"},
+            #"toilets": {"osm": True, "summary": 0, "name": "Öffentliche Toilette"},
             "townhall": {"osm": True, "summary": 0, "name": "Rathaus/Gemeindeamt"},
-            "vending_machine": {"osm": True, "summary": 0, "name": "Verkaufsautomat"},
+            #"vending_machine": {"osm": True, "summary": 0, "name": "Verkaufsautomat"},
             # "waste_basket": {"osm": True, "summary": 0, "name": "Mülleimer"},
             "waste_disposal": {"osm": True, "summary": 0, "name": "Müllabgabestelle"},
-            "waste_tranfer_station": {"osm": True, "summary": 0, "name": "Müllumladestation"},
-            "watering_place": {"osm": True, "summary": 0, "name": "Wasserstelle"},
-            """
-            "water_point": {"osm": True, "summary": 0, "name": "Trinkwasserzapfstelle"},
+            #"waste_tranfer_station": {"osm": True, "summary": 0, "name": "Müllumladestation"},
+            #"watering_place": {"osm": True, "summary": 0, "name": "Wasserstelle"},
+
+            #"water_point": {"osm": True, "summary": 0, "name": "Trinkwasserzapfstelle"},
 
             "animal_boarding": {"osm": True, "summary": 0, "name": "Tierpension"},
             "animal_shelter": {"osm": True, "summary": 0, "name": "Tierheim"},
@@ -403,6 +403,26 @@ class BaseConfig:
         6: {
             'name': 'Private Angebote',
             'slug': 'private-offers'
+        },
+        7: {
+            'name': 'Bildung',
+            'slug': 'education'
+        },
+        8: {
+            'name': 'Transport',
+            'slug': 'transportation'
+        },
+        9: {
+            'name': 'Finanzen',
+            'slug': 'financial'
+        },
+        10: {
+            'name': 'Unterhaltung, Kunst & Kultur',
+            'slug': 'entertainment'
+        },
+        0: {
+            'name': 'Weiteres',
+            'slug': 'misc'
         }
     }
 
@@ -414,15 +434,7 @@ class BaseConfig:
 8: {
     'name': 'Transport',
     'slug': 'transportation'
-},
-9: {
-    'name': 'Finanzen',
-    'slug': 'financial'
-},
-10: {
-    'name': 'Unterhaltung, Kunst & Kultur',
-    'slug': 'entertainment'
-},
+}
 0: {
     'name': 'Weiteres',
     'slug': 'misc'
