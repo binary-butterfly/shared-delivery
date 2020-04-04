@@ -20,7 +20,7 @@
         <div class="row row-form">
             <div class="col-md-12 store-revisit-box bd-callout bd-callout-warning">
                 <i class="fa fa-exclamation-triangle" aria-hidden="true"></i>
-                <p>Die angezeigten Daten wurden noch nicht für Coronoa aktualisiert. Kannst Du uns dabei helfen?</p>
+                <p>Die angezeigten Daten wurden noch nicht für Corona aktualisiert. Kannst Du uns dabei helfen?</p>
                 <a href="/store/{{ store.id }}/suggest" class="btn btn-primary">Ich kenne die aktuellen Öffnungszeiten</a>
             </div>
         </div>
@@ -85,7 +85,7 @@
                 {% for opening_time in opening_times['all'] %}
                     {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
                 {% else %}
-                    Keine Öffnungszseiten hinterlegt.
+                    Keine Öffnungszeiten hinterlegt.
                 {% endfor %}
                 {% if opening_times['delivery']|length %}
                     <h2>Abweichende Lieferzeiten</h2>
