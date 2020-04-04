@@ -109,6 +109,7 @@ def store_delete(store_id):
         store.deleted = True
         db.session.add(store)
         db.session.commit()
+        es_index_store_delay.delay(store.id)
         flash('Geschäft erfolgreich gelöscht', 'success')
         return redirect('/admin/stores')
     return render_template('store-delete.html', store=store, form=form)

@@ -78,6 +78,11 @@
             <p>
                 Letzte Aktualisierung: {{ store.modified|datetime }}
             </p>
+            <p>
+                <a href="/store/{{ store.id }}/suggest" class="btn btn-primary">
+                    Daten dieses Shops aktualisieren
+                </a>
+            </p>
         </div>
         <div class="col-md-6">
             <h2>Öffnungszeiten</h2>
@@ -99,11 +104,6 @@
                         {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
                     {% endfor %}
                 {% endif %}
-            </p>
-            <p>
-                <a href="/store/{{ store.id }}/suggest" class="btn btn-primary">
-                    Daten dieses Shops aktualisieren
-                </a>
             </p>
         </div>
     </div>

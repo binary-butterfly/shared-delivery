@@ -5,7 +5,11 @@
     <div class="row">
         <div class="col-md-12">
             <h1>
-                {{ store.name }} in {{ store.region.name }}: Änderungsvorschlag
+                {% if store.id %}
+                    {{ store.name }} in {{ store.region.name }}: Änderungsvorschlag
+                {% else %}
+                    Neuanlage-Vorschlag
+                {% endif %}
             </h1>
             <p>Es werden nur die sich unterscheidenden Felder angezeigt. Vorlage: OpenStreetMap ID
                 <a href="https://www.openstreetmap.org/node/{{ store.osm_id }}">{{ store.osm_id }}</a>
