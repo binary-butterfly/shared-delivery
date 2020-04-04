@@ -127,7 +127,9 @@ def store_suggestion_show(suggestion_id):
     if not current_user.has_capability('editor'):
         abort(403)
     object_dump = ObjectDump.query.get_or_404(suggestion_id)
-    store = Store.query.get_or_404(object_dump.object_id)
+    store = Store.query.get(object_dump.object_id)
+    if not store:
+        store = Store()
     if not current_user.has_capability('admin') and store.region not in current_user.region:
         abort(403)
     suggestion = Store()

@@ -6,8 +6,6 @@
         <div class="col-md-12">
             <h1>
                 {{ store.name }} in {{ store.region.name }}: Änderungsvorschlag
-                {{ action_button('edit', url_for('store_management.store_edit', store_id=store.id)) }}
-                {{ action_button('delete', url_for('store_management.store_delete', store_id=store.id)) }}
             </h1>
             <p>Es werden nur die sich unterscheidenden Felder angezeigt. Vorlage: OpenStreetMap ID
                 <a href="https://www.openstreetmap.org/node/{{ store.osm_id }}">{{ store.osm_id }}</a>
@@ -19,16 +17,18 @@
             <table class="table">
                 <tr>
                     <th>Wert</th>
-                    <th>alt</th>
+                    {% if store.id %}<th>alt</th>{% endif %}
                     <th>neu</th>
                 </tr>
                 {% if store.address != suggestion.address or store.postalcode != suggestion.postalcode %}
                     <tr>
                         <td>Adresse</td>
-                        <td>
-                            {{ store.address }}<br>
-                            {{ store.postalcode }} {% if store.locality %}{{ store.locality }}{% else %}{{ store.region.name }}{% endif %}
-                        </td>
+                        {% if store.id %}
+                            <td>
+                                {{ store.address }}<br>
+                                {{ store.postalcode }} {% if store.locality %}{{ store.locality }}{% else %}{{ store.region.name }}{% endif %}
+                            </td>
+                        {% endif %}
                         <td>
                             {{ suggestion.address }}<br>
                             {{ suggestion.postalcode }} {% if suggestion.locality %}{{ suggestion.locality }}{% else %}{{ store.region.name }}{% endif %}
@@ -38,60 +38,62 @@
                 {% if store.phone != suggestion.phone %}
                     <tr>
                         <td>Telefon</td>
-                        <td><a href="tel:{{ store.phone }}">{{ store.phone }}</a></td>
+                        {% if store.id %}<td><a href="tel:{{ store.phone }}">{{ store.phone }}</a></td>{% endif %}
                         <td><a href="tel:{{ suggestion.phone }}">{{ suggestion.phone }}</a></td>
                     </tr>
                 {% endif %}
                 {% if store.mobile != suggestion.mobile %}
                     <tr>
                         <td>Mobil</td>
-                        <td><a href="tel:{{ store.mobile }}">{{ store.mobile }}</a></td>
+                        {% if store.id %}<td><a href="tel:{{ store.mobile }}">{{ store.mobile }}</a></td>{% endif %}
                         <td><a href="tel:{{ suggestion.mobile }}">{{ suggestion.mobile }}</a></td>
                     </tr>
                 {% endif %}
                 {% if store.fax != suggestion.fax %}
                     <tr>
                         <td>Fax</td>
-                        <td><a href="tel:{{ store.fax }}">{{ store.fax }}</a></td>
+                        {% if store.id %}<td><a href="tel:{{ store.fax }}">{{ store.fax }}</a></td>{% endif %}
                         <td><a href="tel:{{ suggestion.fax }}">{{ suggestion.fax }}</a></td>
                     </tr>
                 {% endif %}
                 {% if store.email != suggestion.email %}
                     <tr>
                         <td>E-Mail</td>
-                        <td><a href="mailto:{{ store.email }}">{{ store.email }}</a></td>
+                        {% if store.id %}<td><a href="mailto:{{ store.email }}">{{ store.email }}</a></td>{% endif %}
                         <td><a href="mailto:{{ suggestion.email }}">{{ suggestion.email }}</a></td>
                     </tr>
                 {% endif %}
                 {% if store.website != suggestion.website %}
                     <tr>
                         <td>Website</td>
-                        <td><a href="{{ store.website }}">{{ store.website }}</a></td>
+                        {% if store.id %}<td><a href="{{ store.website }}">{{ store.website }}</a></td>{% endif %}
                         <td><a href="{{ suggestion.website }}">{{ suggestion.website }}</a></td>
                     </tr>
                 {% endif %}
                 {% if store.brand != suggestion.brand %}
                     <tr>
                         <td>Kette</td>
-                        <td>{{ store.brand }}</td>
+                        {% if store.id %}<td>{{ store.brand }}</td>{% endif %}
                         <td>{{ suggestion.brand }}</td>
                     </tr>
                 {% endif %}
                 {% if store.wheelchair != suggestion.wheelchair %}
                     <tr>
                         <td>Rollstuhlgeeignet</td>
-                        <td>{{ store.wheelchair_out }}</td>
+                        {% if store.id %}<td>{{ store.wheelchair_out }}</td>{% endif %}
                         <td>{{ suggestion.wheelchair_out }}</td>
                     </tr>
                 {% endif %}
                 {% if opening_times_data['new']|length or opening_times_data['old']|length %}
                     <tr>
                         <td>Geänderte Öffnungszeiten</td>
-                        <td>
-                            {% for opening_time in opening_times_data['old'] %}
-                                {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
-                            {% endfor %}
-                        </td>
+                        {% if store.id %}
+                            <td>
+                                {% for opening_time in opening_times_data['old'] %}
+                                    {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
+                                {% endfor %}
+                            </td>
+                        {% endif %}
                         <td>
                             {% for opening_time in opening_times_data['new'] %}
                                 {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
@@ -100,7 +102,7 @@
                     </tr>
                     <tr>
                         <td>Gleichbleibende Öffnungszeiten</td>
-                        <td colspan="2">
+                        <td{% if store.id %} colspan="2"{% endif %}>
                             {% for opening_time in opening_times_data['both'] %}
                                 {{ opening_time.weekday_out }}: {{ opening_time.open_out }} - {{ opening_time.close_out }}<br>
                             {% endfor %}

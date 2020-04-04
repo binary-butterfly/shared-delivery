@@ -45,7 +45,7 @@ def get_data(limit=None):
                     },
                     {
                         'query_string': {
-                            'fields': ['category'],
+                            'fields': ['category', 'region_name'],
                             'query': data.get('q'),
                             'default_operator': 'and',
                             'boost': 35
@@ -53,10 +53,18 @@ def get_data(limit=None):
                     },
                     {
                         'query_string': {
-                            'fields': ['description'],
+                            'fields': ['description', 'brand'],
                             'query': data.get('q'),
                             'default_operator': 'and',
                             'boost': 20
+                        }
+                    },
+                    {
+                        'query_string': {
+                            'fields': ['region_description'],
+                            'query': data.get('q'),
+                            'default_operator': 'and',
+                            'boost': 10
                         }
                     }
                 ]
@@ -72,7 +80,7 @@ def get_data(limit=None):
                 }
             }
         })
-
+    elastic_request.set_fq('deleted', False)
     if data.get('revisit-required'):
         elastic_request.set_fq('revisit_required', data.get('revisit-required', type=int) == 1)
     for fq_field in fq_fields:

@@ -35,6 +35,41 @@ def store_frontend_main(store_id):
     return render_template('store-frontend.html', store=store, opening_times=opening_times)
 
 
+@store_frontend.route('/store/suggest', methods=['GET', 'POST'])
+def store_frontend_suggest_new():
+    form = StoreFrontendForm()
+    if form.validate_on_submit():
+        opening_times_data = {}
+        for field in ['all', 'delivery', 'pickup']:
+            opening_times_data[field] = getattr(form, 'opening_times_%s' % field)
+            delattr(form, 'opening_times_%s' % field)
+        store = Store()
+        form.populate_obj(store)
+        store_suggestion = store.to_dict()
+        store_suggestion['opening_time'] = []
+        for field in ['all', 'delivery', 'pickup']:
+            if getattr(form, '%s_switch' % field):
+                for opening_time in opening_times_data[field]:
+                    store_suggestion['opening_time'].append({
+                        'type': field,
+                        'weekday': opening_time.weekday.data,
+                        'open': opening_time.open.data_out,
+                        'close': opening_time.close.data_out
+                    })
+        store_suggestion['category'] = form.category.data
+        object_dump = ObjectDump()
+        object_dump.data = store_suggestion
+        object_dump.type = 'suggestion'
+        object_dump.object = 'store'
+        object_dump.region_id = store.region_id
+        object_dump.object_id = store.id
+        db.session.add(object_dump)
+        db.session.commit()
+        flash('Danke für Deinen Verbesserungsvorschlag! Wir schauen kurz drüber und schalten diesen dann normalerweise binnen 24 Stunden frei.', 'success')
+        return redirect('/')
+    return render_template('store-suggest-new.html', form=form)
+
+
 @store_frontend.route('/store/<int:store_id>/suggest', methods=['GET', 'POST'])
 def store_frontend_suggest(store_id):
     store = Store.query.get_or_404(store_id)

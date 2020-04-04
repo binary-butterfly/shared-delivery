@@ -60,7 +60,7 @@ def es_index_store(store, refresh=True):
     for category in store_dict['category']:
         categories.append(category['name'])
         category_slugs.append(category['slug'])
-    store_dict['category'] = categories
+    store_dict['category_name'] = categories
     store_dict['category_slug'] = category_slugs
     for key in store_dict['region'].keys():
         store_dict['region_%s' % key] = store_dict['region'][key]

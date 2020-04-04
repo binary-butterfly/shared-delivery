@@ -43,7 +43,9 @@ def upload_files(form, obj, obj_type):
 
 mimetype_deref = {
     'image/jpeg': 'jpg',
-    'image/png': 'png'
+    'image/png': 'png',
+    'image/svg+xml': 'svg',
+    'image/gif': 'gif'
 }
 
 

@@ -72,6 +72,9 @@ def es_mapping():
             'lastname': {
                 'type': 'text'
             },
+            'deleted': {
+                'type': 'boolean'
+            },
             'company': {
                 'type': 'text'
             },
@@ -135,8 +138,8 @@ def es_mapping():
             'region_location': {
                 'type': 'geo_point'
             },
-            'category': {
-                'type': 'keyword'
+            'category_name': {
+                'type': 'text'
             },
             'category_slug': {
                 'type': 'keyword'

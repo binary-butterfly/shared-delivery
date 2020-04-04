@@ -225,7 +225,7 @@ class StoreBaseForm(FlaskForm):
         label='Logo',
         validators=[
             ValidateMimeType(
-                mimetypes=['image/jpeg', 'image/png', 'image/svg+xml'],
+                mimetypes=['image/jpeg', 'image/png', 'image/svg+xml', 'image/gif'],
                 allow_empty=True,
                 message='Bitte ein PNG-, JPG- oder SVG-Bild hochladen!'
             )
