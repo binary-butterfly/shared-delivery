@@ -8847,7 +8847,10 @@ a.mapboxgl-ctrl-logo.mapboxgl-compact {
   width: 100%; }
 
 .multiselect-container {
-  right: 0 !important; }
+  right: 0 !important;
+  z-index: 10010;
+  max-height: 500px;
+  overflow-y: auto; }
 
 .multiselect-container > li > a > label {
   width: 100%;
