@@ -135,28 +135,13 @@ class StoreBaseForm(FlaskForm):
         label=_('Unternehmen')
     )
     address = StringField(
-        label=_('Straße und Hausnummer'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie eine Straße und Hausnummer an.')
-            )
-        ]
+        label=_('Straße und Hausnummer')
     )
     postalcode = StringField(
-        label=_('Postleitzahl'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie eine Postleitzahl an.')
-            )
-        ]
+        label=_('Postleitzahl')
     )
     locality = StringField(
-        label=_('Ort'),
-        validators=[
-            validators.DataRequired(
-                message=_('Bitte geben Sie einen Ort an.')
-            )
-        ]
+        label=_('Ort')
     )
     website = StringField(
         label=_('Website'),
