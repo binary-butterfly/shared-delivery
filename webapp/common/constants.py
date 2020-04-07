@@ -57,7 +57,7 @@ class BaseConfig:
     OVERPASS_WAIT_TIME = 20
     OVERPASS_SOURCES = {
         "tourism": {
-            "hotel": {"osm": True, "summary": 4, "name": "Hotel"}
+            "hotel": {"osm": True, "summary": 2, "name": "Hotel"}
         },
         "shop": {
             # Food, beverages
@@ -376,6 +376,29 @@ class BaseConfig:
 
             "animal_boarding": {"osm": True, "summary": 0, "name": "Tierpension"},
             "animal_shelter": {"osm": True, "summary": 0, "name": "Tierheim"},
+        },
+        'office': {
+            'insurance': {"osm": True, "summary": 4, "name": "Versicherung"},
+        },
+        'healthcare': {
+            "physiotherapist": {"osm": True, "summary": 1, "name": "Pysiotherapie"},
+            "speech_therapist": {"osm": True, "summary": 1, "name": "Logopädie"},
+        },
+        'craft': {
+            "scaffolding": {"osm": True, "summary": 5, "name": "Gerüstbau"},
+            "gardener": {"osm": True, "summary": 5, "name": "Garten- und Landschaftsbau"},
+            "cleaner": {"osm": True, "summary": 5, "name": "Gebäudereinigung"},
+            "locksmith": {"osm": True, "summary": 5, "name": "Schlüsseldienst"},
+            "carpenter": {"osm": True, "summary": 5, "name": "Schreinerei, Tischlerei"},
+            "agricultural_engines": {"osm": True, "summary": 5, "name": "Landmaschinenbau, -reparatur"},
+            "electrician": {"osm": True, "summary": 5, "name": "Elektriker, Elektroinstallation"},
+            "painter": {"osm": True, "summary": 5, "name": "Maler"},
+            "roofer": {"osm": True, "summary": 5, "name": "Dachdecker"},
+            "sweep": {"osm": True, "summary": 5, "name": "Schornsteinfeger"},
+            "plumber": {"osm": True, "summary": 5, "name": "Installateur, Klemptner"},
+            "tiller": {"osm": True, "summary": 5, "name": "Fliesenleger"},
+            "tailer": {"osm": True, "summary": 5, "name": "Schneiderei"},
+            "metal_construction": {"osm": True, "summary": 5, "name": "Metallbauer"}
         }
     }
 
