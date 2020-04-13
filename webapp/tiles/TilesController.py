@@ -58,6 +58,8 @@ def regions_categories(region_slug):
 @tiles.route('/region/<string:region_slug>/<string:category_slug>')
 def regions_stores(region_slug, category_slug):
     region = Region.query.filter_by(slug=region_slug).first()
+    if not region:
+        abort(404)
     if region.category_style == 'summarized':
         category = None
         for key, category_check in current_app.config['SUMMARIZE_CATEGORIES'].items():

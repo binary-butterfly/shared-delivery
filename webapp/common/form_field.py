@@ -96,7 +96,7 @@ class RegionField(SelectField):
         super(RegionField, self).pre_validate(form)
 
     def process(self, formdata, data=unset_value):
-        if data != unset_value and request.method == 'GET':
+        if data and data != unset_value and request.method == 'GET':
             data = str(data.id)
         super(RegionField, self).process(formdata, data)
 
