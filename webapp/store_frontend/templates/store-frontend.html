@@ -57,10 +57,10 @@
                 {% if store.website %}
                     Website: <a href="{{ store.website }}" target="_blank">{{ store.website }}</a>{% if store.onlineshop %} (mit Onlineshop){% endif %}<br>
                 {% endif %}
-                {% if store.website %}
+                {% if store.website_coupon %}
                     Gutscheine: <a href="{{ store.website_coupon }}" target="_blank">{{ store.website_coupon }}</a><br>
                 {% endif %}
-                {% if store.website %}
+                {% if store.website_crowdfunding %}
                     Crowdfunding: <a href="{{ store.website_crowdfunding }}" target="_blank">{{ store.website_crowdfunding }}</a><br>
                 {% endif %}
             </p>

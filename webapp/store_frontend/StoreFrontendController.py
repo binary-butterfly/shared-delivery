@@ -81,6 +81,7 @@ def store_frontend_suggest(store_id):
             delattr(form, 'opening_times_%s' % field)
         form.populate_obj(store)
         store_suggestion = store.to_dict()
+        db.session.rollback()
         store_suggestion['opening_time'] = []
         for field in ['all', 'delivery', 'pickup']:
             if getattr(form, '%s_switch' % field):
