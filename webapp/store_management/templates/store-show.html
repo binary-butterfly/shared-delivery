@@ -47,10 +47,24 @@
                         <td><a href="mailto:{{ store.email }}">{{ store.email }}</a></td>
                     </tr>
                 {% endif %}
-                {% if store.website %}
+                {% if store.website or store.website_coupon or store.website_crowdfunding %}
                     <tr>
                         <td>Website</td>
-                        <td><a href="{{ store.website }}">{{ store.website }}</a></td>
+                        <td>
+                            {% if store.website %}
+                                <a href="{{ store.website }}">{{ store.website }}</a>
+                                {% if onlineshop %}
+                                    (mit Onlineshop)
+                                {% endif %}
+                            {% endif %}
+                            {% if store.website_coupon %}
+                                Gutscheine: <a href="{{ store.website_coupon }}">{{ store.website_coupon }}</a>
+                            {% endif %}
+
+                            {% if store.website_crowdfunding %}
+                                Crowdfunding: <a href="{{ store.website_crowdfunding }}">{{ store.website_crowdfunding }}</a>
+                            {% endif %}
+                        </td>
                     </tr>
                 {% endif %}
                 {% if store.brand %}

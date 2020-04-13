@@ -74,6 +74,27 @@
                         <td><a href="{{ suggestion.website }}">{{ suggestion.website }}</a></td>
                     </tr>
                 {% endif %}
+                {% if store.website_crowdfunding != suggestion.website_crowdfunding %}
+                    <tr>
+                        <td>Crowdfunding-Website</td>
+                        {% if store.id %}<td><a href="{{ store.website_crowdfunding }}">{{ store.website_crowdfunding }}</a></td>{% endif %}
+                        <td><a href="{{ suggestion.website_crowdfunding }}">{{ suggestion.website_crowdfunding }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.website_coupon != suggestion.website_coupon %}
+                    <tr>
+                        <td>Gutschein-Website</td>
+                        {% if store.id %}<td><a href="{{ store.website_coupon }}">{{ store.website_coupon }}</a></td>{% endif %}
+                        <td><a href="{{ suggestion.website_coupon }}">{{ suggestion.website_coupon }}</a></td>
+                    </tr>
+                {% endif %}
+                {% if store.onlineshop != suggestion.onlineshop %}
+                    <tr>
+                        <td>Online-Shop</td>
+                        {% if store.id %}<td>{% if store.onlineshop %}ja{% else %}nein{% endif %}</td>{% endif %}
+                        <td>{% if suggestion.onlineshop %}ja{% else %}nein{% endif %}</td>
+                    </tr>
+                {% endif %}
                 {% if store.brand != suggestion.brand %}
                     <tr>
                         <td>Kette</td>

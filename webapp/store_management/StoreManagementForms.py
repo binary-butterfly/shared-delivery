@@ -188,6 +188,32 @@ class StoreBaseForm(FlaskForm):
             validators.Optional()
         ],
     )
+    website_coupon = StringField(
+        label=_('Link zum Gutschein-Kauf'),
+        validators=[
+            validators.url(
+                message='Bitte geben Sie eine URL an'
+            ),
+            validators.Length(
+                max=256,
+                message='Die Website darf maximal 256 Zeichen lang sein.'
+            ),
+            validators.Optional()
+        ],
+    )
+    website_crowdfunding = StringField(
+        label=_('Link zu einem Crowdfunding'),
+        validators=[
+            validators.url(
+                message='Bitte geben Sie eine URL an'
+            ),
+            validators.Length(
+                max=256,
+                message='Die Website darf maximal 256 Zeichen lang sein.'
+            ),
+            validators.Optional()
+        ],
+    )
     email = StringField(
         label=_('E-Mail'),
         validators=[
