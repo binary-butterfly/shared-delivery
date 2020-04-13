@@ -100,7 +100,7 @@ class OpeningTimeForm(FlaskForm):
         label='Öffnungszeit'
     )
     close = TimeStringField(
-        label='Sließzeit'
+        label='Schließzeit'
     )
 
 
@@ -113,6 +113,10 @@ class StoreBaseForm(FlaskForm):
         validators=[
             validators.DataRequired(
                 message=_('Bitte geben Sie einen Namen an.')
+            ),
+            validators.Length(
+                max=256,
+                message='Der Name darf maximal 256 Zeichen lang sein.'
             )
         ]
     )
@@ -132,22 +136,54 @@ class StoreBaseForm(FlaskForm):
         ]
     )
     company = StringField(
-        label=_('Unternehmen')
+        label=_('Unternehmen'),
+        validators=[
+            validators.Length(
+                max=256,
+                message='Der Unternehmens-Name darf maximal 256 Zeichen lang sein.'
+            ),
+            validators.Optional()
+        ]
     )
     address = StringField(
-        label=_('Straße und Hausnummer')
+        label=_('Straße und Hausnummer'),
+        validators=[
+            validators.Length(
+                max=256,
+                message='Straße und Hausnummer dürfen maximal 256 Zeichen lang sein.'
+            ),
+            validators.Optional()
+        ]
     )
     postalcode = StringField(
-        label=_('Postleitzahl')
+        label=_('Postleitzahl'),
+        validators=[
+            validators.Regexp(
+                '^[0-9]{5,5}$',
+                message='Die Postleitzahl muss aus fünf Zahlen bestehen'
+            ),
+            validators.Optional()
+        ]
     )
     locality = StringField(
-        label=_('Ort')
+        label=_('Ort'),
+        validators=[
+            validators.Length(
+                max=256,
+                message='Der Ort darf maximal 256 Zeichen lang sein.'
+            ),
+            validators.Optional()
+        ]
     )
     website = StringField(
         label=_('Website'),
         validators=[
             validators.url(
                 message='Bitte geben Sie eine URL an'
+            ),
+            validators.Length(
+                max=256,
+                message='Die Website darf maximal 256 Zeichen lang sein.'
             ),
             validators.Optional()
         ],
@@ -158,17 +194,42 @@ class StoreBaseForm(FlaskForm):
             validators.email(
                 message='Bitte geben Sie eine E-Mail an'
             ),
+            validators.Length(
+                max=256,
+                message='Die E-Mail darf maximal 256 Zeichen lang sein.'
+            ),
             validators.Optional()
         ],
     )
     phone = StringField(
-        label=_('Telefon')
+        label=_('Telefon'),
+        validators=[
+            validators.Regexp(
+                '^[0-9- +]{0,32}$',
+                message='Die Telefonnummer darf aus maximal 32 Zahlen bestehen'
+            ),
+            validators.Optional()
+        ]
     )
     mobile = StringField(
-        label=_('Mobiltelefon')
+        label=_('Mobiltelefon'),
+        validators=[
+            validators.Regexp(
+                '^[0-9- +]{0,32}$',
+                message='Die Mobilfunknummer darf aus maximal 32 Zahlen bestehen'
+            ),
+            validators.Optional()
+        ]
     )
     fax = StringField(
-        label=_('Fax')
+        label=_('Fax'),
+        validators=[
+            validators.Regexp(
+                '^[0-9- +]{0,32}$',
+                message='Die Faxnummer darf aus maximal 32 Zahlen bestehen'
+            ),
+            validators.Optional()
+        ]
     )
     description = TextAreaField(
         label='Beschreibung'
