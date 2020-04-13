@@ -64,7 +64,7 @@ export default class SearchTableStoreSuggestion extends SearchTable {
         return(
             <td>
                 {this.renderActionLink(`/admin/store/suggestion/${row.id}/show`, 'info', true)}
-                {this.renderActionLink(`/admin/store/${row.id}/delete`, 'delete', true)}
+                {this.renderActionLink(`/admin/store/suggestion/${row.id}/delete`, 'delete', true)}
             </td>
         )
     }

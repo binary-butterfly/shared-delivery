@@ -173,7 +173,7 @@ def store_suggestion_show(suggestion_id):
             flash('Verbesserungsvorschlag wurde erfolgreich gelöscht.', 'success')
             return redirect('/admin/store/suggestions')
         if form.edit.data:
-            return redirect('/admin/store/suggestion/%s/edit' % suggestion.id)
+            return redirect('/admin/store/suggestion/%s/edit' % object_dump.id)
         store.load_cache(object_dump.data)
         store.revisited_user = object_dump.created
         db.session.add(store)
@@ -209,4 +209,30 @@ def store_suggestion_edit(suggestion_id):
         'store-suggestion-edit.html',
         object_dump=object_dump,
         store=store
+    )
+
+
+@store_management.route('/admin/store/suggestion/<int:suggestion_id>/delete', methods=['GET', 'POST'])
+def store_suggestion_delete(suggestion_id):
+    if not current_user.has_capability('editor'):
+        abort(403)
+    object_dump = ObjectDump.query.get_or_404(suggestion_id)
+    store = Store.query.get(object_dump.object_id)
+    if not store:
+        store = Store()
+    form = StoreDeleteForm()
+    if form.validate_on_submit():
+        if form.abort.data:
+            return redirect('/admin/stores')
+        object_dump.deleted = True
+        db.session.add(object_dump)
+        db.session.commit()
+        flash('Vorschlag erfolgreich gelöscht', 'success')
+        return redirect('/admin/store/suggestions')
+
+    return render_template(
+        'store-suggestion-delete.html',
+        object_dump=object_dump,
+        store=store,
+        form=form
     )

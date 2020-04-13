@@ -75,7 +75,7 @@ def api_store_suggestions():
             'status': -1,
             'errors': form.errors
         })
-    stores = ObjectDump.query.filter_by(type='suggestion')
+    stores = ObjectDump.query.filter_by(type='suggestion').filter_by(deleted=False)
 
     if form.region.data and form.region.data not in ['None', '_all']:
         stores = stores.filter_by(region_id=form.region.data)

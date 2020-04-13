@@ -28359,7 +28359,7 @@ var SearchTableStoreSuggestion = /*#__PURE__*/function (_SearchTable) {
   }, {
     key: "renderTableCellActions",
     value: function renderTableCellActions(row) {
-      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, this.renderActionLink("/admin/store/suggestion/".concat(row.id, "/show"), 'info', true), this.renderActionLink("/admin/store/".concat(row.id, "/delete"), 'delete', true));
+      return /*#__PURE__*/react__WEBPACK_IMPORTED_MODULE_7___default.a.createElement("td", null, this.renderActionLink("/admin/store/suggestion/".concat(row.id, "/show"), 'info', true), this.renderActionLink("/admin/store/suggestion/".concat(row.id, "/delete"), 'delete', true));
     }
   }]);
 
