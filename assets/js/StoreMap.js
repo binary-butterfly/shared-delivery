@@ -234,7 +234,7 @@ export default class StoreMap extends Component {
                     <div className="col-md-6">
                         {(!(this.state.overlayData.revisited_government || this.state.overlayData.revisited_store || this.state.overlayData.revisited_user || this.state.overlayData.revisited_admin)) &&
                         <p className="map-not-revisited">
-                            Die angezeigten Daten wurden noch nicht für Coronoa aktualisiert. Kannst Du uns dabei helfen?<br/>
+                            Die angezeigten Daten wurden noch nicht für Corona aktualisiert. Kannst Du uns dabei helfen?<br/>
                             <a href={`/store/${this.state.overlayData.id}/suggest`} className="btn btn-primary">
                                 Ich kenne die aktuellen Öffnungszeiten
                             </a>
