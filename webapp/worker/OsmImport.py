@@ -22,6 +22,12 @@ from ..store_management.StoreManagementHelper import create_store_revision
 from ..store_management.StoreElasticImport import es_refresh_stores
 
 
+def sync_all_regions():
+    for region in Region.query.all():
+        print('syncing region %s' % region.name)
+        import_osm(region.id)
+
+
 @celery.task
 def import_osm_delay(region_id):
     import_osm(region_id)

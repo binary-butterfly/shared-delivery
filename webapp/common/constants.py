@@ -76,7 +76,7 @@ class BaseConfig:
             "farm": {"osm": True, "summary": 3, "name": "Hofladen"},
             "frozen_food": {"osm": True, "summary": 3, "name": "Tiefkühlkost"},
             "greengrocer": {"osm": True, "summary": 3, "name": "Obst- und Gemüsehändler"},
-            "health_food": {"osm": True, "summary": 3, "name": "Naturkost- oder Bioladen"},
+            "health_food": {"osm": True, "summary": 3, "name": "Bioladen, Reformhaus"},
             "ice_cream": {"osm": True, "summary": 3, "name": "Verpackte Eisprodukte"},
             "pasta": {"osm": True, "summary": 3, "name": "Frische Nudeln, Teigwaren"},
             "pastry": {"osm": True, "summary": 3, "name": "Konditoreiwaren"},
@@ -381,8 +381,9 @@ class BaseConfig:
             'insurance': {"osm": True, "summary": 4, "name": "Versicherung"},
         },
         'healthcare': {
-            "physiotherapist": {"osm": True, "summary": 1, "name": "Pysiotherapie"},
+            "physiotherapist": {"osm": True, "summary": 1, "name": "Physiotherapie"},
             "speech_therapist": {"osm": True, "summary": 1, "name": "Logopädie"},
+            "alternative": {"osm": True, "summary": 1, "name": "Alternative Medizin"}
         },
         'craft': {
             "scaffolding": {"osm": True, "summary": 5, "name": "Gerüstbau"},
@@ -398,7 +399,8 @@ class BaseConfig:
             "plumber": {"osm": True, "summary": 5, "name": "Installateur, Klemptner"},
             "tiller": {"osm": True, "summary": 5, "name": "Fliesenleger"},
             "tailer": {"osm": True, "summary": 5, "name": "Schneiderei"},
-            "metal_construction": {"osm": True, "summary": 5, "name": "Metallbauer"}
+            "metal_construction": {"osm": True, "summary": 5, "name": "Metallbauer"},
+            "printer": {"osm": True, "summary": 5, "name": "Druckerei"},
         }
     }
 
