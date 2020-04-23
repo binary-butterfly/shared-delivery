@@ -31,7 +31,6 @@ class BaseConfig:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SQLALCHEMY_ECHO = False
 
-    CELERY_RESULT_BACKEND = 'amqp://localhost'
     CELERY_BROKER_URL = 'amqp://localhost'
 
     ELASTICSEARCH_HOST = 'localhost'
@@ -275,7 +274,6 @@ class BaseConfig:
             "music_school": {"osm": True, "summary": 7, "name": "Musikschule"},
             "school": {"osm": True, "summary": 7, "name": "Schule"},
             "university": {"osm": True, "summary": 7, "name": "Universität"},
-            "dancing_school": {}
             # Transportation
 
             #"bicycle_parking": {"osm": True, "summary": 8, "name": "Fahrradparkplatz"},
