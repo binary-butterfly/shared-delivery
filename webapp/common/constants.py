@@ -57,7 +57,8 @@ class BaseConfig:
     OVERPASS_WAIT_TIME = 20
     OVERPASS_SOURCES = {
         "tourism": {
-            "hotel": {"osm": True, "summary": 2, "name": "Hotel"}
+            "hotel": {"osm": True, "summary": 2, "name": "Hotel"},
+            'camp_site': {"osm": True, "summary": 2, "name": "Campingplatz"}
         },
         "shop": {
             # Food, beverages
@@ -274,7 +275,7 @@ class BaseConfig:
             "music_school": {"osm": True, "summary": 7, "name": "Musikschule"},
             "school": {"osm": True, "summary": 7, "name": "Schule"},
             "university": {"osm": True, "summary": 7, "name": "Universität"},
-
+            "dancing_school": {}
             # Transportation
 
             #"bicycle_parking": {"osm": True, "summary": 8, "name": "Fahrradparkplatz"},
@@ -379,6 +380,7 @@ class BaseConfig:
         },
         'office': {
             'insurance': {"osm": True, "summary": 4, "name": "Versicherung"},
+            "lawyer": {"osm": True, "summary": 4, "name": "Anwalt"}
         },
         'healthcare': {
             "physiotherapist": {"osm": True, "summary": 1, "name": "Physiotherapie"},
@@ -401,6 +403,15 @@ class BaseConfig:
             "tailer": {"osm": True, "summary": 5, "name": "Schneiderei"},
             "metal_construction": {"osm": True, "summary": 5, "name": "Metallbauer"},
             "printer": {"osm": True, "summary": 5, "name": "Druckerei"},
+            "handicraft": {"osm": True, "summary": 3, "name": "Kunsthandwerk"},
+            'caterer': {"osm": True, "summary": 4, "name": "Caterer"},
+        },
+        'leisure': {
+            'sports_centre': {"osm": True, "summary": 4, "name": "Fitness-Studio"},
+            'dance': {"osm": True, "summary": 4, "name": "Tanz-Schule, -Halle"}
+        },
+        'sport': {
+            'yoga':  {"osm": True, "summary": 4, "name": "Yoga-Studio"}
         }
     }
 
