@@ -122,7 +122,12 @@ class StoreBaseForm(FlaskForm):
         ]
     )
     category = CategoryField(
-        label=_('Art des Geschäfts')
+        label=_('Art des Geschäfts'),
+        validators=[
+            validators.DataRequired(
+                message='Bitte geben Sie mindestens eine Kategorie an.'
+            )
+        ]
     )
     source_text = StringField(
         label=_('Woher kommt die Information?')
