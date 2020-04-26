@@ -9,7 +9,7 @@
         <meta name="publisher" content="lokalwirkt"/>
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <meta property="og:title" content="lokalwirkt">
+        <meta property="og:title" content="{% block og_title %}lokalwirkt{% endblock %}">
         <meta property="og:type" content="website"/>
         <meta property="og:url" content="{{ config['PROJECT_URL'] }}{{ current_path }}" />
         <meta property="og:image" content="{{ config['PROJECT_URL'] }}/static/img/logo.png" />

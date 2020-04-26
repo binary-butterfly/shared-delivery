@@ -1,6 +1,9 @@
 {% extends "layout.html" %}
 {% from "macros.html" import action_button with context %}
 
+{% block title %}{{ store.name }} | {{ super() }}{% endblock %}
+{{ block og_title }}{{ store.name }} | {{ super }}{% endblock %}
+
 {% block content %}
     <div class="row">
         <div class="col-md-12">
