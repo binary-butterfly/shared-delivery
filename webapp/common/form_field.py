@@ -76,10 +76,12 @@ class SummarizeCategoryField(SelectField):
 
 
 class RegionField(SelectField):
-    def __init__(self, all_option=False, limit_allowed=False, **kwargs):
+    def __init__(self, all_option=False, limit_allowed=False, none_entry=False, **kwargs):
         self.simple_validate = getattr(kwargs['_form'], 'simple_validate', False)
         super(RegionField, self).__init__(**kwargs)
         self.choices = [('_all', 'beliebig')] if all_option else [('0', 'bitte wählen')]
+        if none_entry:
+            self.choices.append(('_none', 'nicht gesetzt'))
         if self.simple_validate:
             return
         regions = Region.query

@@ -77,9 +77,11 @@ def api_store_suggestions():
         })
     stores = ObjectDump.query.filter_by(type='suggestion').filter_by(deleted=False)
 
-    if form.region.data and form.region.data not in ['None', '_all']:
+    if form.region.data and form.region.data not in ['None', '_all', '_none']:
         stores = stores.filter_by(region_id=form.region.data)
-    elif not current_user.has_capability('admin'):
+    elif form.region.data == '_none':
+        stores = stores.filter_by(region_id=None)
+    if not current_user.has_capability('admin'):
         stores = stores.filter(Store.region_id.in_(current_user.region_ids))
 
     if form.settled.data and form.settled.data not in ['None', '_all']:
