@@ -11,9 +11,9 @@ THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND 
 """
 
 
-from flask import Blueprint, render_template, flash, redirect
+from flask import Blueprint, render_template, flash, redirect, abort
 
-from ..models import Store, OpeningTime, ObjectDump
+from ..models import Store, OpeningTime, ObjectDump, Region
 from ..extensions import db
 from .StoreFrontendForm import StoreFrontendForm
 from ..store_management.StoreManagementHelper import get_opening_times_for_form, create_store_revision
@@ -35,9 +35,12 @@ def store_frontend_main(store_id):
     return render_template('store-frontend.html', store=store, opening_times=opening_times)
 
 
-@store_frontend.route('/store/suggest', methods=['GET', 'POST'])
-def store_frontend_suggest_new():
+@store_frontend.route('/store/<string:region_slug>/suggest', methods=['GET', 'POST'])
+def store_frontend_suggest_new(region_slug):
     form = StoreFrontendForm()
+    region = Region.query.filter_by(slug=region_slug).first()
+    if not region:
+        abort(404)
     if form.validate_on_submit():
         opening_times_data = {}
         for field in ['all', 'delivery', 'pickup']:
@@ -45,6 +48,7 @@ def store_frontend_suggest_new():
             delattr(form, 'opening_times_%s' % field)
         store = Store()
         form.populate_obj(store)
+        store.region_id = region.id
         store_suggestion = store.to_dict()
         store_suggestion['opening_time'] = []
         for field in ['all', 'delivery', 'pickup']:

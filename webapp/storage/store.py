@@ -22,7 +22,7 @@ class Store(db.Model, BaseModel):
         'id', 'created', 'modified', 'name', 'firstname', 'lastname', 'company', 'address', 'postalcode', 'locality',
         'country', 'lat', 'lon', 'website', 'email', 'phone', 'mobile', 'fax', 'description', 'website_crowdfunding',
         'website_coupon', 'wheelchair', 'licence', 'brand', 'osm_id', 'revisited_government', 'revisited_store',
-        'delivery', 'pickup', 'onlineshop', 'deleted'
+        'delivery', 'pickup', 'onlineshop', 'deleted', 'region_id'
     ]
 
     version = '0.9.0'
