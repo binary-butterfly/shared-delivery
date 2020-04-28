@@ -37,8 +37,10 @@ def api_stores():
     if form.name.data:
         stores = stores.filter(Store.name.like('%%%s%%' % form.name.data))
 
-    if form.region.data and form.region.data not in ['None', '_all']:
+    if form.region.data and form.region.data not in ['None', '_all', '_none']:
         stores = stores.filter_by(region_id=form.region.data)
+    elif form.region.data == '_none':
+        stores = stores.filter_by(region_id=None)
     elif not current_user.has_capability('admin'):
         stores = stores.filter(Store.region_id.in_(current_user.region_ids))
 

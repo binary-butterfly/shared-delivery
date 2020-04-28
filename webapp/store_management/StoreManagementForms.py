@@ -30,6 +30,7 @@ class StoreSearchForm(SearchBaseForm):
         label='Region',
         all_option=True,
         limit_allowed=True,
+        none_entry=True,
         validators=[
             validators.Optional()
         ]
