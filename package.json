@@ -52,7 +52,7 @@
     "downshift": "^3.3.1",
     "socket.io-client": "^2.2",
     "debounce-fn": "^3.0.1",
-    "chart.js": "^2.8.0",
+    "chart.js": "^2.9.4",
     "react-chartjs-2": "^2.7.6",
     "bootstrap-daterangepicker": "^3.0.3",
     "bootstrap-select": "^1.13.5",
